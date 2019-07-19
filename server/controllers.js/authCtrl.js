@@ -4,9 +4,10 @@ module.exports = {
     register: async (req, res) => {
         try {
             const db = req.app.get('db')
-            const { name, email, password, username } = req.body
+            const { username, email, password, faction_id } = req.body
+            let profile_pic = `https://robohash.org/${username}`
     
-            let users = await db.find_user_by_email(email)
+            let users = await db.auth.find_user_by_username(username)
             let user = users[0]
     
             if (user) {
@@ -16,7 +17,7 @@ module.exports = {
             const salt = bcrypt.genSaltSync(10)
             const hash = bcrypt.hashSync(password, salt)
     
-            let response = await db.create_user({name, email, hash, username})
+            let response = await db.auth.create_user({username, email, hash, profile_pic, faction_id})
             let newUser = response[0]
     
             delete newUser.password
@@ -32,9 +33,9 @@ module.exports = {
     login: async (req, res) => {
         try {
             const db = req.app.get('db')
-            let { email, password } = req.body
+            let { username, password } = req.body
     
-            let users = await db.find_user_by_email(email)
+            let users = await db.auth.find_user_by_username(username)
             let user = users[0]
     
             if (!user) {
@@ -64,8 +65,8 @@ module.exports = {
     currentUser: async (req, res) => {
         if (req.session.user) {
             let db = req.app.get('db')
-            let {email} = req.session.user
-            let users = await db.find_user_by_email(email)
+            let {username} = req.session.user
+            let users = await db.auth.find_user_by_username(username)
             let user = users[0]
             delete user.password
             req.session.user = user
