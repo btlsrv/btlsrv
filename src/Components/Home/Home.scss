@@ -1,0 +1,42 @@
+@import '../../Styles/styles.scss';
+
+.body {
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $white;
+}
+
+.top-section {
+
+
+}
+
+.welcome {
+}
+
+.video {
+    height: 300px;
+    width: 600px;
+    background: $favorite-green;
+}
+
+.buttons {
+
+    button {
+        background: $favorite-green;
+        color: $black;
+        border: none;
+        width: 100px;
+        height: 25px;
+        margin: 10px;
+        font-size: 14px; 
+    }
+
+    button:hover {
+        background: $highlight-blue
+    }
+
+
+}
