@@ -3,6 +3,7 @@ let massive = require('massive')
 let session = require('express-session')
 let app = express()
 require('dotenv').config()
+let authCtrl = require('./controllers.js/authCtrl')
 
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
@@ -21,3 +22,8 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 365
     }
 }))
+
+app.post('/auth/register', authCtrl.register)
+app.post('/auth/login', authCtrl.login)
+app.get('/auth/logout', authCtrl.logout)
+app.get('/auth/getuser', authCtrl.currentUser)
