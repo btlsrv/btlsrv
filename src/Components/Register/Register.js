@@ -1,11 +1,11 @@
 import React from 'react'
 
-const LoginReg = () => {
+const Reg = () => {
     return (
         <div>
-            <h2>LoginReg</h2>
+            <h2>Reg</h2>
         </div>
     )
 }
 
-export default LoginReg
+export default Reg
