@@ -1,3 +1,3 @@
 INSERT INTO maps (user_id)
-VALUES (${user_id})
+VALUES ($1)
 returning *;
