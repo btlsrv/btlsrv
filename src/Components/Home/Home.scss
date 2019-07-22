@@ -9,11 +9,21 @@
 }
 
 .top-section {
+    display: flex;
+    align-items: center;
+    height: 60vh;
+    width: 100vw;
+    justify-content: space-evenly;
+}
 
-
+.top-text {
+    text-align: center;
+    font-size: 30px;
 }
 
 .welcome {
+    padding: 20px;
+
 }
 
 .video {
@@ -35,8 +45,12 @@
     }
 
     button:hover {
-        background: $highlight-blue
+        background: $pink;
     }
 
 
+}
+
+.about-section {
+    
 }

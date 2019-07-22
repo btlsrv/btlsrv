@@ -19,13 +19,15 @@ const Home = props => {
                 :
                 <div className='body'>
                 <section className='top-section'>
-                    <h1 className='welcome'>welcome</h1>
-                    <div className='video'></div>
-
-                    <div className='buttons'>
-                        <Link to='/login'><button>login</button></Link>
-                        <Link to='/register'><button>register</button></Link>
+                    <div className='top-text'>
+                        <h1 className='welcome'>welcome</h1>
+                        <div className='buttons'>
+                            <Link to='/login'><button>login</button></Link>
+                            <Link to='/register'><button>register</button></Link>
+                        </div>
                     </div>
+
+                    <div className='video'></div>
                 </section>
 
                 <section className='about-section'>
