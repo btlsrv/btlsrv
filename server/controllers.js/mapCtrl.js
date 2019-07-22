@@ -2,7 +2,7 @@ module.exports = {
     getAllUserMaps: async (req, res) => {
         try {
             const db = req.app.get('db')
-            const { id: user_id } = req.session.user
+            const { user_id } = req.session.user
             let maps = await db.maps.get_all_user_maps(user_id)
             res.status(200).send(maps)
         } catch (error) {
@@ -15,7 +15,6 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { id: map_id } = req.params
-
             let map = await db.maps.get_user_map(map_id)
             map = map[0]
 
@@ -29,7 +28,7 @@ module.exports = {
     createMap: async (req, res) => {
         try {
             const db = req.app.get('db')
-            const { id: user_id } = req.session.user
+            const { user_id } = req.session.user
             let maps = await db.maps.create_map(user_id)
 
             res.status(200).send(maps)
@@ -42,7 +41,7 @@ module.exports = {
     deleteMap: async (req, res) => {
         try {
             const db = req.app.get('db')
-            const { id: map_id } = req.params
+            const { map_id } = req.params
 
             let maps = await db.maps.delete_map(map_id)
 
