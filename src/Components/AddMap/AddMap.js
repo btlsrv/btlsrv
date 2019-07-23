@@ -1,4 +1,5 @@
 import React from 'react'
+import './AddMap.scss'
 
 const AddMap = () => {
     return (

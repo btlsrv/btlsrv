@@ -3,6 +3,8 @@ import './Home.scss'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
+import icon from '../../Assets/personicon.png'
+import FactionPage from '../FactionPage/FactionPage'
 
 const Home = props => {
     useEffect(()=> {
@@ -10,12 +12,10 @@ const Home = props => {
     }, [props])
 
     return (
-        <div>
+        <div className='home'>
             {props.user
                 ?
-                <div>
-                    <h1 style={{'color':'white'}}>faction page</h1>f
-                </div>
+                <FactionPage/>
                 :
                 <div className='body'>
                 <section className='top-section'>
@@ -30,9 +30,34 @@ const Home = props => {
                     <div className='video'></div>
                 </section>
 
-                <section className='about-section'>
+                <section className='about-header'>
                     <h1>about</h1>
                     <p>info about the game and stuff</p>
+                </section>
+
+                <section className='about-section'>
+                    <div className='about-text'>
+                        <p>Words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words wordswords words words words words words words words words words words words</p>
+                    </div>
+
+                    <div className='developers'>
+                        <div>
+                            <img src={icon} alt='dev'/>
+                            <p>riley</p>
+                        </div>
+                        <div>
+                            <img src={icon} alt='dev'/>
+                            <p>derek</p>
+                        </div>
+                        <div>
+                            <img src={icon} alt='dev'/>
+                            <p>marshall</p>
+                        </div>
+                        <div>
+                            <img src={icon} alt='dev'/>
+                            <p>devin</p>
+                        </div>
+                    </div>
                 </section>
             </div>}
     </div>
