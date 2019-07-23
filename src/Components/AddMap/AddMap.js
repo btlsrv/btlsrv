@@ -1,9 +1,10 @@
 import React from 'react'
+import './AddMap.scss'
 
 const AddMap = () => {
     return (
-        <div>
-            <h2>AddMap</h2>
+        <div className='add-map'>
+            <h2>Add Map</h2>
         </div>
     )
 }
