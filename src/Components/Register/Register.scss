@@ -1,0 +1,53 @@
+@import '../../Styles/styles.scss';
+
+.reg {
+    background: $black;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+.reg-card {
+    background: $white;
+    width: 300px;
+    height: 400px;
+    margin: 0 auto;
+    position: relative;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: 10px 10px 0 $favorite-green;
+
+    input {
+        border: none;
+        border-bottom: 1px solid $shadow-grey;
+        height: 20px;
+    }
+
+    select {
+        border: none;
+        background: none;
+
+        option {
+            background: $pink;
+        }
+    }
+
+    button {
+        width: 75px;
+        height: 30px;
+        background: $favorite-green;
+        border: none;
+
+        &:hover {
+            background: $pink;
+        }
+
+        &:active {
+            background: $black;
+            color: $white;
+        }
+    }
+}
