@@ -8,6 +8,7 @@ let socket = require('socket.io')
 let authCtrl = require('./controllers.js/authCtrl')
 let mapCtrl = require('./controllers.js/mapCtrl')
 let modulesCtrl = require('./controllers.js/modulesCtrl')
+let messagesCtrl = require('./controllers.js/messageCtrl')
 
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
@@ -40,6 +41,7 @@ app.use(session({
     }
 }))
 
+//// Auth Endpoints ///
 app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
 app.get('/auth/logout', authCtrl.logout)
@@ -53,3 +55,8 @@ app.delete('/api/maps/:id', mapCtrl.deleteMap)
 
 //// Modules Endpoint ////
 app.post('/api/modules', modulesCtrl.createModules)
+
+//// Messages Endpoints ////
+app.post('/api/messages', messagesCtrl.createMessage)
+app.get('/api/messages', messagesCtrl.getAllMessages)
+app.delete('/api/messages/:id', messagesCtrl.deleteMessage)

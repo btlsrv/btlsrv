@@ -5,6 +5,9 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { username, email, password, faction_id } = req.body
+            // faction id 1 = Cyber Monkeys
+            // faction id 2 = Alpaca Hackers
+            // faction id 3 = Skylight Ducks
             let profile_pic = `https://robohash.org/${username}`
     
             let users = await db.auth.find_user_by_username(username)
