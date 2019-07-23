@@ -6,6 +6,8 @@ require('dotenv').config()
 let socket = require('socket.io')
 
 let authCtrl = require('./controllers.js/authCtrl')
+let mapCtrl = require('./controllers.js/mapCtrl')
+let modulesCtrl = require('./controllers.js/modulesCtrl')
 
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
@@ -46,3 +48,12 @@ app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
 app.get('/auth/logout', authCtrl.logout)
 app.get('/auth/getuser', authCtrl.currentUser)
+
+//// Map Endpoints ///
+app.post('/api/maps', mapCtrl.createMap)
+app.get('/api/maps', mapCtrl.getAllUserMaps)
+app.get('/api/maps/:id', mapCtrl.getMap)
+app.delete('/api/maps/:id', mapCtrl.deleteMap)
+
+//// Modules Endpoint ////
+app.post('/api/modules', modulesCtrl.createModules)
