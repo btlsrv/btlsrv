@@ -11,7 +11,7 @@ module.exports = {
             let user = users[0]
     
             if (user) {
-                return res.status(409).send('email already exists')
+                return res.status(409).send('username already exists')
             }
     
             const salt = bcrypt.genSaltSync(10)
@@ -39,13 +39,13 @@ module.exports = {
             let user = users[0]
     
             if (!user) {
-                return res.status(401).send('email or password incorrect')
+                return res.status(401).send('username or password incorrect')
             }
 
             let isAuthenticated = bcrypt.compareSync(password, user.password)
 
             if (!isAuthenticated) {
-                return res.status(401).send('email or password incorrect')
+                return res.status(401).send('username or password incorrect')
             }
 
             delete user.password

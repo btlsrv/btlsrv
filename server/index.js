@@ -25,6 +25,10 @@ massive(CONNECTION_STRING).then(db => {
             gameRoom += 1
         })
 
+        client.on('getRooms', () => {
+            client.emit('roomsGot', io.sockets.adapter.rooms)
+        })
+
         client.on('disconnect', () => console.log('user disconnected'))
     })
 })
