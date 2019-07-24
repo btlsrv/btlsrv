@@ -8,9 +8,10 @@ import { getUser } from '../../ducks/reducers/user'
 
 
 const Nav = props => {
+    const {getUser} = props
     useEffect(()=> {
-        props.getUser()
-    }, [props])
+        getUser()
+    }, [getUser])
 
     const logout = () => {
         axios.get('/auth/logout').then(res => {

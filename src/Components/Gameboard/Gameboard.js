@@ -7,19 +7,20 @@ const socket = io()
 
 
 const Gameboard = props => {
+    const { getUser } = props
     const [room, setRoom] = useState({
         room: 0
     })
 
     useEffect(()=> {
-        props.getUser()
+        getUser()
         socket.emit('startGame')
         socket.on('startedGame', players => {
             let {gameRoom} = players
             setRoom(gameRoom)
             console.log(players)
         })
-    }, [])
+    }, [getUser])
 
     console.log(room)
 
