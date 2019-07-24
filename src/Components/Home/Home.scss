@@ -70,20 +70,21 @@
 }
 
 .about-section {
-    width: 90vw;
+    width: 100vw;
     min-height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    background: $black;
 }
 
 .about-text {
-    width: 75%;
+    width: 65%;
 }
 
 .developers {
-    width: 75%;
+    width: 65%;
     display: flex;
     justify-content: space-between;
     text-align: center;

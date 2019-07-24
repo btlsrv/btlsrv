@@ -7,9 +7,10 @@ import icon from '../../Assets/personicon.png'
 import FactionPage from '../FactionPage/FactionPage'
 
 const Home = props => {
+    const {getUser} = props
     useEffect(()=> {
-            props.getUser()
-    }, [props])
+        getUser()
+    }, [getUser])
 
     return (
         <div className='home'>
