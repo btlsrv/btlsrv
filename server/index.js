@@ -14,18 +14,57 @@ let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
 app.use(express.json())
 
+let player1 = ''
+
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
     const io = socket(app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`)))
 
     io.on('connection', client => {
-        let gameRoom = 1
+        console.log('connected')
 
-        client.on('startGame', () => {
-            let room = gameRoom
+        client.leave(client.id)
+
+        // Creating rooms and games //
+        
+        client.on('createRoom', data => {
+            let { room } = data
             client.join(room)
-            io.in(room).emit('startedGame', { gameRoom })
-            gameRoom += 1
+        })
+
+        client.on('startGame', data => {
+            let { player1Map } = data
+            console.log('started')
+            player1 = player1Map
+        })
+
+        // Joining rooms and games //
+
+        client.on('joinRoom', data => {
+            let { room } = data
+            client.join(room)
+        })
+
+        client.on('joinGame', async data => {
+            let { player2Map, room } = data
+            console.log('joined')
+            io.in(room).emit('gameJoined', { player1, player2Map })
+            player1 = '',
+            io.emit('roomsGot', io.sockets.adapter.rooms)
+        })
+
+        // Gameplay
+
+        client.on('changeTurns', data => {
+            let { currentTurn, room } = data
+            io.in(room).emit('turnsChanged', currentTurn)
+        })
+
+        // Leave game or disconnect
+
+        client.on('leaveGame', room => {
+            client.leave(room)
+            client.in(room).emit('playerLeft')
         })
 
         client.on('disconnect', () => console.log('user disconnected'))
