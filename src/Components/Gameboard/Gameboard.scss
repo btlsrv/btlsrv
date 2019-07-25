@@ -1,1 +1,19 @@
 @import '../../Styles/styles.scss';
+
+.gameboard {
+    display: flex;
+}
+
+.board {
+    height: 350px;
+    width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.unclicked {
+    background: $primary-blue;
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+}

@@ -26,11 +26,22 @@ const Dashboard = props => {
             {props.user 
             ?
             <div className='dash'>
-                <h1 className='welcome'>welcome, {props.user.username}</h1>
-                <Link to='/gameboard'><button className='button'>start game</button></Link>
-                <button onClick={databaseCall} className='button'>start game</button>
+                {/* <h1 className='welcome'>welcome, {props.user.username}</h1> */}
+                <div>
+                <Link to='/gameboard'><button className='button' onClick={databaseCall}>start game</button></Link>
+                <div className='game-list'>
+                <button>join</button>
+                <button>join</button>
+                <button>join</button>
+                <button>join</button>
+                </div>
+                </div>
+
+                <div>
                 <Link to='/addmap'><button className='button'>add map</button></Link>
-                <div className='game-list'></div>
+                <Link to='/viewmaps'><button>view maps</button></Link>
+                </div>
+                
             </div>
             :
             // <Redirect to='/'/>
