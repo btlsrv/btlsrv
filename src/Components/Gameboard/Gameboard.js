@@ -6,6 +6,7 @@ import board from './board'
 import axios from 'axios'
 // const socket = io()
 import './Gameboard.scss'
+import Blank from '../Modules/Blank/Blank'
 
 
 class Gameboard extends Component {
@@ -46,10 +47,61 @@ class Gameboard extends Component {
 
     handleClick = space => {
         console.log('THE SPACE', space)
-        const {name} = space
-        // if (name === 'sapce') {
-        //     return class = 'missed'
-        // }
+        const {name, comp} = space
+        if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        } else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }  else if (name === 'm2_position1') {
+            return space.comp = <Blank/>
+        }
+        
+
+        // m2_position2
+        // m3_position1
+        // m3_position2
+        // m3_position3
+        // m3b_position1
+        // m3b_position2
+        // m3b_position3
+        // m4_position1
+        // m4_position2
+        // m4_position3
+        // m4_position4
+        // m5_position1
+        // m5_position2
+        // m5_position3
+        // m5_position4
+        // m5_position5
+
     }
 
     render() {
