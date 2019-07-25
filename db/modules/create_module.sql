@@ -19,19 +19,23 @@ VALUES (
 
 INSERT INTO modules4 (map_id, m4_position1, m4_position2, m4_position3, m4_position4)
 VALUES (
-    ${map_id}
-    ${m4_position1}
-    ${m4_position2}
-    ${m4_position3}
+    ${map_id},
+    ${m4_position1},
+    ${m4_position2},
+    ${m4_position3},
     ${m4_position4}
 );
 
 INSERT INTO modules5 (map_id, m5_position1, m5_position2, m5_position3, m5_position4, m5_position5)
 VALUES (
-    ${map_id}
-    ${m5_position1}
-    ${m5_position2}
-    ${m5_position3}
-    ${m5_position4}
+    ${map_id},
+    ${m5_position1},
+    ${m5_position2},
+    ${m5_position3},
+    ${m5_position4},
     ${m5_position5}
 );
+
+UPDATE maps
+SET name = ${name}
+WHERE map_id = ${map_id};

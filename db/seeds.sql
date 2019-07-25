@@ -14,6 +14,10 @@ CREATE TABLE factions (
     name VARCHAR
 );
 
+-- faction id 1 = Cyber Monkeys
+-- faction id 2 = Alpaca Hackers
+-- faction id 3 = Skylight Ducks
+
 CREATE TABLE maps (
     map_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(users_id),
@@ -64,12 +68,12 @@ CREATE TABLE modules5 (
 
 CREATE TABLE messages (
     message_id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(users_id),
+    user_id INTEGER REFERENCES users(user_id),
+    forum_id INTEGER REFERENCES forums(forum_id),
     message VARCHAR
 );
 
-CREATE TABLE forms (
-    from_id SERIAL PRIMARY KEY,
-    faction_id INTEGER REFERENCES factions(faction_id),
-    message_id INTEGER REFERENCES messages(message_id)
+CREATE TABLE forums (
+    forum_id SERIAL PRIMARY KEY,
+    faction_id INTEGER REFERENCES factions(faction_id)
 );

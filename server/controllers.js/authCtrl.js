@@ -5,13 +5,16 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { username, email, password, faction_id } = req.body
+            // faction id 1 = Cyber Monkeys
+            // faction id 2 = Alpaca Hackers
+            // faction id 3 = Skylight Ducks
             let profile_pic = `https://robohash.org/${username}`
     
             let users = await db.auth.find_user_by_username(username)
             let user = users[0]
     
             if (user) {
-                return res.status(409).send('email already exists')
+                return res.status(409).send('username already exists')
             }
     
             const salt = bcrypt.genSaltSync(10)
@@ -39,13 +42,13 @@ module.exports = {
             let user = users[0]
     
             if (!user) {
-                return res.status(401).send('email or password incorrect')
+                return res.status(401).send('username or password incorrect')
             }
 
             let isAuthenticated = bcrypt.compareSync(password, user.password)
 
             if (!isAuthenticated) {
-                return res.status(401).send('email or password incorrect')
+                return res.status(401).send('username or password incorrect')
             }
 
             delete user.password

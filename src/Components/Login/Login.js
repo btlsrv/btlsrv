@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './Login.scss'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
@@ -27,10 +28,12 @@ const Login = (props) => {
     }
 
     return (
-        <div>
-            <input type='text' name='username' onChange={handleChange} placeholder='username'/>
-            <input type='text' name='password' onChange={handleChange} placeholder='password'/>
-            <button onClick={handleLogin}>Login</button>
+        <div className='login'>
+            <div className='login-card'>
+                <input type='text' name='username' onChange={handleChange} placeholder='username'/>
+                <input type='password' name='password' onChange={handleChange} placeholder='password'/>
+                <button onClick={handleLogin}>Login</button>
+            </div>
         </div>
     )
 }
