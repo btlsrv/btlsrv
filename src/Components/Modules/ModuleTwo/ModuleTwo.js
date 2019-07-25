@@ -1,11 +1,14 @@
-import React from 'react'
-
-const ModuleTwo = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
-
-export default ModuleTwo
+export default [
+    {
+        name: 'stoplight',
+        class: 'box',
+        number: 2,
+        position: null
+    },
+    {
+        name: 'threebar',
+        class: 'box',
+        number: 2,
+        position: null
+    }
+]
