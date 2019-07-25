@@ -1,0 +1,60 @@
+$primary-blue: #1532BC;
+$module-blue: #224EDE;
+$highlight-blue: #2B85F8;
+$missed-blue: #1C2861;
+$favorite-green: #1FF1E5;
+$pink: #FD5FBF;
+$missed-pink: #93376F;
+$yellow: #FFFDC4;
+$black: #000000;
+$white: #FFFFFF;
+$shadow-grey: #C4C4C4;
+$light-grey: #E5E5E5;
+
+.main {
+    padding-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 0;
+    height: 600px;
+}
+
+.flex {
+    display: flex;
+    margin: 10px;
+    min-height: 50px;
+    width: 250px;
+    background: transparent;
+}
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    width: 350px;
+    height: 350px;
+    position: absolute;
+    right: 0px;
+}
+
+.box {
+    height: 30px;
+    width: 30px;
+    margin: 2px;
+}
+
+.blank {
+    background: $primary-blue;
+}
+
+.module {
+    height: 30px;
+    width: 30px;
+    background: $module-blue;
+}
+
+
+.mod-2 {
+    background: transparent;
+}
