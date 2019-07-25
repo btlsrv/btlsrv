@@ -1,5 +1,5 @@
 import React from 'react'
-import './ThreeBar.scss'
+import './Threebar.scss'
 
 const ThreeBar = () => {
     return (
