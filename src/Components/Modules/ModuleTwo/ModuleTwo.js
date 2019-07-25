@@ -11,4 +11,4 @@ export default [
         number: 2,
         position: null
     }
-]
+  ]
