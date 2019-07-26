@@ -50,5 +50,8 @@
       "src/*",
       "public/*"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^3.4.0"
   }
 }
