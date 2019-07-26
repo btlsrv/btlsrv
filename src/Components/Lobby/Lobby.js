@@ -83,6 +83,7 @@ class Lobby extends Component {
     }
 
     render() {
+        console.log(this.state.rooms)
         return (
             <div>
                 <h2>Lobby</h2>

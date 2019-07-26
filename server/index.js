@@ -28,26 +28,31 @@ massive(CONNECTION_STRING).then(db => {
         // Creating rooms and games //
         
         client.on('createRoom', data => {
+            console.log('room created')
             let { room } = data
             client.join(room)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
         client.on('startGame', data => {
             let { player1Map } = data
             console.log('started')
             player1 = player1Map
+            console.log(player1)
         })
 
         // Joining rooms and games //
 
         client.on('joinRoom', data => {
+            console.log('room joined')
             let { room } = data
             client.join(room)
         })
 
         client.on('joinGame', async data => {
             let { player2Map, room } = data
-            console.log('joined')
+            console.log(data)
+            console.log('game joined')
             io.in(room).emit('gameJoined', { player1, player2Map })
             player1 = '',
             io.emit('roomsGot', io.sockets.adapter.rooms)
