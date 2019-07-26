@@ -8,7 +8,6 @@ const Stoplight = () => {
                 <div className='circle yellow'></div>
                 <div className='circle red'></div>
             </div>
-            
         </div>
     )
 }

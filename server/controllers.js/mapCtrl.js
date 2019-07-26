@@ -41,9 +41,9 @@ module.exports = {
     deleteMap: async (req, res) => {
         try {
             const db = req.app.get('db')
-            const { map_id } = req.params
+            const { id } = req.params
 
-            let maps = await db.maps.delete_map(map_id)
+            let maps = await db.maps.delete_map(id)
 
             res.status(200).send(maps)
         } catch (error) {
