@@ -9,6 +9,7 @@ let authCtrl = require('./controllers.js/authCtrl')
 let mapCtrl = require('./controllers.js/mapCtrl')
 let modulesCtrl = require('./controllers.js/modulesCtrl')
 let messagesCtrl = require('./controllers.js/messageCtrl')
+let factionCtrl = require('./controllers.js/factionCtrl')
 
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
@@ -104,3 +105,6 @@ app.post('/api/modules', modulesCtrl.createModules)
 app.post('/api/messages', messagesCtrl.createMessage)
 app.get('/api/messages', messagesCtrl.getAllMessages)
 app.delete('/api/messages/:id', messagesCtrl.deleteMessage)
+
+//// Faction Endpoint ////
+app.get('/api/faction', factionCtrl.getFactionUsers)

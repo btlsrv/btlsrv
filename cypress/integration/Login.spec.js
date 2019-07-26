@@ -15,6 +15,10 @@ describe('able to get to login page', () => {
         cy.contains('h1', 'welcome')
     })
 
+    it('shows info on About info', () => {
+        cy.contains('h1', 'about')
+    })
+
     it('should hit login button and go to login page', () => {
         cy.get('.buttons')
         .first()
