@@ -6,31 +6,24 @@
 }
 
 .board {
-    height: 350px;
-    width: 350px;
+    height: 495px;
+    width: 495px;
     display: flex;
     flex-wrap: wrap;
 }
 
 .player-1 {
-    height: 350px;
-    width: 350px;
+    height: 495px;
+    width: 495px;
     display: flex;
     flex-wrap: wrap;
 }
 
 .player-2 {
-    height: 350px;
-    width: 350px;
+    height: 495px;
+    width: 495px;
     display: flex;
     flex-wrap: wrap;
     position: absolute;
     right: 300px;
-}
-
-.unclicked {
-    background: $primary-blue;
-    width: 30px;
-    height: 30px;
-    margin: 2px;
 }

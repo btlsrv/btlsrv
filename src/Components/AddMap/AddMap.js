@@ -6,10 +6,14 @@ import moduleThreeB from '../Modules/ModuleThreeB/ModuleThreeB'
 import moduleFour from '../Modules/ModuleFour/ModuleFour'
 import moduleFive from '../Modules/ModuleFive/ModuleFive'
 import  '../Modules/Styles/Styles.scss'
+import './AddMap.scss'
 import Stoplight from '../Modules/Stoplight/Stoplight'
 import ThreeBar from '../Modules/ThreeBar/ThreeBar'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import blank from './Blank'
 
-export default class MyTest extends Component {
+class AddMap extends Component {
     constructor() {
         super()
 
@@ -32,8 +36,80 @@ export default class MyTest extends Component {
             modFiveDirection: 'row',
             currentPiece: 0,
             currentIndex: null,
-            alertMessage: false
+            name: ''
         }
+    }
+
+    handleChange = e => {
+        this.setState({
+            name: e.target.value
+        })
+    }
+
+    saveMap = async() => {
+        let map_id = this.props.id
+        let name = this.state.name
+        let newBoard = this.state.board.filter(space => {
+            return space.name !== 'board'
+        })
+        let objArray = newBoard.map(piece => {
+            for (let key in piece) {
+                if (key.includes('position')) {
+                    let newObj = {
+                        [key]: piece[key]
+                    }
+                    return newObj
+                }
+            }
+        })
+
+        let p21 = await objArray.findIndex(obj => obj.m2_position1)
+        let p22 = await objArray.findIndex(obj => obj.m2_position2)         
+        let p31 = await objArray.findIndex(obj => obj.m3a_position1) 
+        let p32 = await objArray.findIndex(obj => obj.m3a_position2)
+        let p33 = await objArray.findIndex(obj => obj.m3a_position3)
+        let p31b = await objArray.findIndex(obj => obj.m3b_position1) 
+        let p32b = await objArray.findIndex(obj => obj.m3b_position2)
+        let p33b = await objArray.findIndex(obj => obj.m3b_position3) 
+        let p41 = await objArray.findIndex(obj => obj.m4_position1) 
+        let p42 = await objArray.findIndex(obj => obj.m4_position2) 
+        let p43 = await objArray.findIndex(obj => obj.m4_position3) 
+        let p44 = await objArray.findIndex(obj => obj.m4_position4) 
+        let p51 = await objArray.findIndex(obj => obj.m5_position1) 
+        let p52 = await objArray.findIndex(obj => obj.m5_position2) 
+        let p53 = await objArray.findIndex(obj => obj.m5_position3) 
+        let p54 = await objArray.findIndex(obj => obj.m5_position4) 
+        let p55 = await objArray.findIndex(obj => obj.m5_position5) 
+
+        let body = {
+            map_id,
+            ...objArray[p21],
+            ...objArray[p22],
+            ...objArray[p31],
+            ...objArray[p32],
+            ...objArray[p33],
+            ...objArray[p31b],
+            ...objArray[p32b],
+            ...objArray[p33b],
+            ...objArray[p41],
+            ...objArray[p42],
+            ...objArray[p43],
+            ...objArray[p44],
+            ...objArray[p51],
+            ...objArray[p52],
+            ...objArray[p53],
+            ...objArray[p54],
+            ...objArray[p55],
+            name
+        }
+
+        await this.setState({
+            board: blank
+        })
+
+        axios.post('/api/modules', body).then(res => {
+            this.props.history.push('/dashboard')
+        })
     }
 
     onDragStart = (e, length) => {
@@ -68,8 +144,8 @@ export default class MyTest extends Component {
             return this.resetPiece(2)
         } else {
             board.splice(i, length, moduleTwo[0], moduleTwo[1])
-            moduleTwo[0].position = i 
-            moduleTwo[1].position = i + 1
+            moduleTwo[0].m2_position1 = i 
+            moduleTwo[1].m2_position2 = i + 1
             this.setState({
                 modTwoDisplay: false,
                 moduleTwo: moduleTwo
@@ -89,8 +165,8 @@ export default class MyTest extends Component {
         } else {
             board.splice(i, 1, moduleTwo[0])
             board.splice(i + 10, 1, moduleTwo[1])
-            moduleTwo[0].position = i
-            moduleTwo[1].position = i + 10
+            moduleTwo[0].m2_position1 = i
+            moduleTwo[1].m2_position2 = i + 10
             this.setState({
                 modTwoDisplay: false,
                 moduleTwo: moduleTwo
@@ -115,9 +191,9 @@ export default class MyTest extends Component {
             return this.resetPiece(3)            
         } else {
             board.splice(i, length, moduleThree[0], moduleThree[1], moduleThree[2])
-            moduleThree[0].position = i
-            moduleThree[1].position = i + 1
-            moduleThree[2].position = i + 2
+            moduleThree[0].m3a_position1 = i
+            moduleThree[1].m3a_position2 = i + 1
+            moduleThree[2].m3a_position3 = i + 2
             this.setState({
                 modThreeDisplay: false,
                 moduleThree: moduleThree
@@ -143,9 +219,9 @@ export default class MyTest extends Component {
             board.splice(i, 1, moduleThree[0])
             board.splice(i + 10, 1, moduleThree[1])
             board.splice(i + 20, 1, moduleThree[2])
-            moduleThree[0].position = i
-            moduleThree[1].position = i + 10
-            moduleThree[2].position = i + 20
+            moduleThree[0].m3a_position1 = i
+            moduleThree[1].m3a_position2 = i + 10
+            moduleThree[2].m3a_position3 = i + 20
             this.setState({
                 modThreeDisplay: false,
                 moduleThree: moduleThree
@@ -170,9 +246,9 @@ export default class MyTest extends Component {
             return this.resetPiece(33)            
         } else {
             board.splice(i, length, moduleThreeB[0], moduleThreeB[1], moduleThreeB[2])
-            moduleThreeB[0].position = i
-            moduleThreeB[1].position = i + 1
-            moduleThreeB[2].position = i + 2
+            moduleThreeB[0].m3b_position1 = i
+            moduleThreeB[1].m3b_position2 = i + 1
+            moduleThreeB[2].m3b_position3 = i + 2
             this.setState({
                 modThreeBDisplay: false,
                 moduleThreeB: moduleThreeB
@@ -198,9 +274,9 @@ export default class MyTest extends Component {
             board.splice(i, 1, moduleThreeB[0])
             board.splice(i + 10, 1, moduleThreeB[1])
             board.splice(i + 20, 1, moduleThreeB[2])
-            moduleThreeB[0].position = i
-            moduleThreeB[1].position = i + 10
-            moduleThreeB[2].position = i + 20
+            moduleThreeB[0].m3b_position1 = i
+            moduleThreeB[1].m3b_position2 = i + 10
+            moduleThreeB[2].m3b_position3 = i + 20
             this.setState({
                 modThreeBDisplay: false,
                 moduleThreeB: moduleThreeB
@@ -230,10 +306,10 @@ export default class MyTest extends Component {
             return this.resetPiece(4)            
         } else {
             board.splice(i, length, moduleFour[0], moduleFour[1], moduleFour[2], moduleFour[3])
-            moduleFour[0].position = i
-            moduleFour[1].position = i + 1
-            moduleFour[2].position = i + 2
-            moduleFour[3].position = i + 3
+            moduleFour[0].m4_position1 = i
+            moduleFour[1].m4_position2 = i + 1
+            moduleFour[2].m4_position3 = i + 2
+            moduleFour[3].m4_position4 = i + 3
             this.setState({
                 modFourDisplay: false,
                 moduleFour: moduleFour
@@ -265,10 +341,10 @@ export default class MyTest extends Component {
             board.splice(i + 10, 1, moduleFour[1])
             board.splice(i + 20, 1, moduleFour[2])
             board.splice(i + 30, 1, moduleFour[3])
-            moduleFour[0].position = i
-            moduleFour[1].position = i + 10
-            moduleFour[2].position = i + 20
-            moduleFour[3].position = i + 30
+            moduleFour[0].m4_position1 = i
+            moduleFour[1].m4_position2 = i + 10
+            moduleFour[2].m4_position3 = i + 20
+            moduleFour[3].m4_position4 = i + 30
             this.setState({
                 modFourDisplay: false,
                 moduleFour: moduleFour
@@ -303,11 +379,11 @@ export default class MyTest extends Component {
                     return this.resetPiece(5)            
             } else {
             board.splice(i, length, moduleFive[0], moduleFive[1], moduleFive[2], moduleFive[3], moduleFive[4])
-            moduleFive[0].position = i
-            moduleFive[1].position = i + 1
-            moduleFive[2].position = i + 2
-            moduleFive[3].position = i + 3
-            moduleFive[4].position = i + 4
+            moduleFive[0].m5_position1 = i
+            moduleFive[1].m5_position2 = i + 1
+            moduleFive[2].m5_position3 = i + 2
+            moduleFive[3].m5_position4 = i + 3
+            moduleFive[4].m5_position5 = i + 4
             this.setState({
                 modFiveDisplay: false,
                 moduleFive: moduleFive
@@ -345,11 +421,11 @@ export default class MyTest extends Component {
             board.splice(i + 20, 1, moduleFive[2])
             board.splice(i + 30, 1, moduleFive[3])
             board.splice(i + 40, 1, moduleFive[4])
-            moduleFive[0].position = i
-            moduleFive[1].position = i + 10
-            moduleFive[2].position = i + 20
-            moduleFive[3].position = i + 30
-            moduleFive[4].position = i + 40
+            moduleFive[0].m5_position1 = i
+            moduleFive[1].m5_position2 = i + 10
+            moduleFive[2].m5_position3 = i + 20
+            moduleFive[3].m5_position4 = i + 30
+            moduleFive[4].m5_position5 = i + 40
             this.setState({
                 modFiveDisplay: false,
                 moduleFive: moduleFive
@@ -416,23 +492,23 @@ export default class MyTest extends Component {
 
         // make an array of all the positions
 
-        let p21 = moduleTwo[0].position
-        let p22 = moduleTwo[1].position
-        let p31 = moduleThree[0].position
-        let p32 = moduleThree[1].position
-        let p33 = moduleThree[2].position
-        let p31b = moduleThreeB[0].position
-        let p32b = moduleThreeB[1].position
-        let p33b = moduleThreeB[2].position
-        let p41 = moduleFour[0].position
-        let p42 = moduleFour[1].position
-        let p43 = moduleFour[2].position
-        let p44 = moduleFour[3].position
-        let p51 = moduleFive[0].position
-        let p52 = moduleFive[1].position
-        let p53 = moduleFive[2].position
-        let p54 = moduleFive[3].position
-        let p55 = moduleFive[4].position
+        let p21 = moduleTwo[0].m2_position1
+        let p22 = moduleTwo[1].m2_position2
+        let p31 = moduleThree[0].m3a_position1
+        let p32 = moduleThree[1].m3a_position2
+        let p33 = moduleThree[2].m3a_position3
+        let p31b = moduleThreeB[0].m3b_position1
+        let p32b = moduleThreeB[1].m3b_position2
+        let p33b = moduleThreeB[2].m3b_position3
+        let p41 = moduleFour[0].m4_position1
+        let p42 = moduleFour[1].m4_position2
+        let p43 = moduleFour[2].m4_position3
+        let p44 = moduleFour[3].m4_position4
+        let p51 = moduleFive[0].m5_position1
+        let p52 = moduleFive[1].m5_position2
+        let p53 = moduleFive[2].m5_position3
+        let p54 = moduleFive[3].m5_position4
+        let p55 = moduleFive[4].m5_position5
 
         let obj = {
             name: 'board',
@@ -442,39 +518,24 @@ export default class MyTest extends Component {
         if (num === 2) {
             board[p21] = obj
             board[p22] = obj
-            moduleTwo = moduleTwo.map(piece => {
-                piece.position = null
-                return piece
-            })
             this.setState({
                 board: board,
-                moduleTwo, 
                 modTwoDisplay: true
             })
         } else if (num === 3) {
             board[p31] = obj
             board[p32] = obj
             board[p33] = obj
-            moduleThree = moduleThree.map(piece => {
-                piece.position = null
-                return piece
-            })
             this.setState({
                 board: board,
-                moduleThree, 
                 modThreeDisplay: true
             })
         } else if (num === 33) {
             board[p31b] = obj
             board[p32b] = obj
             board[p33b] = obj
-            moduleThreeB = moduleThreeB.map(piece => {
-                piece.position = null
-                return piece
-            })
             this.setState({
-                board: board,
-                moduleThreeB, 
+                board: board, 
                 modThreeBDisplay: true
             })
         } else if (num === 4) {
@@ -482,13 +543,8 @@ export default class MyTest extends Component {
             board[p42] = obj
             board[p43] = obj
             board[p44] = obj
-            moduleFour = moduleFour.map(piece => {
-                piece.position = null
-                return piece
-            })
             this.setState({
                 board: board,
-                moduleFour, 
                 modFourDisplay: true
             })
         } else if (num === 5) {
@@ -497,28 +553,27 @@ export default class MyTest extends Component {
             board[p53] = obj
             board[p54] = obj
             board[p55] = obj
-            moduleFive = moduleFive.map(piece => {
-                piece.position = null
-                return piece
-            })
             this.setState({
                 board: board,
-                moduleFive, 
                 modFiveDisplay: true
             })
         }
     }
 
     render() {
-        console.log('HELLLLLLOOOOOOOO', this.state.board)
         return (
-            <div className='main'>
+            <div className='add-map'>
+                
+                <div className='main'>
+                <div className='top-left-box'>
+                    <input className='add-map-input' onChange={this.handleChange}></input>
+                    <button className='add-map-button' onClick={this.saveMap}>save</button>
+                </div>
 
-                {this.state.alertMessage && <p className='alert'>choose another spot</p>}
 
-                <div className='mod-2'>    
+                <div className='module-container'>    
                 {this.state.modTwoDisplay &&
-                <div className='flex'  
+                <div className='flex cut-2'  
                     onDragStart={e => this.onDragStart(e, 2)}
                     draggable
                     onClick={() => this.handleRotate('modTwoDirection',this.state.modTwoDirection)}
@@ -529,7 +584,6 @@ export default class MyTest extends Component {
                                 return (
                                     <div
                                         key={i}
-                                        className={piece.class}
                                         onMouseDown={() => this.setState({ currentIndex: i })}>
                                             <Stoplight/>
                                     </div>
@@ -538,7 +592,6 @@ export default class MyTest extends Component {
                                 return (
                                     <div 
                                         key={i}
-                                        className={piece.class}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
                                          <ThreeBar/>
                                     </div>
@@ -550,7 +603,7 @@ export default class MyTest extends Component {
                 </div>}
 
                 {this.state.modThreeDisplay &&
-                <div className='flex'  
+                <div className='flex cut-3'  
                     onDragStart={e => this.onDragStart(e, 3)}
                     draggable
                     onClick={() => this.handleRotate('modThreeDirection', this.state.modThreeDirection)}
@@ -561,7 +614,6 @@ export default class MyTest extends Component {
                             return (
                                 <div
                                 key={i}
-                                className={piece.class}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
                                     <Stoplight/>
                                 </div>
@@ -569,7 +621,6 @@ export default class MyTest extends Component {
                                 return (
                                     <div 
                                         key={i}
-                                        className={piece.class}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
                                             <ThreeBar/>
                                     </div>
@@ -581,7 +632,7 @@ export default class MyTest extends Component {
                 </div>}
 
                 {this.state.modThreeBDisplay &&
-                <div className='flex'  
+                <div className='flex cut-3b'  
                     onDragStart={e => this.onDragStart(e, 33)}
                     draggable
                     onClick={() => this.handleRotate('modThreeBDirection', this.state.modThreeBDirection)}
@@ -592,7 +643,6 @@ export default class MyTest extends Component {
                             return (
                                 <div
                                 key={i}
-                                className={piece.class}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
                                     <Stoplight/>
                                 </div>
@@ -600,7 +650,6 @@ export default class MyTest extends Component {
                                 return (
                                     <div 
                                         key={i}
-                                        className={piece.class}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
                                             <ThreeBar/>
                                     </div>
@@ -612,7 +661,7 @@ export default class MyTest extends Component {
                 </div>}
 
                 {this.state.modFourDisplay &&
-                <div className='flex'  
+                <div className='flex cut-4'  
                     onDragStart={e => this.onDragStart(e, 4)}
                     draggable
                     onClick={() => this.handleRotate('modFourDirection', this.state.modFourDirection)}
@@ -623,7 +672,6 @@ export default class MyTest extends Component {
                             return (
                                 <div
                                 key={i}
-                                className={piece.class}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
                                     <Stoplight/>
                                 </div>
@@ -631,7 +679,6 @@ export default class MyTest extends Component {
                                 return (
                                     <div 
                                         key={i}
-                                        className={piece.class}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
                                             <ThreeBar/>
                                     </div>
@@ -643,7 +690,7 @@ export default class MyTest extends Component {
                 </div>}
 
                 {this.state.modFiveDisplay &&
-                <div className='flex'  
+                <div className='flex cut-5'  
                     onDragStart={e => this.onDragStart(e, 5)}
                     draggable
                     onClick={() => this.handleRotate('modFiveDirection', this.state.modFiveDirection)}
@@ -654,7 +701,6 @@ export default class MyTest extends Component {
                             return (
                                 <div
                                 key={i}
-                                className={piece.class}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
                                     <Stoplight/>
                                 </div>
@@ -662,7 +708,6 @@ export default class MyTest extends Component {
                                 return (
                                     <div 
                                         key={i}
-                                        className={piece.class}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
                                             <ThreeBar/>
                                     </div>
@@ -673,14 +718,14 @@ export default class MyTest extends Component {
                         })} 
                 </div>}
                 </div>
+                </div>
 
                 <div className='board'>
                     {this.state.board.map((space, i) => {
                         if (space.name === 'stoplight') {
                             return (
                             <div 
-                            key={i} 
-                            className={space.class}
+                            key={i}
                             onClick={() => this.resetPiece(space.number)}>
                                 <Stoplight/>
                             </div>
@@ -688,7 +733,6 @@ export default class MyTest extends Component {
                             return (
                                 <div 
                                 key={i} 
-                                className={space.class}
                                 onClick={() => this.resetPiece(space.number)}>
                                     <ThreeBar/>
                             </div> )
@@ -708,3 +752,12 @@ export default class MyTest extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    console.log('state in ADD MAP', state)
+    return {
+        id: state.map.id
+    }
+}
+
+export default connect(mapStateToProps)(AddMap)

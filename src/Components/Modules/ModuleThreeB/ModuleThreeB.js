@@ -1,20 +1,17 @@
 export default [
     {
         name: 'threebar',
-        class: 'box mod-3b',
         number: 33,
-        position: null
+        m3b_position1: null
     },
     {
         name: 'stoplight',
-        class: 'box mod-3b',
         number: 33,
-        position: null
+        m3b_position2: null
     },
     {
         name: 'threebar',
-        class: 'box mod-3b',
         number: 33,
-        position: null
+        m3b_position3: null
     }
   ]

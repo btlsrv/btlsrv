@@ -21,7 +21,8 @@ const Reg = props => {
         })
     }
 
-    const handleRegister = () => {
+    const handleRegister = e => {
+        e.preventDefault()
         console.log('the info we send to the backend', info)
         axios.post('/auth/register', info).then(res => {
             props.login(info)
@@ -37,18 +38,18 @@ const Reg = props => {
 
     return (
         <div className='reg'>
-            <div className='reg-card'>
+            <form className='reg-card'>
                 <input type='text' name='username' onChange={handleChange} placeholder='username'/>
                 <input type='text' name='email' onChange={handleChange} placeholder='email'/>
-                <input type='text' name='password' onChange={handleChange} placeholder='password'/>
+                <input type='password' name='password' onChange={handleChange} placeholder='password'/>
                 <select name='faction_id' value={info.faction_id} onChange={handleChange} placeholder='select a faction' required>
                     <option value='' selected hidden>select a faction</option>
                     <option value='1'>cyber monkeys</option>
                     <option value='2'>alpaca hackas</option>
                     <option value='3'>skylight ducks</option>
                 </select>
-                <button onClick={handleRegister}>register</button>
-            </div>
+                <button onClick={handleRegister} type='submit'>register</button>
+            </form>
         </div>
     )
 }
