@@ -19,7 +19,8 @@ const Login = (props) => {
         })
     }
 
-    const handleLogin = () => {
+    const handleLogin = e => {
+        e.preventDefault()
         props.login(info)
     }
     
@@ -29,11 +30,11 @@ const Login = (props) => {
 
     return (
         <div className='login'>
-            <div className='login-card'>
+            <form className='login-card'>
                 <input type='text' name='username' onChange={handleChange} placeholder='username'/>
                 <input type='password' name='password' onChange={handleChange} placeholder='password'/>
-                <button onClick={handleLogin}>Login</button>
-            </div>
+                <button onClick={handleLogin} type='submit'>Login</button>
+            </form>
         </div>
     )
 }
