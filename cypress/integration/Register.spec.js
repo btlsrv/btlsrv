@@ -23,6 +23,7 @@ describe('testing register process', () => {
         .should('have.value', 'password')
     })
 
+
     it('able to register a new user', () => {
         cy.visit('/')
         cy.get('.buttons')

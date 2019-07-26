@@ -1,18 +1,21 @@
 import { isTSAnyKeyword, exportAllDeclaration } from "@babel/types";
 
 describe('my first test', () => {
-    isTSAnyKeyword('does not do much', () => {
+    it('does not do much', () => {
         expect(true).to.equal(true)
     })
 })
 
 describe('able to get to login page', () => {
-    it('visits local host 4000', () => {
-        cy.visit(`/`)
+    beforeEach(() => {
+        cy.visit('/')
+    })
+    
+    it('welcomes you when you come to website', () => {
+        cy.contains('h1', 'welcome')
     })
 
     it('should hit login button and go to login page', () => {
-        cy.visit(`/`)
         cy.get('.buttons')
         .first()
         .contains('login')
@@ -54,4 +57,21 @@ describe('Testing login functionality', () => {
         .click()
     })
 
+
+    it('goes to the correct page after login', () => {
+        cy.get('input[name=username]')
+            .type('marshall')
+            .should('have.value', 'marshall')
+
+        cy.get('input[name=password]')
+            .type('password')
+            .should('have.value', 'password')
+
+        cy.get('.login-card')
+        .first()
+        .contains('Login')
+        .click()
+
+        cy.hash().should('eq', '#/')
+    })
 })
