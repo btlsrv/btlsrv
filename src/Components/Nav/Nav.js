@@ -4,7 +4,7 @@ import logo from '../../Assets/btlsrvlogo.svg'
 import './Nav.scss'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { getUser } from '../../ducks/reducers/user'
+import { getUser, logout } from '../../ducks/reducers/user'
 
 
 const Nav = props => {
@@ -14,9 +14,7 @@ const Nav = props => {
     }, [getUser])
 
     const logout = () => {
-        axios.get('/auth/logout').then(res => {
-            console.log('user logged out')
-        })
+        props.logout()
     }
 
     return (
@@ -55,4 +53,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {getUser})(Nav)
+export default connect(mapStateToProps, {getUser, logout})(Nav)
