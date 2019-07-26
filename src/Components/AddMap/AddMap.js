@@ -510,7 +510,6 @@ export default class MyTest extends Component {
     }
 
     render() {
-        console.log('HELLLLLLOOOOOOOO', this.state.board)
         return (
             <div className='main'>
 
