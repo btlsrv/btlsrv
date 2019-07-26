@@ -25,13 +25,13 @@ class Gameboard extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.getUser()
         let id = this.props.map
         const {board} = this.state
         console.log('PLAYER', this.props.player)
         if (this.props.player === 'player1') {
-            axios.get(`/api/maps/${id}`).then(res => {
+            await axios.get(`/api/maps/${id}`).then(res => {
                 const positions = res.data
                 const newBoard = board.map((space, i) => {
                     for (let key in positions) {
@@ -42,11 +42,12 @@ class Gameboard extends Component {
                     return space
                 })
                 this.setState({
-                    player1Map: newBoard
+                    player1Map: newBoard,
+                    // player2Map: newBoard // testing take out when finished
                 })
             })
         } else {
-            axios.get(`/api/maps/${id}`).then(res => {
+            await axios.get(`/api/maps/${id}`).then(res => {
                 const positions = res.data
                 const newBoard = board.map((space, i) => {
                     for (let key in positions) {
@@ -68,8 +69,14 @@ class Gameboard extends Component {
         }
 
         socket.on('gameJoined', data => {
+            console.log(data)
             let { player1, player2Map } = data
-            this.setState ({ player1Map: player1, player2Map }) 
+            if (this.props.player === 'player1') {
+                this.setState ({ player2Map})
+            } else {
+                this.setState ({ player1Map: player1 })
+            }
+            // this.setState ({ player1Map: player1, player2Map }) 
         })
 
         socket.on('turnsChanged', data => {
@@ -151,35 +158,44 @@ class Gameboard extends Component {
     }
 
     render() {
-        console.log('THE BOARD', this.state.board)
-        console.log(this.props)
+        // console.log('THE BOARD', this.state.board)
+        console.log(this.state)
 
         return (
+            // <div>Hello</div>
             <div className='gameboard'>
                 <h2>Gameboard</h2>
                 <div className='player-1'>
-                    {this.state.player1Map.map((space, i) => {
+                    { this.state.player1Map.length > 0 ?
+                        this.state.player1Map.map((space, i) => {
                         console.log('SPACES ON PLAYER 1 MAP', space)
                         return (
                             <div
                             key ={i}
                             onClick={() => this.handleClick(space)}>
-                                {space.comp}
+                                {/* {space.comp} */}
                             </div>
                         )
-                    })}
+                    })
+                    :
+                    null
+                    }
                 </div>
                 <div className='player-2'>
-                    {this.state.player2Map.map((space, i) => {
+                    {this.state.player2Map.length > 0 ?
+                        this.state.player2Map.map((space, i) => {
                         console.log('SPACES ON PLAYER 2 MAP', space)
                         return (
                             <div
                             key ={i}
                             onClick={() => this.handleClick(space)}>
-                                {space.comp}
+                                {/* {space.comp} */}
                             </div>
                         )
-                    })}
+                    })
+                    :
+                    null
+                    }
                 </div>
             </div>
         )
