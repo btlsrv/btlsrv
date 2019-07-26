@@ -3,34 +3,43 @@ import './Dashboard.scss'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
-import io from 'socket.io-client'
+import {setMap} from '../../ducks/reducers/game'
 import axios from 'axios'
+import Lobby from '../Lobby/Lobby'
 
-const socket = io()
 
 const Dashboard = props => {
     let {getUser} = props
+
+    const [lobby, setLobby] = useState(false)
     
     useEffect(()=> {
         getUser()
     }, [getUser])
 
-    const databaseCall = () => {
-        axios.get('/api/maps/3').then(res => {
-            console.log(res)
-        })
+    const setMap = () => {
+        props.setMap(3)
+        setLobby(true)
     }
+
 
     return (
         <div>
             {props.user 
             ?
             <div className='dash'>
-                <h1 className='welcome'>welcome, {props.user.username}</h1>
-                <Link to='/gameboard'><button className='button'>start game</button></Link>
-                <button onClick={databaseCall} className='button'>start game</button>
+                {lobby 
+                ? 
+                    <Lobby/>
+                :
+                    <button onClick={setMap}>set map</button>
+                }
+
+                <div>
                 <Link to='/addmap'><button className='button'>add map</button></Link>
-                <div className='game-list'></div>
+                <Link to='/viewmaps'><button>view maps</button></Link>
+                </div>
+                
             </div>
             :
             // <Redirect to='/'/>
@@ -46,4 +55,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {getUser})(Dashboard)
+export default connect(mapStateToProps, {getUser, setMap})(Dashboard)
