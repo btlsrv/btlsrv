@@ -103,9 +103,11 @@ class AddMap extends Component {
             name
         }
 
-        await this.setState({
-            board: blank
-        })
+         this.resetPiece(2)
+         this.resetPiece(3)
+         this.resetPiece(33)
+         this.resetPiece(4)
+         this.resetPiece(5)
 
         axios.post('/api/modules', body).then(res => {
             this.props.history.push('/dashboard')
@@ -566,8 +568,11 @@ class AddMap extends Component {
                 
                 <div className='main'>
                 <div className='top-left-box'>
-                    <input className='add-map-input' onChange={this.handleChange}></input>
-                    <button className='add-map-button' onClick={this.saveMap}>save</button>
+                    <p>name your new map</p>
+                    <div className='input-button-container'>
+                        <input className='add-map-input' onChange={this.handleChange}></input>
+                        <button className='add-map-button' onClick={this.saveMap}>save</button>
+                    </div>
                 </div>
 
 
