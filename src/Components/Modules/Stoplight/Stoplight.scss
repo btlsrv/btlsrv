@@ -1,0 +1,74 @@
+@import '../Styles/StylesColors.scss';
+
+@keyframes blink-redLight {
+  0% {
+      opacity: .5;
+  }
+  50% {
+      opacity: 1;
+      box-shadow: 0 0 30px $pink;
+  }
+  100% {
+      opacity: .5;
+  }
+}
+
+@keyframes blink-yellowLight {
+  0% {
+      opacity: .5;
+  }
+  50% {
+      opacity: 1;
+      box-shadow: 0 0 30px $yellow;
+  }
+  100% {
+      opacity: .5;
+  }
+}
+
+.box {
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+}
+
+.module {
+  height: 30px;
+  width: 30px;
+  background: $module-blue;
+  margin: 2px;
+}
+
+
+.stoplight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.red {
+  background: $pink;
+  animation: blink-redLight 2s ease-in .3s infinite;
+}
+
+.yellow {
+  background: $yellow;
+  animation: blink-yellowLight 1.5s ease-out infinite;
+}
+
+.circle {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+}
+
+
+.back-box {
+  height: 26px;
+  width: 20px;
+  background: $highlight-blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
