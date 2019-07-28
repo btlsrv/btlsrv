@@ -7,6 +7,7 @@ import {setMap} from '../../ducks/reducers/game'
 import {addMap} from '../../ducks/reducers/map'
 import axios from 'axios'
 import Lobby from '../Lobby/Lobby'
+import Chart from '../Chart/Chart'
 
 
 const Dashboard = props => {
@@ -47,21 +48,22 @@ const Dashboard = props => {
     }
 
     return (
-        <div>
+        <div className='dash'>
             {props.user 
             ?
-            <div className='dash'>
+            <div className='card-container'>
                 {lobby 
                 ? 
                     <Lobby/>
                 :
-                <div>
+                <div className='map-list box-and-shadow'>
                     {mapsList &&
                         mapsList.map((map, i) => {
                             return (
                                 <div
-                                key={i}>
-                                    <p>{map.name}</p>
+                                key={i}
+                                className='map'>
+                                    <p className='map-name'>{map.name}</p>
                                     <button onClick={() => setMap(map.map_id)}>set map</button>
                                     <button onClick={() => deleteMap(map.map_id)}>delete</button>
                                 </div>
@@ -71,9 +73,23 @@ const Dashboard = props => {
                 </div>
                 }
 
-                <div>
-                <button className='button' onClick={addMap}>add map</button>
-                <Link to='/viewmaps'><button>view maps</button></Link>
+                <div className='right-section'>
+                    <div className='right-section-top'>
+                        <div className='map-buttons box-and-shadow'>
+                            <button className='top-button button-text' onClick={addMap}>add map</button>
+                            <button className='top-button'><Link to='/viewmaps' className='button-text'>view maps</Link></button>
+                        </div>
+                        <div className='profile box-and-shadow'>
+                            <img src={props.user.profile_pic} alt='user profile image'/>
+                        </div>
+                    </div>
+                    <div className='right-section-middle box-and-shadow'>
+                        <Chart/>
+                    </div>
+                    <div className='right-section-bottom box-and-shadow'>
+                        <p>leaderboard</p>
+                        <div className='overall-leaderboard'></div>
+                    </div>
                 </div>
                 
             </div>

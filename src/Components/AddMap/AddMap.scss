@@ -13,6 +13,36 @@
     width: 550px;
     height: 100px;
     background: $white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: 10px 10px 0 $shadow-grey;
+    
+    button {
+        background: $pink;
+        border: none;
+        color: $white;
+        height: 40px;
+        width: 95px;
+        font-size: 24px;
+    }
+    
+    input {
+        border: none;
+        border-bottom: 3px solid $favorite-green;
+        width: 50%;
+        height: 40px;
+        font-size: 24px;
+    }
+}
+
+.input-button-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .add-map-input {

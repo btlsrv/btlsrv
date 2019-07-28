@@ -1,18 +1,104 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './FactionPage.scss'
+import { connect } from 'react-redux'
+import { getUser } from '../../ducks/reducers/user'
+import axios from 'axios'
+import monkey from '../../Assets/cybermonkeys.svg'
+import alpaca from '../../Assets/alpacahackas.svg'
+import duck from '../../Assets/skylightducks.svg'
 
-const FactionPage = () => {
+const FactionPage = props => {
+    const [faction, setFaction] = useState('')
+    const [picture, setPicture] = useState('')
+    const [messages, setMessages] = useState([])
+    const [message, setMessage] = useState('')
+
+    useEffect(()=> {
+        getUser()
+        let {user} = props
+        if (user.faction_id === 1) {
+            setFaction('cyber monkeys')
+            setPicture(monkey)
+        } else if (user.faction_id === 2) {
+            setFaction('alpaca hackas')
+            setPicture(alpaca)
+
+        } else {
+            setFaction('skylight ducks')
+            setPicture(duck)
+        }
+        axios.get('api/messages').then(res => {
+            let messagesArray = res.data
+            let updatedMessages = messagesArray.map(message => {
+                if (message.username === props.user.username) {
+                    let newMessage = {...message, class: 'message my-message'}
+                    return newMessage
+                } else {
+                    let newMessage = {...message, class: 'message faction-message'}
+                    return newMessage
+                }
+            })
+            setMessages(updatedMessages)
+        })
+    }, [getUser, setFaction])
+
+    const handleChange = e => {
+        const {value} = e.target
+        setMessage(value)
+    }
+
+    const sendMessage = () => {
+        let forum_id = props.user.faction_id
+        let body = {
+            message,
+            forum_id
+        }
+        axios.post('/api/messages', body).then(res => {
+            console.log('res', res)
+            axios.get('api/messages').then(res => {
+                let messagesArray = res.data
+                let updatedMessages = messagesArray.map(message => {
+                    if (message.username === props.user.username) {
+                        let newMessage = {...message, class: 'message my-message'}
+                        return newMessage
+                    } else {
+                        let newMessage = {...message, class: 'message faction-message'}
+                        return newMessage
+                    }
+                })
+                setMessages(updatedMessages)
+            })
+        })
+        setMessage('')
+    }
+
     return (
         <div className='faction'>
-            <h1>faction page</h1>
+            <div className='faction-header'>
+                <img src={picture} alt='faction picture id' style={{'width': 75, 'marginRight': 10}}/>
+                <h1>{faction}</h1>
+            </div>
 
-            <section className='main'>
-                <div className='leaderboard'>
+            <section className='faction-main'>
+                <div className='leaderboard box-shadow'>
 
                 </div>
 
-                <div className='forum'>
-
+                <div className='forum box-shadow'>
+                    {messages &&
+                        messages.map((message, i) => {
+                            return (
+                                <div key={i} className={message.class}>
+                                    <h6 className='username'>{message.username}:</h6>
+                                    <p>{message.message}</p>
+                                </div>
+                            )
+                        })
+                    }
+                    <div className='create-message'>
+                        <input type='text' onChange={handleChange} value={message}></input>
+                        <button onClick={sendMessage}>send</button>
+                    </div>
                 </div>
             </section>
             
@@ -20,4 +106,10 @@ const FactionPage = () => {
     )
 }
 
-export default FactionPage
+const mapStateToProps = state => {
+    return {
+        user: state.user.data
+    }
+}
+
+export default connect(mapStateToProps, {getUser})(FactionPage)
