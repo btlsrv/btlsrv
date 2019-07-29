@@ -1,11 +1,11 @@
 export default [
     {
-        name: 'threebar',
+        name: 'twominidots',
         number: 5,
         m5_position1: null
     },
     {
-        name: 'stoplight',
+        name: 'sidebar',
         number: 5,
         m5_position2: null
     },
@@ -15,12 +15,12 @@ export default [
         m5_position3: null
     },
     {
-        name: 'stoplight',
+        name: 'manydots',
         number: 5,
         m5_position4: null
     },
     {
-        name: 'threebar',
+        name: 'stoplight',
         number: 5,
         m5_position5: null
     }
