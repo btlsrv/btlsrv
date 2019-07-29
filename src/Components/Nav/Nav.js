@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Link, Redirect, withRouter} from 'react-router-dom'
 import logo from '../../Assets/btlsrvlogo.svg'
 import './Nav.scss'
 import axios from 'axios'
@@ -13,10 +13,11 @@ const Nav = props => {
         getUser()
     }, [getUser])
 
-    const logout = () => {
-        props.logout()
+    const logout = async() => {
+        await props.logout()
+        props.history.push('/')
     }
-
+    console.log(props)
     return (
         <>
         {props.user
@@ -31,7 +32,7 @@ const Nav = props => {
             <div className='link-container'>
                 <Link to='/'>home</Link>
                 <Link to='/dashboard'>dashboard</Link>
-                <Link to='/'><button onClick={logout}>logout</button></Link>
+                <button onClick={logout}>logout</button>
             </div>
         </div>
         :
@@ -53,4 +54,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {getUser, logout})(Nav)
+export default connect(mapStateToProps, {getUser, logout})(withRouter(Nav))

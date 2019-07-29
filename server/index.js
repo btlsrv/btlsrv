@@ -75,7 +75,13 @@ massive(CONNECTION_STRING).then(db => {
             io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
-        // Leave game or disconnect
+        // Leave game or win game
+
+        client.on('gameOver', data => {
+            console.log(data)
+            let { room, winner } = data
+            client.in(room).emit('gameOver', winner)
+        })
 
         client.on('leaveGame', room => {
             client.leave(room)
