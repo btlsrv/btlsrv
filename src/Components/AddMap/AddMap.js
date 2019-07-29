@@ -84,6 +84,42 @@ class AddMap extends Component {
         let p54 = await objArray.findIndex(obj => obj.m5_position4) 
         let p55 = await objArray.findIndex(obj => obj.m5_position5) 
 
+        if (p21 === -1) {
+            p21 = 0
+        } else if (p22 === -1) {
+            p22 = 0
+        }else if (p31 === -1) {
+            p31 = 0
+        } else if (p32 === -1) {
+            p32 = 0
+        } else if (p33 === -1) {
+            p33 = 0
+        } else if (p31b === -1) {
+            p31b = 0
+        } else if (p32b === -1) {
+            p32b = 0
+        } else if (p33b === -1) {
+            p33b = 0
+        } else if (p41 === -1) {
+            p41 = 0
+        } else if (p42 === -1) {
+            p42 = 0
+        } else if (p43 === -1) {
+            p43 = 0
+        } else if (p44 === -1) {
+            p44 = 0
+        } else if (p51 === -1) {
+            p51 = 0
+        } else if (p52 === -1) {
+            p52 = 0
+        } else if (p53 === -1) {
+            p53 = 0
+        } else if (p54 === -1) {
+            p54 = 0
+        } else if (p55 === -1) {
+            p55 = 0
+        }
+
         let body = {
             map_id,
             ...objArray[p21],
