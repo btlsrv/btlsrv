@@ -7,7 +7,7 @@ describe('/Home ', () => {
         cy.visit('/#')
     })
 
-    it('h1 saying which page you are on', () => {
+    it('h1 saying which page you are on', () => { // test done by Devan
         cy.contains('h1', 'faction page')
     })
 })
