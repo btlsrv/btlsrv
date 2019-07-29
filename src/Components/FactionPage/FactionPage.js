@@ -39,8 +39,9 @@ const FactionPage = props => {
                 }
             })
             setMessages(updatedMessages)
+            pageScroll()
         })
-    }, [getUser, setFaction])
+    }, [getUser, setFaction, messages])
 
     const handleChange = e => {
         const {value} = e.target
@@ -72,6 +73,10 @@ const FactionPage = props => {
         setMessage('')
     }
 
+    const pageScroll = () => {
+        document.getElementById('scroll').scrollBy(0, 100000000000000000)
+    }
+
     return (
         <div className='faction'>
             <div className='faction-header'>
@@ -84,7 +89,7 @@ const FactionPage = props => {
 
                 </div>
 
-                <div className='forum box-shadow'>
+                <div className='forum box-shadow' id="scroll">
                     {messages &&
                         messages.map((message, i) => {
                             return (
