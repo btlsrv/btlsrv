@@ -567,16 +567,15 @@ class AddMap extends Component {
             <div className='add-map'>
                 
                 <div className='main'>
+                
+                <div className='module-container'> 
                 <div className='top-left-box'>
                     <p>name your new map</p>
                     <div className='input-button-container'>
                         <input className='add-map-input' onChange={this.handleChange}></input>
                         <button className='add-map-button' onClick={this.saveMap}>save</button>
                     </div>
-                </div>
-
-
-                <div className='module-container'>    
+                </div>   
                 {this.state.modTwoDisplay &&
                 <div className='flex cut-2'  
                     onDragStart={e => this.onDragStart(e, 2)}

@@ -47,6 +47,7 @@ const Dashboard = props => {
         props.history.push('/addmap')
     }
 
+
     return (
         <div className='dash'>
             {props.user 
@@ -57,8 +58,8 @@ const Dashboard = props => {
                     <Lobby/>
                 :
                 <div className='map-list box-and-shadow'>
-                    {mapsList &&
-                        mapsList.map((map, i) => {
+                    {mapsList.length > 0 &&
+                        <div>{mapsList.map((map, i) => {
                             return (
                                 <div
                                 key={i}
@@ -68,16 +69,32 @@ const Dashboard = props => {
                                     <button onClick={() => deleteMap(map.map_id)}>delete</button>
                                 </div>
                             )
-                        })
+                        })}</div>
                     }
                 </div>
                 }
 
+                {mapsList.length < 1 ? 
+                    <div className='top-message'>
+                        <p>click the pink "add map" button to get started</p>
+                    </div>
+                    :
+                    <div className='top-message'>
+                        <p>set a map to start or join a game!</p>
+                    </div>
+                }
+
                 <div className='right-section'>
                     <div className='right-section-top'>
-                        <div className='map-buttons box-and-shadow'>
+                        <div className='map-button box-and-shadow'>
+                            {mapsList.length > 4 ?
+                            <div>
+                                <p>you've reached the 5 map limit</p>
+                            </div>
+                            :
                             <button className='top-button button-text' onClick={addMap}>add map</button>
-                            <button className='top-button'><Link to='/viewmaps' className='button-text'>view maps</Link></button>
+                            }
+                            
                         </div>
                         <div className='profile box-and-shadow'>
                             <img src={props.user.profile_pic} alt='user profile image'/>

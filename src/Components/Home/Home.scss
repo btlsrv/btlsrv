@@ -17,9 +17,10 @@
 .top-section {
     display: flex;
     align-items: center;
-    height: 60vh;
+    height: 65vh;
     width: 100vw;
     justify-content: space-evenly;
+    background: $black;
 }
 
 .top-text {
@@ -65,8 +66,8 @@
     background: $white;
     width: 100vw;
     color: $pink;
-    height: 200px;
-    clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 70%)
+    height: 150px;
+    clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 70%);
 }
 
 .about-section {
@@ -81,6 +82,7 @@
 
 .about-text {
     width: 65%;
+    text-align: center;
 }
 
 .developers {
@@ -90,7 +92,7 @@
     text-align: center;
 
     img {
-        width: 50px;
+        width: 100px;
         background: $pink;
     }
 }

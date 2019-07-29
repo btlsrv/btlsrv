@@ -49,8 +49,10 @@
     flex-direction: column;
     color: $black;
     margin-top: 5px;
+    margin-bottom: 5px;
     width: 60%;
     text-align: center;
+    background: $white;
 
     p {
         padding: 2px 6px;
@@ -87,7 +89,7 @@
     height: 35px;
     border-top: 3px solid $pink;
     border-bottom: 3px solid $white;
-    margin-top: 3px;
+    margin-top: 5px;
 
     input {
         height: 20px;
