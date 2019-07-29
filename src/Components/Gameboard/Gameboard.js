@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
-import board from './board'
+import {board1, board2} from './board'
 import axios from 'axios'
-// const socket = io()
 import './Gameboard.scss'
 import Blank from '../Modules/Blank/Blank'
 import Stoplight from '../Modules/Stoplight/Stoplight'
@@ -12,96 +11,215 @@ import socket from '../../sockets'
 
 
 
+
 class Gameboard extends Component {
     constructor() {
         super() 
 
         this.state = {
-            board,
-            player1Map: [],
-            player2Map: [],
-            currentTurn: 'player1',
-            spotSelected: ''
+            player1Map: board1,
+            player2Map: board2,
+            player2: false,
+            currentTurn: 'player1'
         }
     }
 
     async componentDidMount() {
         this.props.getUser()
-        let id = this.props.map
-        const {board} = this.state
-        console.log('PLAYER', this.props.player)
-        if (this.props.player === 'player1') {
-            await axios.get(`/api/maps/${id}`).then(res => {
-                const positions = res.data
-                const newBoard = board.map((space, i) => {
-                    for (let key in positions) {
-                        if (key.charAt(10) && positions[key] === i) {
-                            space.name = key
-                        }
-                    }
-                    return space
-                })
-                this.setState({
-                    player1Map: newBoard,
-                    // player2Map: newBoard // testing take out when finished
-                })
-            })
-        } else {
-            await axios.get(`/api/maps/${id}`).then(res => {
-                const positions = res.data
-                const newBoard = board.map((space, i) => {
-                    for (let key in positions) {
-                        if (key.charAt(10) && positions[key] === i) {
-                            space.name = key
-                        }
-                    }
-                    return space
-                })
-                this.setState({
-                    player2Map: newBoard
-                })
-            })
-        }
         if (this.props.player === 'player1') {
             this.initializePlayer1()
         } else if (this.props.player === 'player2') {
             this.initializePlayer2()
         }
 
-        socket.on('gameJoined', data => {
-            console.log(data)
-            let { player1, player2Map } = data
+        socket.on('gameJoined', async data => {
+            let { map1, map2 } = data
+            this.setState ({ player2: true })
             if (this.props.player === 'player1') {
-                this.setState ({ player2Map})
+                await axios.get(`/api/maps/${map2}`).then(res => {
+                    const positions = res.data
+                    const newBoard = board2.map((space, i) => {
+                        for (let key in positions) {
+                            if (key.charAt(10) && positions[key] === i) {
+                                space.name = key
+                            }
+                        }
+                        return space
+                    })
+                    this.setState({
+                        player2Map: newBoard
+                    })
+                })
+
             } else {
-                this.setState ({ player1Map: player1 })
+                await axios.get(`/api/maps/${map1}`).then(res => {
+                    const positions = res.data
+                    const newBoard = board1.map((space, i) => {
+                        for (let key in positions) {
+                            if (key.charAt(10) && positions[key] === i) {
+                                space.name = key
+                            }
+                        }
+                        return space
+                    })
+                    this.setState({
+                        player1Map: newBoard,
+                    })
+                })
             }
-            // this.setState ({ player1Map: player1, player2Map }) 
         })
 
-        socket.on('turnsChanged', data => {
-            console.log(data)
-            this.setState ({ currentTurn: data })
+        socket.on('turnsChanged', async data => {
+            let { currentTurn, spotSelected } = data
+            await this.setState ({ currentTurn })
+            if (this.props.player === this.state.currentTurn) {
+                this.handleClickOpposite(spotSelected)
+            }
         })
 
-        socket.on('playerLeft', () => alert('opponent left. game over.'))
+        socket.on('playerLeft', () => {
+            alert('opponent left. Game over')
+            // this.props.history.push('/dashboard')
+        })
     }
 
-    initializePlayer1 = () => {
+    initializePlayer1 = async() => {
+
         let { player1Map } = this.state
+        let id = this.props.map
+        await axios.get(`/api/maps/${id}`).then(res => {
+            const positions = res.data
+            let newBoard = player1Map.map((space, i) => {
+                for (let key in positions) {
+                    if (key.charAt(10) && positions[key] === i) {
+                        space.name = key
+                    }
+                }
+                return space
+            })
+            this.setState ({ player1Map: newBoard })
+        }) 
+        let { map:map1 } = this.props
         let { room } = this.props
-        socket.emit('startGame', { player1Map, room })
+        socket.emit('startGame', { map1, room })
     }
 
-    initializePlayer2 = () => {
-        let { player2Map } = this.state
-        let { room } = this.props
-        socket.emit('joinGame', {player2Map, room})
+    initializePlayer2 = async() => {
+        let id = this.props.map
+        await axios.get(`/api/maps/${id}`).then(res => {
+            const positions = res.data
+            let newBoard = board2.map((space, i) => {
+                for (let key in positions) {
+                    if (key.charAt(10) && positions[key] === i) {
+                        space.name = key
+                    }
+                }
+                return space
+            })
+            this.setState({ player2Map: newBoard})
+        })
+        let { map:map2, room } = this.props
+        socket.emit('joinGame', {map2, room})
     }
 
-    handleClick = async space => {
-        console.log('THE SPACE', space)
-        const {name} = space
+    handleClickOpposite = (spotSelected) => {
+        const { i } = spotSelected
+        if (this.props.player === this.state.currentTurn) {
+            if (this.props.player === 'player1') {
+                let map = this.state.player1Map
+                let space = this.state.player1Map[i]
+                let {name} = space
+
+                if (name === 'm2_position1') {
+                    map[i].comp = <Stoplight/>
+                } else if (name === 'm2_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm3_position1') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm3_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm3_position3') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm3b_position1') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm3b_position2') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm3b_position3') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm4_position1') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm4_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm4_position3') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm4_position4') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position1') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm5_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position3') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm5_position4') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position5') {
+                    map[i].comp = <Stoplight/>
+                }
+                this.setState ({ player1Map: map })
+
+            } else {
+
+                let map = this.state.player2Map
+                let space = this.state.player2Map[i]
+                let {name} = space
+
+                if (name === 'm2_position1') {
+                    map[i].comp = <Stoplight/>
+                } else if (name === 'm2_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm3_position1') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm3_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm3_position3') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm3b_position1') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm3b_position2') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm3b_position3') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm4_position1') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm4_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm4_position3') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm4_position4') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position1') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm5_position2') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position3') {
+                    map[i].comp = <Stoplight/>
+                }  else if (name === 'm5_position4') {
+                    map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position5') {
+                    map[i].comp = <Stoplight/>
+                }
+                this.setState ({ player2Map: map })
+                
+            }
+        }
+    }
+
+    handleClick = async (spotSelected) => {
+        console.log(spotSelected)
+        
+        const {name} = spotSelected.space
+        const { space } = spotSelected
+
         if (name === 'm2_position1') {
             space.comp = <Stoplight/>
         } else if (name === 'm2_position2') {
@@ -148,7 +266,7 @@ class Gameboard extends Component {
         }
         let { room } = this.props
         let { currentTurn } = this.state
-        socket.emit('changeTurns', {currentTurn, room})
+        socket.emit('changeTurns', {currentTurn, room, spotSelected})
     }
 
     leaveGame = () => {
@@ -158,22 +276,25 @@ class Gameboard extends Component {
     }
 
     render() {
-        // console.log('THE BOARD', this.state.board)
-        console.log(this.state)
+        console.log(this.props)
 
         return (
-            // <div>Hello</div>
             <div className='gameboard'>
                 <h2>Gameboard</h2>
+                {                                                   
+                    this.state.currentTurn === this.props.player ? 
+                        <h6>Your Turn</h6>                          
+                    :                                                   
+                        <h6>Opponent's turn</h6>                      
+                }
                 <div className='player-1'>
                     { this.state.player1Map.length > 0 ?
                         this.state.player1Map.map((space, i) => {
-                        console.log('SPACES ON PLAYER 1 MAP', space)
                         return (
                             <div
                             key ={i}
-                            onClick={() => this.handleClick(space)}>
-                                {/* {space.comp} */}
+                            onClick={() => this.handleClick({space, i})}>
+                                {space.comp}
                             </div>
                         )
                     })
@@ -182,20 +303,20 @@ class Gameboard extends Component {
                     }
                 </div>
                 <div className='player-2'>
-                    {this.state.player2Map.length > 0 ?
+                    {this.state.player2 ?
                         this.state.player2Map.map((space, i) => {
-                        console.log('SPACES ON PLAYER 2 MAP', space)
                         return (
                             <div
                             key ={i}
-                            onClick={() => this.handleClick(space)}>
-                                {/* {space.comp} */}
+                            onClick={() => this.handleClick({space, i})}>
+                                {space.comp}
                             </div>
                         )
                     })
                     :
-                    null
+                    <h1>Waiting for Opponent</h1>
                     }
+                    <h1 onClick={this.leaveGame}>Leave Game</h1>
                 </div>
             </div>
         )
