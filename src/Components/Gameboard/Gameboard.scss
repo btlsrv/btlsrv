@@ -2,7 +2,14 @@
 
 .gameboard {
     display: flex;
+    flex-direction: column;
     position: relative;
+    height: calc(100vh - 70px);
+    background: $black;
+
+    h6 {
+        color: $white;
+    }
 }
 
 .board {
@@ -12,18 +19,31 @@
     flex-wrap: wrap;
 }
 
-.player-1 {
-    height: 495px;
-    width: 495px;
+.gameboards-main-section {
+    width: 100vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    background: $white;
+    width: 30vw;
+    height: 70vh;
+}
+
+.player-board {
+    height: 220px;
+    width: 220px;
     display: flex;
     flex-wrap: wrap;
 }
 
-.player-2 {
+.opponent-board {
     height: 495px;
     width: 495px;
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
-    right: 300px;
 }

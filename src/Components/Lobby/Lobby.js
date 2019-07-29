@@ -86,19 +86,17 @@ class Lobby extends Component {
     render() {
         console.log(this.state)
         return (
-            <div>
+            <div className='lobby'>
                 <h2>Lobby</h2>
     
-                <div>
-                    <button className='button' onClick={this.nameGame}>start game</button>
+                <div className='lobby-list'>
                     {this.state.createRoomName ? 
-                    <div>
+                    <div className='game-name-inputs'>
                         <input placeholder="enter game name" onChange={this.handleChange}></input>
-                        <button onClick={this.startGame}>create game</button>
+                        <button className='button' onClick={this.startGame}>create game</button>
                     </div>
                     :
-                    null
-                    
+                    <button className='button' onClick={this.nameGame}>start game</button>                    
                 }
                 { this.state.rooms ?
                     this.state.rooms.map((room, i) => {
