@@ -5,6 +5,10 @@ import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
 import icon from '../../Assets/personicon.png'
 import FactionPage from '../FactionPage/FactionPage'
+import derek from '../../Assets/derek.png'
+import devin from '../../Assets/devin.png'
+import marshall from '../../Assets/marshall.png'
+import riley from '../../Assets/riley.png'
 
 const Home = props => {
     const {getUser} = props
@@ -32,31 +36,31 @@ const Home = props => {
                 </section>
 
                 <section className='about-header'>
-                    <h1>about</h1>
-                    <p>info about the game and stuff</p>
+                    <h1 style={{'background':'white'}}>about</h1>
+                    <p style={{'background':'white'}}>read about the game and its developers</p>
                 </section>
 
                 <section className='about-section'>
                     <div className='about-text'>
-                        <p>Words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words wordswords words words words words words words words words words words words</p>
+                        <p>We developed BTLSRV in our final weeks as students at DevMountain's web development bootcamp. The app was built with React, Sass, Node, Postgres, Massive, Express, Express-Sessions, and Socket.io. We had a great time learning and building it and hope that you enjoy playing.</p>
                     </div>
 
                     <div className='developers'>
                         <div>
-                            <img src={icon} alt='dev'/>
-                            <p>riley</p>
-                        </div>
-                        <div>
-                            <img src={icon} alt='dev'/>
+                            <img src={derek} alt='dev'/>
                             <p>derek</p>
                         </div>
                         <div>
-                            <img src={icon} alt='dev'/>
+                            <img src={devin} alt='dev'/>
+                            <p>devin</p>
+                        </div>
+                        <div>
+                            <img src={marshall} alt='dev'/>
                             <p>marshall</p>
                         </div>
                         <div>
-                            <img src={icon} alt='dev'/>
-                            <p>devin</p>
+                            <img src={riley} alt='dev'/>
+                            <p>riley</p>
                         </div>
                     </div>
                 </section>

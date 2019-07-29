@@ -26,9 +26,10 @@
 .map {
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 350px;
     height: 40px;
     border-bottom: 3px solid $favorite-green;
+    margin-top: 30px;
 
      button {
         margin-left: 5px;
@@ -48,6 +49,13 @@
     width: 75%;
 }
 
+.top-message {
+    position: absolute;
+    left: 18%;
+    top: 125px;
+    width: 250px;
+    text-align: center;
+}
 
 .box-and-shadow {
     background: $white;
@@ -69,7 +77,7 @@
     width: 100%;
 }
 
-.map-buttons {
+.map-button {
     width: 70%;
     height: 100px;
     display: flex;

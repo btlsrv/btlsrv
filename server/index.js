@@ -10,6 +10,7 @@ let mapCtrl = require('./controllers.js/mapCtrl')
 let modulesCtrl = require('./controllers.js/modulesCtrl')
 let messagesCtrl = require('./controllers.js/messageCtrl')
 let factionCtrl = require('./controllers.js/factionCtrl')
+let userCtrl = require('./controllers.js/userCtrl')
 
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
@@ -74,7 +75,13 @@ massive(CONNECTION_STRING).then(db => {
             io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
-        // Leave game or disconnect
+        // Leave game or win game
+
+        client.on('gameOver', data => {
+            console.log(data)
+            let { room, winner } = data
+            client.in(room).emit('gameOver', winner)
+        })
 
         client.on('leaveGame', room => {
             client.leave(room)
@@ -116,3 +123,7 @@ app.delete('/api/messages/:id', messagesCtrl.deleteMessage)
 
 //// Faction Endpoint ////
 app.get('/api/faction', factionCtrl.getFactionUsers)
+
+//// User Endpoint ////
+app.post('/api/victories', userCtrl.increaseVictories)
+app.post('/api/defeats', userCtrl.increaseDefeats)
