@@ -12,7 +12,8 @@ const FactionPage = props => {
     const [picture, setPicture] = useState('')
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
-
+    const {getUser} = props
+    
     useEffect(()=> {
         getUser()
         let {user} = props
@@ -39,8 +40,9 @@ const FactionPage = props => {
                 }
             })
             setMessages(updatedMessages)
+            pageScroll()
         })
-    }, [getUser, setFaction])
+    }, [getUser, faction, messages.length])
 
     const handleChange = e => {
         const {value} = e.target
@@ -72,6 +74,11 @@ const FactionPage = props => {
         setMessage('')
     }
 
+    const pageScroll = () => {
+        document.getElementById('scroll').scrollBy(0, 100000000000000000)
+        setTimeout('pageScroll', 0)
+    }
+
     return (
         <div className='faction'>
             <div className='faction-header'>
@@ -84,7 +91,7 @@ const FactionPage = props => {
 
                 </div>
 
-                <div className='forum box-shadow'>
+                <div className='forum box-shadow' id="scroll">
                     {messages &&
                         messages.map((message, i) => {
                             return (
