@@ -3,6 +3,8 @@
 .gameboard {
     display: flex;
     position: relative;
+    height: calc(100vh - 70px);
+    background: $black;
 }
 
 .board {
@@ -12,18 +14,23 @@
     flex-wrap: wrap;
 }
 
-.player-1 {
-    height: 495px;
-    width: 495px;
+.gameboards-main-section {
+    width: 100vw;
     display: flex;
-    flex-wrap: wrap;
 }
 
-.player-2 {
-    height: 495px;
-    width: 495px;
+.player-board {
+    height: 200px;
+    width: 200px;
     display: flex;
     flex-wrap: wrap;
     position: absolute;
     right: 300px;
+}
+
+.opponent-board {
+    height: 495px;
+    width: 495px;
+    display: flex;
+    flex-wrap: wrap;
 }

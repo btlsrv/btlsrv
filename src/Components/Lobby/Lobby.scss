@@ -1,5 +1,48 @@
 @import '../../Styles/styles.scss';
 
+.box-and-shadow {
+    background: $white;
+    box-shadow: 10px 10px 0 $shadow-grey;
+}
+
+.lobby {
+    height: 80vh;
+    width: 35vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: $white; 
+
+    h2 {
+        margin: 20px 0;
+    }
+}
+
+.lobby-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-name-inputs {
+    width: 35vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    input {
+        border: none;
+        border-bottom: 3px solid $favorite-green;
+        font-size: 18px;
+        width: 50%;
+    }
+}
+
 .button {
     background: $pink;
+    width: 150px;
+    height: 30px;
+    color: $white;
+    border: none;
+    font-size: 20px;
 }

@@ -7,10 +7,13 @@ import './Gameboard.scss'
 import Blank from '../Modules/Blank/Blank'
 import Stoplight from '../Modules/Stoplight/Stoplight'
 import Threebar from '../Modules/ThreeBar/ThreeBar'
+import Sidebar from '../Modules/Sidebar/Sidebar'
+import ManyDots from '../Modules/ManyDots/ManyDots'
+import TwoMiniDots from '../Modules/TwoMiniDots/TwoMiniDots'
+import Blankspot from './Blankspot'
+import Missedspot from './Missedspot'
+import Modulespot from './Modulespot'
 import socket from '../../sockets'
-
-
-
 
 class Gameboard extends Component {
     constructor() {
@@ -135,33 +138,33 @@ class Gameboard extends Component {
                 } else if (name === 'm2_position2') {
                     map[i].comp = <Threebar/>
                 }  else if (name === 'm3_position1') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <Sidebar/>
                 }  else if (name === 'm3_position2') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <TwoMiniDots/>
                 }  else if (name === 'm3_position3') {
-                    map[i].comp = <Stoplight/>
-                }  else if (name === 'm3b_position1') {
                     map[i].comp = <Threebar/>
+                }  else if (name === 'm3b_position1') {
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm3b_position2') {
                     map[i].comp = <Stoplight/>
                 }  else if (name === 'm3b_position3') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <Sidebar/>
                 }  else if (name === 'm4_position1') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm4_position2') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm4_position3') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm4_position4') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm5_position1') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <TwoMiniDots/>
                 }  else if (name === 'm5_position2') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <Sidebar/>
                 }  else if (name === 'm5_position3') {
-                    map[i].comp = <Stoplight/>
-                }  else if (name === 'm5_position4') {
                     map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position4') {
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm5_position5') {
                     map[i].comp = <Stoplight/>
                 }
@@ -178,33 +181,33 @@ class Gameboard extends Component {
                 } else if (name === 'm2_position2') {
                     map[i].comp = <Threebar/>
                 }  else if (name === 'm3_position1') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <Sidebar/>
                 }  else if (name === 'm3_position2') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <TwoMiniDots/>
                 }  else if (name === 'm3_position3') {
-                    map[i].comp = <Stoplight/>
-                }  else if (name === 'm3b_position1') {
                     map[i].comp = <Threebar/>
+                }  else if (name === 'm3b_position1') {
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm3b_position2') {
                     map[i].comp = <Stoplight/>
                 }  else if (name === 'm3b_position3') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <Sidebar/>
                 }  else if (name === 'm4_position1') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm4_position2') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm4_position3') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm4_position4') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm5_position1') {
-                    map[i].comp = <Stoplight/>
+                    map[i].comp = <TwoMiniDots/>
                 }  else if (name === 'm5_position2') {
-                    map[i].comp = <Threebar/>
+                    map[i].comp = <Sidebar/>
                 }  else if (name === 'm5_position3') {
-                    map[i].comp = <Stoplight/>
-                }  else if (name === 'm5_position4') {
                     map[i].comp = <Threebar/>
+                }  else if (name === 'm5_position4') {
+                    map[i].comp = <ManyDots/>
                 }  else if (name === 'm5_position5') {
                     map[i].comp = <Stoplight/>
                 }
@@ -225,33 +228,33 @@ class Gameboard extends Component {
         } else if (name === 'm2_position2') {
             space.comp = <Threebar/>
         }  else if (name === 'm3_position1') {
-            space.comp = <Stoplight/>
+            space.comp = <Sidebar/>
         }  else if (name === 'm3_position2') {
-            space.comp = <Threebar/>
+            space.comp = <TwoMiniDots/>
         }  else if (name === 'm3_position3') {
-            space.comp = <Stoplight/>
-        }  else if (name === 'm3b_position1') {
             space.comp = <Threebar/>
+        }  else if (name === 'm3b_position1') {
+            space.comp = <ManyDots/>
         }  else if (name === 'm3b_position2') {
             space.comp = <Stoplight/>
         }  else if (name === 'm3b_position3') {
-            space.comp = <Threebar/>
+            space.comp = <Sidebar/>
         }  else if (name === 'm4_position1') {
-            space.comp = <Stoplight/>
+            space.comp = <ManyDots/>
         }  else if (name === 'm4_position2') {
-            space.comp = <Threebar/>
+            space.comp = <ManyDots/>
         }  else if (name === 'm4_position3') {
-            space.comp = <Stoplight/>
+            space.comp = <ManyDots/>
         }  else if (name === 'm4_position4') {
-            space.comp = <Threebar/>
+            space.comp = <ManyDots/>
         }  else if (name === 'm5_position1') {
-            space.comp = <Stoplight/>
+            space.comp = <TwoMiniDots/>
         }  else if (name === 'm5_position2') {
-            space.comp = <Threebar/>
+            space.comp = <Sidebar/>
         }  else if (name === 'm5_position3') {
-            space.comp = <Stoplight/>
-        }  else if (name === 'm5_position4') {
             space.comp = <Threebar/>
+        }  else if (name === 'm5_position4') {
+            space.comp = <ManyDots/>
         }  else if (name === 'm5_position5') {
             space.comp = <Stoplight/>
         }
@@ -279,46 +282,57 @@ class Gameboard extends Component {
         console.log(this.props)
 
         return (
+            <>
+            {this.props.player === 'player1' ? 
             <div className='gameboard'>
-                <h2>Gameboard</h2>
-                {                                                   
-                    this.state.currentTurn === this.props.player ? 
-                        <h6>Your Turn</h6>                          
-                    :                                                   
-                        <h6>Opponent's turn</h6>                      
-                }
-                <div className='player-1'>
-                    { this.state.player1Map.length > 0 ?
-                        this.state.player1Map.map((space, i) => {
-                        return (
-                            <div
-                            key ={i}
-                            onClick={() => this.handleClick({space, i})}>
-                                {space.comp}
-                            </div>
-                        )
-                    })
-                    :
-                    null
-                    }
-                </div>
-                <div className='player-2'>
-                    {this.state.player2 ?
-                        this.state.player2Map.map((space, i) => {
-                        return (
-                            <div
-                            key ={i}
-                            onClick={() => this.handleClick({space, i})}>
-                                {space.comp}
-                            </div>
-                        )
-                    })
-                    :
-                    <h1>Waiting for Opponent</h1>
-                    }
-                    <h1 onClick={this.leaveGame}>Leave Game</h1>
-                </div>
+            {                                                   
+                this.state.currentTurn === this.props.player ? 
+                    <h6>Your Turn</h6>                          
+                :                                                   
+                    <h6>Opponent's Turn</h6>                      
+            }
+            <div className='gameboards-main-section'>
+            <div className='player-board'>
+                { this.state.player1Map.length > 0 &&
+                    this.state.player1Map.map((space, i) => {
+                        console.log('MY SPACES', {space})
+                        if (space.name === 'space') {
+                            return (
+                                <div key={i}>{Blankspot}</div>
+                            )
+                        } else if (space.name === 'clicked') {
+                            return (
+                                <div key={i}>{Missedspot}</div>
+                            )
+                        } else {
+                            return (
+                                <div key={i}>{Modulespot}</div>
+                            )
+                        }
+                })}
+                <h1 onClick={this.leaveGame}>Leave Game</h1>
             </div>
+            <div className='opponent-board'>
+                {this.state.player2 ?
+                    this.state.player2Map.map((space, i) => {
+                    return (
+                        <div
+                        key ={i}
+                        onClick={() => this.handleClick({space, i})}>
+                            {space.comp}
+                        </div>
+                    )
+                })
+                :
+                <h1>Waiting for Opponent</h1>
+                }
+            </div>
+            </div>
+            </div>
+            :
+            null
+            }
+        </>
         )
     }
 }

@@ -74,13 +74,15 @@ const Dashboard = props => {
                 </div>
                 }
 
-                {mapsList.length < 1 ? 
-                    <div className='top-message'>
-                        <p>click the pink "add map" button to get started</p>
-                    </div>
-                    :
+                {mapsList.length > 0 && !lobby &&
                     <div className='top-message'>
                         <p>set a map to start or join a game!</p>
+                    </div>
+                }
+
+                {mapsList.length < 1 && !lobby &&
+                    <div className='top-message'>
+                        <p>click the pink "add map" button to get started</p>
                     </div>
                 }
 
