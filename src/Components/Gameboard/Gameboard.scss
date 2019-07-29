@@ -2,9 +2,14 @@
 
 .gameboard {
     display: flex;
+    flex-direction: column;
     position: relative;
     height: calc(100vh - 70px);
     background: $black;
+
+    h6 {
+        color: $white;
+    }
 }
 
 .board {
@@ -17,16 +22,21 @@
 .gameboards-main-section {
     width: 100vw;
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .left-panel {
     display: flex;
     flex-direction: column;
+    background: $white;
+    width: 30vw;
+    height: 70vh;
 }
 
 .player-board {
-    height: 200px;
-    width: 200px;
+    height: 220px;
+    width: 220px;
     display: flex;
     flex-wrap: wrap;
 }

@@ -4,7 +4,7 @@ const Blankspot = () => <div style={style}/>
 
 export default Blankspot
 
-style = {
+let style = {
     'width': 20,
     'height': 20,
     'background': '#FD5FBF',

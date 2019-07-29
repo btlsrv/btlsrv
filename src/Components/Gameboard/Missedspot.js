@@ -4,7 +4,7 @@ const Missedspot = () => <div style={style}/>
 
 export default Missedspot
 
-style = {
+let style = {
     'width': 20,
     'height': 20,
     'background': '#93376F',

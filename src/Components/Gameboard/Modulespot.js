@@ -4,7 +4,7 @@ const Modulespot = () => <div style={style}/>
 
 export default Modulespot
 
-style = {
+let style = {
     'width': 20,
     'height': 20,
     'background': '#C4C4C4',
