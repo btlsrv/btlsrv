@@ -9,12 +9,13 @@ let authCtrl = require('./controllers.js/authCtrl')
 let mapCtrl = require('./controllers.js/mapCtrl')
 let modulesCtrl = require('./controllers.js/modulesCtrl')
 let messagesCtrl = require('./controllers.js/messageCtrl')
+let factionCtrl = require('./controllers.js/factionCtrl')
 
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
 app.use(express.json())
 
-let player1 = ''
+let player1Id = ''
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
@@ -35,10 +36,10 @@ massive(CONNECTION_STRING).then(db => {
         })
 
         client.on('startGame', data => {
-            let { player1Map } = data
+            let { map1 } = data
             console.log('started')
-            player1 = player1Map
-            console.log(player1)
+            player1Id = map1
+            console.log(player1Id)
         })
 
         // Joining rooms and games //
@@ -50,10 +51,10 @@ massive(CONNECTION_STRING).then(db => {
         })
 
         client.on('joinGame', async data => {
-            let { player2Map, room } = data
+            let { map2, room } = data
             console.log(data)
             console.log('game joined')
-            io.in(room).emit('gameJoined', { player1, player2Map })
+            io.in(room).emit('gameJoined', { map2, map1: player1Id })
             player1 = '',
             io.emit('roomsGot', io.sockets.adapter.rooms)
         })
@@ -61,8 +62,16 @@ massive(CONNECTION_STRING).then(db => {
         // Gameplay
 
         client.on('changeTurns', data => {
-            let { currentTurn, room } = data
-            io.in(room).emit('turnsChanged', currentTurn)
+            let { currentTurn, room, spotSelected } = data
+            console.log(data)
+            io.in(room).emit('turnsChanged', {currentTurn, spotSelected})
+        })
+
+
+        // get rooms for lobby
+        
+        client.on('getRooms', () => {
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
         // Leave game or disconnect
@@ -104,3 +113,6 @@ app.post('/api/modules', modulesCtrl.createModules)
 app.post('/api/messages', messagesCtrl.createMessage)
 app.get('/api/messages', messagesCtrl.getAllMessages)
 app.delete('/api/messages/:id', messagesCtrl.deleteMessage)
+
+//// Faction Endpoint ////
+app.get('/api/faction', factionCtrl.getFactionUsers)

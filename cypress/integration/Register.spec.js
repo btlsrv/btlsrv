@@ -23,6 +23,10 @@ describe('testing register process', () => {
         .should('have.value', 'password')
     })
 
+    it('able to select a faction to join', () => {
+        cy.get('select').select('cyber monkeys')
+    })
+
     it('able to register a new user', () => {
         cy.visit('/')
         cy.get('.buttons')
@@ -41,5 +45,7 @@ describe('testing register process', () => {
         cy.get('input[name=password]')
             .type('password')
             .should('have.value', 'password')
+
+        cy.get('select').select('cyber monkeys')
     })
 })
