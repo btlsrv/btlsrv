@@ -1,5 +1,4 @@
 const SET_GAME_ROOM = 'SET_GAME_ROOM'
-const SET_GAME_ROOM_FULFILLED = 'SET_GAME_ROOM_FULFILLED'
 const SET_MAP = 'SET_MAP'
 
 const initialState = {
