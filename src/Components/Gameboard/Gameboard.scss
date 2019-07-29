@@ -19,13 +19,16 @@
     display: flex;
 }
 
+.left-panel {
+    display: flex;
+    flex-direction: column;
+}
+
 .player-board {
     height: 200px;
     width: 200px;
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
-    right: 300px;
 }
 
 .opponent-board {
