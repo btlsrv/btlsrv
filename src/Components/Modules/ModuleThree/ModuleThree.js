@@ -1,16 +1,16 @@
 export default [
     {
-        name: 'stoplight',
+        name: 'sidebar',
         number: 3,
         m3a_position1: null
     },
     {
-        name: 'threebar',
+        name: 'twominidots',
         number: 3,
         m3a_position2: null
     },
     {
-        name: 'stoplight',
+        name: 'threebar',
         number: 3,
         m3a_position3: null
     }

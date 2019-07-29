@@ -1,6 +1,6 @@
 export default [
     {
-        name: 'threebar',
+        name: 'manydots',
         number: 33,
         m3b_position1: null
     },
@@ -10,7 +10,7 @@ export default [
         m3b_position2: null
     },
     {
-        name: 'threebar',
+        name: 'sidebar',
         number: 33,
         m3b_position3: null
     }
