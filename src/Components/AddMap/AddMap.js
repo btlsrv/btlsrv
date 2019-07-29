@@ -9,6 +9,9 @@ import  '../Modules/Styles/Styles.scss'
 import './AddMap.scss'
 import Stoplight from '../Modules/Stoplight/Stoplight'
 import ThreeBar from '../Modules/ThreeBar/ThreeBar'
+import Sidebar from '../Modules/Sidebar/Sidebar'
+import TwoMiniDots from '../Modules/TwoMiniDots/TwoMiniDots'
+import ManyDots from '../Modules/ManyDots/ManyDots'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import blank from './Blank'
@@ -615,14 +618,21 @@ class AddMap extends Component {
                     style={{'flexDirection':this.state.modThreeDirection}}
                     >
                         {this.state.moduleThree.map((piece, i) => {
-                            if (piece.name === 'stoplight'){
+                            if (piece.name === 'sidebar'){
                             return (
                                 <div
                                 key={i}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
-                                    <Stoplight/>
+                                    <Sidebar/>
                                 </div>
-                            )} else if (piece.name === 'threebar'){
+                            )} else if (piece.name === 'twominidots'){
+                                return (
+                                    <div 
+                                        key={i}
+                                        onMouseDown={() => this.setState({currentIndex: i})}>
+                                            <TwoMiniDots/>
+                                    </div>
+                                )} else if (piece.name === 'threebar'){
                                 return (
                                     <div 
                                         key={i}
@@ -644,22 +654,28 @@ class AddMap extends Component {
                     style={{'flexDirection':this.state.modThreeBDirection}}
                     >
                         {this.state.moduleThreeB.map((piece, i) => {
-                            if (piece.name === 'stoplight'){
+                            if (piece.name === 'manydots'){
                             return (
                                 <div
                                 key={i}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
-                                    <Stoplight/>
+                                    <ManyDots/>
                                 </div>
-                            )} else if (piece.name === 'threebar'){
+                            )} else if (piece.name === 'stoplight'){
                                 return (
                                     <div 
                                         key={i}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
-                                            <ThreeBar/>
+                                            <Stoplight/>
                                     </div>
-                                )
-                            } else {
+                                )} else if (piece.name === 'sidebar'){
+                                    return (
+                                        <div 
+                                            key={i}
+                                            onMouseDown={() => this.setState({currentIndex: i})}>
+                                                <Sidebar/>
+                                        </div>
+                                    )} else {
                                return (<></>) 
                             }
                         })} 
@@ -673,22 +689,35 @@ class AddMap extends Component {
                     style={{'flexDirection':this.state.modFourDirection}}
                     >
                         {this.state.moduleFour.map((piece, i) => {
-                            if (piece.name === 'stoplight'){
+                            if (piece.name === 'manydots'){
                             return (
                                 <div
                                 key={i}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
-                                    <Stoplight/>
+                                    <ManyDots/>
                                 </div>
-                            )} else if (piece.name === 'threebar'){
+                            )} else if (piece.name === 'manydots'){
                                 return (
                                     <div 
                                         key={i}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
-                                            <ThreeBar/>
+                                            <ManyDots/>
                                     </div>
-                                )
-                            } else {
+                                )} else if (piece.name === 'manydots'){
+                                    return (
+                                        <div 
+                                            key={i}
+                                            onMouseDown={() => this.setState({currentIndex: i})}>
+                                                <ManyDots/>
+                                        </div>
+                                    )} else if (piece.name === 'manydots'){
+                                        return (
+                                            <div 
+                                                key={i}
+                                                onMouseDown={() => this.setState({currentIndex: i})}>
+                                                    <ManyDots/>
+                                            </div>
+                                        )} else {
                                return (<></>) 
                             }
                         })}
@@ -702,22 +731,42 @@ class AddMap extends Component {
                     style={{'flexDirection':this.state.modFiveDirection}}
                     >
                         {this.state.moduleFive.map((piece, i) => {
-                            if (piece.name === 'stoplight'){
+                            if (piece.name === 'twominidots'){
                             return (
                                 <div
                                 key={i}
                                 onMouseDown={() => this.setState({currentIndex: i})}>
-                                    <Stoplight/>
+                                    <TwoMiniDots/>
                                 </div>
-                            )} else if (piece.name === 'threebar'){
+                            )} else if (piece.name === 'sidebar'){
                                 return (
                                     <div 
                                         key={i}
                                         onMouseDown={() => this.setState({currentIndex: i})}>
-                                            <ThreeBar/>
+                                            <Sidebar/>
                                     </div>
-                                )
-                            } else {
+                                )} else if (piece.name === 'threebar'){
+                                    return (
+                                        <div 
+                                            key={i}
+                                            onMouseDown={() => this.setState({currentIndex: i})}>
+                                                <ThreeBar/>
+                                        </div>
+                                    )} else if (piece.name === 'manydots'){
+                                        return (
+                                            <div 
+                                                key={i}
+                                                onMouseDown={() => this.setState({currentIndex: i})}>
+                                                    <ManyDots/>
+                                            </div>
+                                        )} else if (piece.name === 'stoplight'){
+                                            return (
+                                                <div 
+                                                    key={i}
+                                                    onMouseDown={() => this.setState({currentIndex: i})}>
+                                                        <Stoplight/>
+                                                </div>
+                                            )} else {
                                return (<></>) 
                             }
                         })} 
@@ -734,12 +783,33 @@ class AddMap extends Component {
                             onClick={() => this.resetPiece(space.number)}>
                                 <Stoplight/>
                             </div>
-                        )} if (space.name === 'threebar') {
+                        )} else if (space.name === 'threebar') {
                             return (
                                 <div 
                                 key={i} 
                                 onClick={() => this.resetPiece(space.number)}>
                                     <ThreeBar/>
+                            </div> 
+                        )} else if (space.name === 'twominidots') {
+                            return (
+                                <div 
+                                key={i} 
+                                onClick={() => this.resetPiece(space.number)}>
+                                    <TwoMiniDots/>
+                            </div> 
+                        )} else if (space.name === 'manydots') {
+                            return (
+                                <div 
+                                key={i} 
+                                onClick={() => this.resetPiece(space.number)}>
+                                    <ManyDots/>
+                            </div> 
+                        )} else if (space.name === 'sidebar') {
+                            return (
+                                <div 
+                                key={i} 
+                                onClick={() => this.resetPiece(space.number)}>
+                                    <Sidebar/>
                             </div> )
                         } else {
                             return (

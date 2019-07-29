@@ -1,0 +1,94 @@
+@import '../Styles/StylesColors.scss';
+
+@keyframes yellowLight {
+  0% {
+      opacity: .5;
+  }
+  50% {
+      opacity: 1;
+      box-shadow: 0 0 30px $yellow;
+  }
+  100% {
+      opacity: .5;
+  }
+}
+
+@keyframes greenLight {
+  0% {
+      opacity: .5;
+  }
+  50% {
+      opacity: 1;
+      box-shadow: 0 0 30px $pink;
+  }
+  100% {
+      opacity: .5;
+  }
+}
+
+
+
+.twominidots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background {
+  background: $highlight-blue;
+  display: flex;
+  flex-wrap: wrap;
+  width: 37px;
+  height: 37px;
+}
+
+.dotsHolder {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 37px;
+  width: 22px;
+}
+
+.grayLights {
+  height: 2px;
+  width: 2px;
+  border-radius: 50%;
+  background: $module-blue;
+  margin: 3px 4px;
+}
+
+.yellowLight {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $yellow;
+  margin: 3px 2px;
+  animation: yellowLight 1.5s ease-out infinite;
+}
+
+.greenLight {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $favorite-green;
+  margin: 3px 2px;
+  animation: greenLight 2s ease-in .3s infinite;
+}
+
+.threeBlueSquares {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 37px;
+  width: 15px;
+}
+
+.three {
+  width: 10px;
+  height: 10px;
+  // margin: 2px;
+  background: $module-blue;
+}
