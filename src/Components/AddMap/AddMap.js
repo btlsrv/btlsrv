@@ -160,10 +160,10 @@ class AddMap extends Component {
 
     setTwoColumn = (currentIndex, i) => {
         // Need to fix math so we can place the currentIndex 1 on the row 10-19
-        i = - currentIndex * 10 + i           
+        i = - currentIndex * 10 + i         
         if (currentIndex === 0 && i >= 90) {
             return this.resetPiece(2)
-        } else if (currentIndex === 1 && i <= 9) {
+        } else if (currentIndex === 1 && i <= -1) {
             return this.resetPiece(2)
         } else if (board[i].class !== 'box blank' || board[i + 10].class !== 'box blank') {
             return this.resetPiece(2)
@@ -210,11 +210,11 @@ class AddMap extends Component {
         i = - currentIndex * 10 + i           
         if (currentIndex === 0 && i >= 80) {
             return this.resetPiece(3)
-        } else if ( currentIndex === 1 && i <= 9) {
+        } else if ( currentIndex === 1 && i <= -1) {
             return this.resetPiece(3)
-        } else if ( currentIndex === 1 && i >= 90) {
+        } else if ( currentIndex === 1 && i >= 80) {
             return this.resetPiece(3)
-        } else if ( currentIndex === 2 && i <= 19) {
+        } else if ( currentIndex === 2 && i <= -1) {
             return this.resetPiece(3)
         }  else if (board[i].class !== 'box blank' || 
                     board[i + 10].class !== 'box blank' || 
@@ -265,11 +265,11 @@ class AddMap extends Component {
         i = - currentIndex * 10 + i           
         if (currentIndex === 0 && i >= 80) {
             return this.resetPiece(33)
-        } else if ( currentIndex === 1 && i <= 9) {
+        } else if ( currentIndex === 1 && i <= -1) {
             return this.resetPiece(33)
-        } else if ( currentIndex === 1 && i >= 90) {
+        } else if ( currentIndex === 1 && i >= 80) {
             return this.resetPiece(33)
-        } else if ( currentIndex === 2 && i <= 19) {
+        } else if ( currentIndex === 2 && i <= -1) {
             return this.resetPiece(33)
         }  else if (board[i].class !== 'box blank' || 
                     board[i + 10].class !== 'box blank' || 
@@ -326,15 +326,15 @@ class AddMap extends Component {
         i = - currentIndex * 10 + i           
         if (currentIndex === 0 && i >= 70) {
             return this.resetPiece(4)
-        } else if ( currentIndex === 1 && i <= 9) {
+        } else if ( currentIndex === 1 && i <= -1) {
             return this.resetPiece(4)
-        } else if ( currentIndex === 1 && i >= 80) {
+        } else if ( currentIndex === 1 && i >= 70) {
             return this.resetPiece(4)
-        } else if ( currentIndex === 2 && i <= 19) {
+        } else if ( currentIndex === 2 && i <= -1) {
             return this.resetPiece(4)
-        } else if ( currentIndex === 2 && i >= 90) {
+        } else if ( currentIndex === 2 && i >= 70) {
             return this.resetPiece(4)
-        } else if ( currentIndex === 3 && i <= 29) {
+        } else if ( currentIndex === 3 && i <= -1) {
             return this.resetPiece(4)
         } else if (board[i].class !== 'box blank' || 
                     board[i + 10].class !== 'box blank' || 
@@ -400,19 +400,19 @@ class AddMap extends Component {
         i = - currentIndex * 10 + i           
         if (currentIndex === 0 && i >= 60) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 1 && i <= 9) {
+        } else if ( currentIndex === 1 && i <= -1) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 1 && i >= 70) {
+        } else if ( currentIndex === 1 && i >= 60) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 2 && i <= 19) {
+        } else if ( currentIndex === 2 && i <= -1) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 2 && i >= 80) {
+        } else if ( currentIndex === 2 && i >= 60) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 3 && i <= 29) {
+        } else if ( currentIndex === 3 && i <= -1) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 3 && i >= 90) {
+        } else if ( currentIndex === 3 && i >= 60) {
             return this.resetPiece(5)
-        } else if ( currentIndex === 4 && i <= 39) {
+        } else if ( currentIndex === 4 && i <= -1) {
             return this.resetPiece(5)
         } else if (board[i].class !== 'box blank' || 
                     board[i + 10].class !== 'box blank' || 
