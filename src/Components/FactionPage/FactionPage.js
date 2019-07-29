@@ -12,7 +12,8 @@ const FactionPage = props => {
     const [picture, setPicture] = useState('')
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
-
+    const {getUser} = props
+    
     useEffect(()=> {
         getUser()
         let {user} = props
@@ -41,7 +42,7 @@ const FactionPage = props => {
             setMessages(updatedMessages)
             pageScroll()
         })
-    }, [getUser, setFaction, messages])
+    }, [getUser, faction, messages.length])
 
     const handleChange = e => {
         const {value} = e.target
@@ -75,6 +76,7 @@ const FactionPage = props => {
 
     const pageScroll = () => {
         document.getElementById('scroll').scrollBy(0, 100000000000000000)
+        setTimeout('pageScroll', 0)
     }
 
     return (
