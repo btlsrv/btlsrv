@@ -1,0 +1,117 @@
+@import '../Styles/StylesColors.scss';
+
+@keyframes firstBlink {
+  0% {
+    opacity: .5;
+    background: $yellow;
+  }
+  20% {
+    opacity: 1;
+    background: $highlight-blue;
+  }
+  40% {
+    opacity: 1;
+    background: $pink;
+  }
+  60% {
+    opacity: 1;
+    background: $highlight-blue
+  }
+  80% {
+    opacity: 1;
+    background: $favorite-green;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@keyframes secondBlink {
+  0% {
+    opacity: .5;
+    background:$highlight-blue;
+  }
+  20% {
+    opacity: 1;
+    background: $favorite-green;
+  }
+  40% {
+    opacity: 1;
+    background: $highlight-blue;
+  }
+  60% {
+    opacity: 1;
+    background:$highlight-blue;
+  }
+  80% {
+    opacity: 1;
+    background: $pink;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@keyframes thirdBlink {
+  0% {
+    opacity: .5;
+    background: $pink;
+  }
+  20% {
+    background:$highlight-blue;
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+    background: $yellow;
+  }
+  60% {
+    opacity: 1;
+    background: $favorite-green;
+  }
+  80% {
+    opacity: 1;
+    background:$highlight-blue;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+
+.manydots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .manyHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 40px;
+  height: 40px;
+}
+
+.colorLights {
+  height: 2px;
+  width: 2px;
+  border-radius: 50%;
+  background: $highlight-blue;
+  margin: 2px;
+  animation: firstBlink 5s infinite
+}
+.secondLights {
+  height: 2px;
+  width: 2px;
+  border-radius: 50%;
+  background: $highlight-blue;
+  margin: 2px;
+  animation: secondBlink 5s infinite
+}
+.thirdLights {
+  height: 2px;
+  width: 2px;
+  border-radius: 50%;
+  background: $highlight-blue;
+  margin: 2px;
+  animation: thirdBlink 5s infinite
+}
