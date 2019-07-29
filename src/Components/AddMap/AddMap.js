@@ -783,12 +783,33 @@ class AddMap extends Component {
                             onClick={() => this.resetPiece(space.number)}>
                                 <Stoplight/>
                             </div>
-                        )} if (space.name === 'threebar') {
+                        )} else if (space.name === 'threebar') {
                             return (
                                 <div 
                                 key={i} 
                                 onClick={() => this.resetPiece(space.number)}>
                                     <ThreeBar/>
+                            </div> 
+                        )} else if (space.name === 'twominidots') {
+                            return (
+                                <div 
+                                key={i} 
+                                onClick={() => this.resetPiece(space.number)}>
+                                    <TwoMiniDots/>
+                            </div> 
+                        )} else if (space.name === 'manydots') {
+                            return (
+                                <div 
+                                key={i} 
+                                onClick={() => this.resetPiece(space.number)}>
+                                    <ManyDots/>
+                            </div> 
+                        )} else if (space.name === 'sidebar') {
+                            return (
+                                <div 
+                                key={i} 
+                                onClick={() => this.resetPiece(space.number)}>
+                                    <Sidebar/>
                             </div> )
                         } else {
                             return (
