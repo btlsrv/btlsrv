@@ -29,7 +29,8 @@ class Gameboard extends Component {
             player2Hits: 0,
             player2: false,
             currentTurn: 'player1',
-            winner: ''
+            winner: '',
+            time: 0
         }
     }
 
@@ -180,12 +181,30 @@ class Gameboard extends Component {
                 }
             })
             this.setState({ player2Map: newBoard})
+            // setTimeout(this.forceChangeTurns, 120000)
         })
         let { map:map2, room } = this.props
         socket.emit('joinGame', {map2, room})
     }
 
+    forceChangeTurns = async () => {
+        if (this.state.currentTurn === 'player1') {
+            await this.setState({
+                currentTurn: 'player2'
+            })
+        } else {
+            await this.setState({
+                currentTurn: 'player1'
+            })
+        }
+        let { room } = this.props
+        let { currentTurn } = this.state
+        socket.emit('changeTurns', {currentTurn, room})
+    }
+
     handleClickOpposite = (spotSelected) => {
+        // setTimeout(this.forceChangeTurns, 120000)
+        if (spotSelected) {
         const { i } = spotSelected
         if (this.props.player === this.state.currentTurn) {
             if (this.props.player === 'player1') {
@@ -280,6 +299,7 @@ class Gameboard extends Component {
                 
             }
         }
+    }
     }
 
     handleClick = async (spotSelected) => {
@@ -555,8 +575,9 @@ class Gameboard extends Component {
                                 <div key={i} style={{'width': 20, 'height': 20, 'margin': 1}}>{space.comp}</div>
                             )
                     })}
-                    <h1 onClick={this.leaveGame}>Leave Game</h1>
                 </div>
+                <button onClick={this.leaveGame}>Leave Game</button>
+                <div className='timer'></div>
             </div>
             <div className='opponent-board'>
                 {this.state.player2 ?
@@ -592,8 +613,9 @@ class Gameboard extends Component {
                                 <div key={i} style={{'width': 20, 'height': 20, 'margin': 1}}>{space.comp}</div>
                             )
                     })}
-                    <h1 onClick={this.leaveGame}>Leave Game</h1>
                 </div>
+                <button onClick={this.leaveGame}>Leave Game</button>
+                <div className='timer'></div>
             </div>
             <div className='opponent-board'>
                 {this.state.player2 &&

@@ -23,7 +23,6 @@ const FactionPage = props => {
         } else if (user.faction_id === 2) {
             setFaction('alpaca hackas')
             setPicture(alpaca)
-
         } else {
             setFaction('skylight ducks')
             setPicture(duck)

@@ -8,6 +8,9 @@ import {addMap} from '../../ducks/reducers/map'
 import axios from 'axios'
 import Lobby from '../Lobby/Lobby'
 import Chart from '../Chart/Chart'
+import monkey from '../../Assets/cybermonkeys.svg'
+import alpaca from '../../Assets/alpacahackas.svg'
+import duck from '../../Assets/skylightducks.svg'
 
 
 const Dashboard = props => {
@@ -15,17 +18,32 @@ const Dashboard = props => {
 
     const [lobby, setLobby] = useState(false)
     const [mapsList, setMapsList] = useState([])
+    const [topTen, setTopTen] = useState([])
+    const [picture, setPicture] = useState({})
     
     useEffect(()=> {
         getUser()
-        axios.get('api/maps').then(res => {
+        axios.get('/api/maps').then(res => {
             setMapsList(res.data)
+        })
+        axios.get('/api/users').then(res => {
+            setTopTen(res.data)
         })
     }, [getUser, setMapsList])
 
     const setMap = id => {
         props.setMap(id)
         setLobby(true)
+    }
+
+    const userPicture = id => {
+        if (id === 1) {
+            return monkey
+        } else if (id === 2) {
+            return alpaca
+        } else {
+            return duck
+        }
     }
 
     const deleteMap = id => {
@@ -106,8 +124,26 @@ const Dashboard = props => {
                         <Chart/>
                     </div>
                     <div className='right-section-bottom box-and-shadow'>
-                        <p>leaderboard</p>
-                        <div className='overall-leaderboard'></div>
+                        <p>top ten players</p>
+                        <div className='leaderboard'>
+                        {topTen && 
+                            topTen.map((user, i) => {
+                                console.log('THE USER', user)
+                                return (
+                                    <div key={i} className='leaderboard-space'>
+                                        <div className='leaderboard-user'>
+                                            <img src={userPicture(user.faction_id)} atl='faction picture'/>
+                                            <h4>{user.username}</h4>
+                                        </div>
+                                        <div className='victories-defeats'>
+                                            <h5>V:{user.victories}</h5>
+                                            <h5>D:{user.defeats}</h5>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        </div>
                     </div>
                 </div>
                 

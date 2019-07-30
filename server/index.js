@@ -127,3 +127,4 @@ app.get('/api/faction', factionCtrl.getFactionUsers)
 //// User Endpoint ////
 app.post('/api/victories', userCtrl.increaseVictories)
 app.post('/api/defeats', userCtrl.increaseDefeats)
+app.get('/api/users', userCtrl.getTopTenUsers)

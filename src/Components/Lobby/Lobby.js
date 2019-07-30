@@ -102,11 +102,11 @@ class Lobby extends Component {
                     this.state.rooms.map((room, i) => {
                         if (room.sockets >= 2) {
                             return (
-                                <button key={i} >Full: {room.name}</button>
+                                <button className='button-2' key={i} >Full: {room.name}</button>
                             )
                         } else {
                         return (
-                            <button key={i} onClick={() => this.joinGame(room.name)}>Join: {room.name}</button>
+                            <button className='button-2' key={i} onClick={() => this.joinGame(room.name)}>Join: {room.name}</button>
                         )
                     }})
                 :
