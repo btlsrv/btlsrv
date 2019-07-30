@@ -1,7 +1,4 @@
 const functions = require('../test-functions/functions')
-// const functions = require ('../test-functions/testing-functions')
-// import Profile from '../Components/Profile/Profile'
-// import axios from 'axios'
 
 test('2 plus 2 eq 4', () => {
     expect(functions.add(2, 2)).toBe(4)
