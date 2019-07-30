@@ -81,6 +81,7 @@ massive(CONNECTION_STRING).then(db => {
             console.log(data)
             let { room, winner } = data
             client.in(room).emit('gameOver', winner)
+            client.leave(room)
         })
 
         client.on('leaveGame', room => {
