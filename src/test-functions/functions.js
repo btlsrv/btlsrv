@@ -6,8 +6,10 @@ export function add(num1, num2) {
 
 //// Dashboard Component
 export async function getMaps() {
-    let maps = axios.get('/api/maps')
-    return maps
+    let maps = await axios.get('/api/maps')
+    this.setState({
+        maplist: maps.data
+    })
 }
 
 export function setMap(id){

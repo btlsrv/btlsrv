@@ -1,13 +1,15 @@
-import {add, getMaps, handleChange, handleLogin, setMap, addMap, deleteMap, saveMap, handleRotate, getUser, login, logout } from './functions'
-import Profile from '../src/Components/Profile/Profile'
+const functions = require('../test-functions/functions')
+// const functions = require ('../test-functions/testing-functions')
+// import Profile from '../Components/Profile/Profile'
+// import axios from 'axios'
 
 test('2 plus 2 eq 4', () => {
-    expect(add(2, 2)).toBe(4)
+    expect(functions.add(2, 2)).toBe(4)
 })
 
 describe('Dashboard Component tests', () => {
     it('getMaps should be a function', () => { // test done by Riley
-        expect(typeof getMaps).toBe('function')
+        expect(typeof functions.getMaps).toBe('function')
     })
 
     it('maps should be an array', () => { // test done by Riley
@@ -43,54 +45,54 @@ describe('Dashboard Component tests', () => {
     })
 
     it('setMap should be a function', () => { // test done by Marshall
-        expect(typeof setMap).toBe('function')
+        expect(typeof functions.setMap).toBe('function')
     })
 
     it('addMap should be a function', () => { // test done by Devan
-        expect(typeof addMap).toBe('function')
+        expect(typeof functions.addMap).toBe('function')
     })
 
     it('deleteMap should be a function', () => { // test done by Devan
-        expect(typeof deleteMap).toBe('function')
+        expect(typeof functions.deleteMap).toBe('function')
     })
 })
 
 describe('testing on login component', () => {
     it('that handleChange is a function', () => { // test done by Devan
-        expect(typeof handleChange).toBe('function')
+        expect(typeof functinos.handleChange).toBe('function')
     })
 
     it('that handleLogin is a function', () => { // test done by Devan
-        expect(typeof handleLogin).toBe('function')
+        expect(typeof functinos.handleLogin).toBe('function')
     })
 })
 
 describe('AddMap component test', () => {
     it('saveMap should be a function', () => { // test done by Devan
-        expect(typeof saveMap).toBe('function')
+        expect(typeof functinos.saveMap).toBe('function')
     })
 
     it('handleRotate should be a function', () => { // test done by Derek
-        expect(typeof handleRotate).toBe('function')
+        expect(typeof functinos.handleRotate).toBe('function')
     })
 })
 
 describe('User reducer testing', () => {
     it('getUser should be a function', () => { // test done by Derek
-        expect(typeof getUser).toBe('function')
+        expect(typeof functinos.getUser).toBe('function')
     })
 
     it('login should be a function', () => { // test done by Derek
-        expect(typeof login).toBe('function')
+        expect(typeof functinos.login).toBe('function')
     })
 
     it('logout should be a function', () => { // test done by Derek
-        expect(typeof logout).toBe('function')
+        expect(typeof functinos.logout).toBe('function')
     })
 })
 
 describe('Profile testing', () => {
     it('Profile should be a function', () => { // test done by Derek
-        expect(typeof Profile).toBe('function')
+        expect(typeof functinos.Profile).toBe('function')
     })
 })
