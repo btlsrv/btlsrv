@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
-import {board1, board2, board3} from './board'
+import board from './board'
 import axios from 'axios'
 import './Gameboard.scss'
 // import Blank from '../Modules/Blank/Blank'
@@ -24,13 +24,18 @@ import littlesidebar from '../../Assets/sidebar.svg'
 import littletwominidots from '../../Assets/twominidots.svg'
 import littlemanydots from '../../Assets/manydots.svg'
 
+let initialBoard1 = board.map(space => ({...space}))
+let initialBoard2 = board.map(space => ({...space}))
+
+
+
 class Gameboard extends Component {
     constructor() {
         super() 
 
         this.state = {
-            player1Map: [...board1],
-            player2Map: [...board2],
+            player1Map: initialBoard1,
+            player2Map: initialBoard2,
             player1Hits: 16,
             player2Hits: 16,
             player2: false,
@@ -50,9 +55,9 @@ class Gameboard extends Component {
         }
 
         socket.on('gameJoined', async data => {
-            let { map1, map2 } = data
+            let { map2 } = data
             this.setState ({ player2: true })
-            let { player1Map, player2Map } = this.state
+            let { player2Map } = this.state
             if (this.props.player === 'player1') {
                 await axios.get(`/api/maps/${map2}`).then(res => {
                     const positions = res.data
@@ -69,7 +74,15 @@ class Gameboard extends Component {
                         interval: setInterval(this.handleCountdown, 1000)
                     })
                 })
-            } else {
+                let { map:map1, room } = this.props
+                socket.emit('sendMapToPlayer2', {map1, room})
+            } 
+        })
+
+        socket.on('mapSentToPlayer2', async map1 => {
+            if (this.props.player === 'player2') {
+                let { player1Map } = this.state
+                console.log(map1)
                 await axios.get(`/api/maps/${map1}`).then(res => {
                     const positions = res.data
                     const newBoard = player1Map.map((space, i) => {
@@ -86,6 +99,7 @@ class Gameboard extends Component {
                 })
             }
         })
+   
 
         socket.on('turnsChanged', async data => {
             let { currentTurn, spotSelected } = data
@@ -104,8 +118,8 @@ class Gameboard extends Component {
             }
         })
 
-        socket.on('playerLeft', () => {
-            alert('Opponent left. Game over')
+        socket.on('playerLeft', async() => {
+            await alert('opponent left. Game over')
             this.props.history.push('/dashboard')
         })
     }
@@ -117,6 +131,11 @@ class Gameboard extends Component {
             socket.emit('gameOver', {winner, room})
         }
     }
+
+    // componentWillUnmount() {
+    //     let { room } = this.props
+    //     socket.emit('leaveGame')
+    // }
 
     initializePlayer1 = async() => {
 
@@ -147,9 +166,6 @@ class Gameboard extends Component {
             })
             this.setState ({ player1Map: newBoard })
         }) 
-        let { map:map1 } = this.props
-        let { room } = this.props
-        socket.emit('startGame', { map1, room })
     }
 
     initializePlayer2 = async() => {
@@ -230,7 +246,6 @@ class Gameboard extends Component {
                     map[i].comp = <Missedspot/>
                 }
                 this.setState ({ player1Map: map })
-
             } else {
 
                 let map = this.state.player2Map
@@ -265,225 +280,130 @@ class Gameboard extends Component {
             space.comp = <Stoplight/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         } else if (name === 'm2_position2') {
             space.comp = <Threebar/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1' })
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm3a_position1') {
             space.comp = <Sidebar/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm3a_position2') {
             space.comp = <TwoMiniDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm3a_position3') {
             space.comp = <Threebar/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm3b_position1') {
             space.comp = <ManyDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm3b_position2') {
             space.comp = <Stoplight/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm3b_position3') {
             space.comp = <Sidebar/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm4_position1') {
             space.comp = <ManyDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm4_position2') {
             space.comp = <ManyDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm4_position3') {
             space.comp = <ManyDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm4_position4') {
             space.comp = <ManyDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm5_position1') {
             space.comp = <TwoMiniDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm5_position2') {
             space.comp = <Sidebar/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm5_position3') {
             space.comp = <Threebar/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm5_position4') {
             space.comp = <ManyDots/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
         }  else if (name === 'm5_position5') {
             space.comp = <Stoplight/>
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
-                if (this.state.player2Hits === 17) {
-                    await this.setState ({ winner: 'player1'})
-                }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
-                if (this.state.player1Hits === 17) {
-                    await this.setState ({ winner: 'player2'})
-                }
             }
+
         } else {
             space.comp = <Missed/>
+        }
+                        
+        if (this.state.player1Hits === 17) {
+            await this.setState ({ winner: 'player2'})
+        } else if (this.state.player2Hits === 17) {
+            await this.setState ({ winner: 'player1'})
         }
 
         this.forceChangeTurns(spotSelected)
@@ -496,6 +416,8 @@ class Gameboard extends Component {
     }
 
     render() {
+        console.log(board, this.state)
+
         return (
             <>
             {this.props.player === 'player1' ? 
