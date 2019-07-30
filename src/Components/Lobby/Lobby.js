@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './Lobby.scss'
-import axios from 'axios'
-import {Link} from 'react-router-dom'
+// import axios from 'axios'
+// import {Link} from 'react-router-dom'
 import socket from '../../sockets'
 import {connect} from 'react-redux'
 import {setGameRoom} from '../../ducks/reducers/game'
@@ -54,26 +54,29 @@ class Lobby extends Component {
         }
     }
 
+    makeGameRoom = () => {
+        let {gameNameInput} = this.state
+        this.props.setGameRoom({room: gameNameInput, player: 'player1'})
+        this.props.history.push('/gameboard')
+        socket.emit('createRoom', {room: gameNameInput})
+    }
+
     startGame = async() => {
         let {gameNameInput} = this.state
         if (gameNameInput) {
             if (this.state.rooms) {
                 this.state.rooms.map(room => {
                     if (room.name === gameNameInput) {
-                       alert ('game name already exists. Please enter different name for your game.')
+                        return alert ('game name already exists. Please enter different name for your game.')
                     } else {
-                        this.props.setGameRoom({room: gameNameInput, player: 'player1'})
-                        this.props.history.push('/gameboard')
-                        socket.emit('createRoom', {room: gameNameInput})
+                        return this.makeGameRoom()
                     }
                 })
             } else {
-                this.props.setGameRoom({room: gameNameInput, player: 'player1'})
-                this.props.history.push('/gameboard')
-                socket.emit('createRoom', {room: gameNameInput})
+                return this.makeGameRoom()
             }
         } else {
-            alert('please enter game name')
+            return alert('please enter game name')
         }
     }
 

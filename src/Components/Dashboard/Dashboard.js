@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import './Dashboard.scss'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
 import {setMap} from '../../ducks/reducers/game'
@@ -19,7 +19,6 @@ const Dashboard = props => {
     const [lobby, setLobby] = useState(false)
     const [mapsList, setMapsList] = useState([])
     const [topTen, setTopTen] = useState([])
-    const [picture, setPicture] = useState({})
     
     useEffect(()=> {
         getUser()
@@ -76,6 +75,15 @@ const Dashboard = props => {
                     <Lobby/>
                 :
                 <div className='map-list box-and-shadow'>
+                     {mapsList.length < 1 && !lobby ?
+                    <div className='top-message'>
+                        <p>click the pink "add map" button to get started</p>
+                    </div>
+                    :
+                    <div className='top-message'>
+                        <p>set a map to start or join a game!</p>
+                    </div>
+                    }
                     {mapsList.length > 0 &&
                         <div>{mapsList.map((map, i) => {
                             return (
@@ -92,47 +100,39 @@ const Dashboard = props => {
                 </div>
                 }
 
-                {mapsList.length > 0 && !lobby &&
-                    <div className='top-message'>
-                        <p>set a map to start or join a game!</p>
-                    </div>
-                }
-
-                {mapsList.length < 1 && !lobby &&
-                    <div className='top-message'>
-                        <p>click the pink "add map" button to get started</p>
-                    </div>
-                }
-
                 <div className='right-section'>
-                    <div className='right-section-top'>
-                        <div className='map-button box-and-shadow'>
-                            {mapsList.length > 4 ?
-                            <div>
-                                <p>you've reached the 5 map limit</p>
-                            </div>
-                            :
-                            <button className='top-button button-text' onClick={addMap}>add map</button>
-                            }
-                            
-                        </div>
-                        <div className='profile box-and-shadow'>
-                            <img src={props.user.profile_pic} alt='user profile image'/>
-                        </div>
+                    <div className ='right-section-top box-and-shadow'>
+                            <h2>{props.user.username}'s dashboard</h2>
                     </div>
-                    <div className='right-section-middle box-and-shadow'>
-                        <Chart/>
+                    <div className='right-section-middle'>
+                        <div className='top-section-left'>
+                            <div className='dash-faction box-and-shadow'>
+                                <img src={userPicture(props.user.faction_id)} alt='user profile'/>
+                            </div>
+                            <div className='map-button box-and-shadow'>
+                                {mapsList.length > 4 ?
+                                <div>
+                                    <p>you've reached the 5 map limit</p>
+                                </div>
+                                :
+                                <button className='top-button button-text' onClick={addMap}>add map</button>
+                                }
+                                
+                            </div>
+                        </div>
+                        <div className='right-section-chart box-and-shadow'>
+                            <Chart/>
+                        </div>
                     </div>
                     <div className='right-section-bottom box-and-shadow'>
                         <p>top ten players</p>
                         <div className='leaderboard'>
                         {topTen && 
                             topTen.map((user, i) => {
-                                console.log('THE USER', user)
                                 return (
                                     <div key={i} className='leaderboard-space'>
                                         <div className='leaderboard-user'>
-                                            <img src={userPicture(user.faction_id)} atl='faction picture'/>
+                                            <img src={userPicture(user.faction_id)} alt='faction mascot'/>
                                             <h4>{user.username}</h4>
                                         </div>
                                         <div className='victories-defeats'>
