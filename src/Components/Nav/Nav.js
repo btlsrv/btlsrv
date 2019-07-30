@@ -17,7 +17,7 @@ const Nav = props => {
         await props.logout()
         props.history.push('/')
     }
-    console.log(props)
+    
     return (
         <>
         {props.user
