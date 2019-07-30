@@ -114,6 +114,7 @@ class Gameboard extends Component {
         let { player1Map } = this.state
         let id = this.props.map
         await axios.get(`/api/maps/${id}`).then(res => {
+            console.log('DATA COMING BACK', res.data)
             const positions = res.data
             let mapBoard = player1Map.map((space, i) => {
                 for (let key in positions) {

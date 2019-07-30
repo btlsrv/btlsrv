@@ -23,7 +23,6 @@ module.exports = {
                 m5_position5,
                 name
             } = req.body
-
             let modules = await db.modules.create_module({
                 map_id,
                 m2_position1,
