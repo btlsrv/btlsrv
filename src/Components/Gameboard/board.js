@@ -807,4 +807,407 @@ let board2 = [
     }
 ]
 
-export {board1, board2}
+let board3 = [
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    },
+    {
+        name: 'space',
+        comp: <Blank/>
+    }
+]
+
+export {board1, board2, board3}

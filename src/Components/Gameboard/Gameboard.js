@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {getUser} from '../../ducks/reducers/user'
-import {board1, board2} from './board'
+import {board1, board2, board3} from './board'
 import axios from 'axios'
 import './Gameboard.scss'
 import Blank from '../Modules/Blank/Blank'
@@ -16,6 +16,7 @@ import Missedspot from './Missedspot'
 import Modulespot from './Modulespot'
 import Hitspot from './Hitspot'
 import Blocker from './Blocker'
+import GameOver from './GameOver'
 import socket from '../../sockets'
 
 class Gameboard extends Component {
@@ -23,10 +24,10 @@ class Gameboard extends Component {
         super() 
 
         this.state = {
-            player1Map: board1,
-            player2Map: board2,
-            player1Hits: 0,
-            player2Hits: 0,
+            player1Map: [...board1],
+            player2Map: [...board2],
+            player1Hits: 16,
+            player2Hits: 16,
             player2: false,
             currentTurn: 'player1',
             winner: ''
@@ -44,10 +45,11 @@ class Gameboard extends Component {
         socket.on('gameJoined', async data => {
             let { map1, map2 } = data
             this.setState ({ player2: true })
+            let { player1Map, player2Map } = this.state
             if (this.props.player === 'player1') {
                 await axios.get(`/api/maps/${map2}`).then(res => {
                     const positions = res.data
-                    const newBoard = board2.map((space, i) => {
+                    const newBoard = player2Map.map((space, i) => {
                         for (let key in positions) {
                             if (key.charAt(10) && positions[key] === i) {
                                 space.name = key
@@ -59,11 +61,10 @@ class Gameboard extends Component {
                         player2Map: newBoard
                     })
                 })
-
             } else {
                 await axios.get(`/api/maps/${map1}`).then(res => {
                     const positions = res.data
-                    const newBoard = board1.map((space, i) => {
+                    const newBoard = player1Map.map((space, i) => {
                         for (let key in positions) {
                             if (key.charAt(10) && positions[key] === i) {
                                 space.name = key
@@ -89,15 +90,14 @@ class Gameboard extends Component {
         socket.on('gameOver', async winner => {
             await this.setState ({ winner })
             if (this.props.player === this.state.winner) {
-                alert('You won!')
+                axios.post('/api/victories')
             } else {
-                alert('You lost.')
+                axios.post('/api/defeats')
             }
         })
 
         socket.on('playerLeft', () => {
             alert('opponent left. Game over')
-            // this.props.history.push('/dashboard')
         })
     }
 
@@ -150,9 +150,10 @@ class Gameboard extends Component {
 
     initializePlayer2 = async() => {
         let id = this.props.map
+        let { player2Map } = this.state
         await axios.get(`/api/maps/${id}`).then(res => {
             const positions = res.data
-            let mapBoard = board2.map((space, i) => {
+            let mapBoard = player2Map.map((space, i) => {
                 for (let key in positions) {
                     if (key.charAt(10) && positions[key] === i) {
                         space.name = key
@@ -293,12 +294,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         } else if (name === 'm2_position2') {
@@ -306,12 +307,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1' })
+                    await this.setState ({ winner: 'player1' })
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm3a_position1') {
@@ -319,12 +320,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm3a_position2') {
@@ -332,12 +333,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm3a_position3') {
@@ -345,12 +346,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm3b_position1') {
@@ -358,12 +359,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm3b_position2') {
@@ -371,12 +372,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm3b_position3') {
@@ -384,12 +385,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm4_position1') {
@@ -397,12 +398,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm4_position2') {
@@ -410,12 +411,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm4_position3') {
@@ -423,12 +424,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm4_position4') {
@@ -436,12 +437,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm5_position1') {
@@ -449,12 +450,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm5_position2') {
@@ -462,12 +463,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm5_position3') {
@@ -475,12 +476,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm5_position4') {
@@ -488,12 +489,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         }  else if (name === 'm5_position5') {
@@ -501,12 +502,12 @@ class Gameboard extends Component {
             if (this.state.currentTurn === 'player1') {
                 await this.setState ({ player2Hits: this.state.player2Hits + 1 })
                 if (this.state.player2Hits === 17) {
-                    this.setState ({ winner: 'player1'})
+                    await this.setState ({ winner: 'player1'})
                 }
             } else {
                 await this.setState ({ player1Hits: this.state.player1Hits + 1 })
                 if (this.state.player1Hits === 17) {
-                    this.setState ({ winner: 'player2'})
+                    await this.setState ({ winner: 'player2'})
                 }
             }
         } else {
@@ -534,16 +535,20 @@ class Gameboard extends Component {
     }
 
     render() {
-        console.log('PLAYER ONE MAP',this.state.player1Map)
-        console.log('PLAYER TWO MAP', this.state.player2Map)
+        console.log(board1, board2, board3)
 
         return (
             <>
             {this.props.player === 'player1' ? 
             <div className='gameboard'>
-            {                                                   
-                this.state.currentTurn !== this.props.player &&                                                 
-                    <Blocker/>                      
+            {  
+                this.state.winner ?
+                    <GameOver winner={this.state.winner}/>
+                :
+                this.state.currentTurn !== this.props.player ?                                                 
+                    <Blocker/>                     
+                :
+                null 
             }
             <div className='gameboards-main-section'>
             <div className='left-panel'>
@@ -579,8 +584,13 @@ class Gameboard extends Component {
 
             <div className='gameboard'>
             {                                                   
-                this.state.currentTurn !== this.props.player &&                                                  
+                this.state.winner ?
+                    <GameOver winner={this.state.winner}/>
+                :
+                this.state.currentTurn !== this.props.player ?                                                 
                     <Blocker/>                     
+                :
+                null                   
             }
             <div className='gameboards-main-section'>
             <div className='left-panel'>
@@ -625,3 +635,4 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {getUser})(Gameboard)
+
