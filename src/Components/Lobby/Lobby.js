@@ -84,7 +84,7 @@ class Lobby extends Component {
     }
 
     render() {
-        console.log(this.state)
+        console.log(this.props)
         return (
             <div className='lobby'>
                 <h2>Lobby</h2>

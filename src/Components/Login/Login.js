@@ -22,6 +22,7 @@ const Login = (props) => {
     const handleLogin = e => {
         e.preventDefault()
         props.login(info)
+        .catch(() => alert('Email Or Password Incorrect. Please Try Again.'))
     }
     
     if(props.user) {
