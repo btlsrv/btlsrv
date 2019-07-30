@@ -23,6 +23,7 @@ const FactionPage = props => {
         } else if (user.faction_id === 2) {
             setFaction('alpaca hackas')
             setPicture(alpaca)
+
         } else {
             setFaction('skylight ducks')
             setPicture(duck)
@@ -81,7 +82,7 @@ const FactionPage = props => {
     return (
         <div className='faction'>
             <div className='faction-header'>
-                <img src={picture} alt='faction mascot' style={{'width': 75, 'marginRight': 10}}/>
+                <img src={picture} alt='faction picture id' style={{'width': 75, 'marginRight': 10}}/>
                 <h1>{faction}</h1>
             </div>
 

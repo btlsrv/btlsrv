@@ -182,7 +182,7 @@ class Gameboard extends Component {
         socket.emit('joinGame', {map2, room})
     }
 
-    forceChangeTurns = async () => {
+    forceChangeTurns = async (spotSelected) => {
         clearInterval(this.state.interval)
         if (this.state.currentTurn === 'player1') {
             await this.setState({
@@ -195,7 +195,7 @@ class Gameboard extends Component {
         }
         let { room } = this.props
         let { currentTurn } = this.state
-        socket.emit('changeTurns', {currentTurn, room})
+        socket.emit('changeTurns', {currentTurn, room, spotSelected})
     }
 
     handleCountdown = () => {
@@ -484,7 +484,7 @@ class Gameboard extends Component {
             space.comp = <Missed/>
         }
 
-        this.forceChangeTurns()
+        this.forceChangeTurns(spotSelected)
     }
 
     leaveGame = () => {
