@@ -22,5 +22,16 @@ module.exports = {
             console.log('there was an error', error)
             res.status(500).send(error)
         }
+    }, 
+
+    getTopTenUsers : async (req, res) => {
+        try {
+            const db = req.app.get('db')
+            let topTen = await db.user.get_top_ten_users()
+            res.status(200).send(topTen)
+        } catch (error) {
+            console.log('there was an error', error)
+            res.status(500).send(error)
+        }
     }
 }

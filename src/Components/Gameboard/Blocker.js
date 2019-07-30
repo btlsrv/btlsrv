@@ -9,7 +9,8 @@ let style = {
     'height': 'calc(100vh - 70px)',
     'background': 'rgba(255,255,255,.5)',
     'display': 'flex',
-    'justify-content': 'center',
-    'align-items': 'center',
-    'position': 'absolute'
+    'justifyContent': 'center',
+    'alignItems': 'center',
+    'position': 'absolute',
+    'padding': 10
 }

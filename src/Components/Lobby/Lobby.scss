@@ -24,6 +24,15 @@
     align-items: center;
 }
 
+.button-2 {
+    background: $favorite-green;
+    width: 70%;
+    height: 30px;
+    color: $white;
+    border: none;
+    margin: 10px;
+}
+
 .game-name-inputs {
     width: 35vw;
     display: flex;
