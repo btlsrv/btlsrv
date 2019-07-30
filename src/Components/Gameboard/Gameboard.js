@@ -112,7 +112,7 @@ class Gameboard extends Component {
 
         socket.on('playerLeft', async() => {
             await alert('opponent left. Game over')
-            this.props.history.push('/')
+            this.props.history.push('/dashboard')
         })
     }
 
