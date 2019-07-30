@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import {Link, Redirect, withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import logo from '../../Assets/btlsrvlogo.svg'
 import './Nav.scss'
-import axios from 'axios'
+// import axios from 'axios'
 import { connect } from 'react-redux'
 import { getUser, logout } from '../../ducks/reducers/user'
 

@@ -4,7 +4,7 @@ import {getUser} from '../../ducks/reducers/user'
 import board from './board'
 import axios from 'axios'
 import './Gameboard.scss'
-import Blank from '../Modules/Blank/Blank'
+// import Blank from '../Modules/Blank/Blank'
 import Missed from '../Modules/Missed/Missed'
 import Stoplight from '../Modules/Stoplight/Stoplight'
 import Threebar from '../Modules/ThreeBar/ThreeBar'
@@ -18,6 +18,11 @@ import Hitspot from './Hitspot'
 import Blocker from './Blocker'
 import GameOver from './GameOver'
 import socket from '../../sockets'
+import littlestoplight from '../../Assets/stoplight.svg'
+import littlethreebar from '../../Assets/threebar.svg'
+import littlesidebar from '../../Assets/sidebar.svg'
+import littletwominidots from '../../Assets/twominidots.svg'
+import littlemanydots from '../../Assets/manydots.svg'
 
 let initialBoard1 = board.map(space => ({...space}))
 let initialBoard2 = board.map(space => ({...space}))
@@ -35,7 +40,9 @@ class Gameboard extends Component {
             player2Hits: 16,
             player2: false,
             currentTurn: 'player1',
-            winner: ''
+            winner: '',
+            time: 30,
+            interval: null
         }
     }
 
@@ -63,7 +70,8 @@ class Gameboard extends Component {
                         return space
                     })
                     this.setState({
-                        player2Map: newBoard
+                        player2Map: newBoard,
+                        interval: setInterval(this.handleCountdown, 1000)
                     })
                 })
                 let { map:map1, room } = this.props
@@ -134,7 +142,6 @@ class Gameboard extends Component {
         let { player1Map } = this.state
         let id = this.props.map
         await axios.get(`/api/maps/${id}`).then(res => {
-            console.log('DATA COMING BACK', res.data)
             const positions = res.data
             let mapBoard = player1Map.map((space, i) => {
                 for (let key in positions) {
@@ -149,11 +156,6 @@ class Gameboard extends Component {
                     return {
                         ...space,
                         comp : <Blankspot/>
-                    }
-                } else if (space.name === 'clicked') {
-                    return {
-                        ...space,
-                        comp : <Missedspot/>
                     }
                 } else {
                     return {
@@ -185,11 +187,6 @@ class Gameboard extends Component {
                         ...space,
                         comp : <Blankspot/>
                     }
-                } else if (space.name === 'clicked') {
-                    return {
-                        ...space,
-                        comp : <Missedspot/>
-                    }
                 } else {
                     return {
                         ...space,
@@ -203,65 +200,77 @@ class Gameboard extends Component {
         socket.emit('joinGame', {map2, room})
     }
 
-    handleClickOpposite = spotSelected => {
-        const { i } = spotSelected
-        if (this.props.player === 'player1') {
-            var map = this.state.player1Map
-            var space = this.state.player1Map[i]
-            var { name } = space
+    forceChangeTurns = async (spotSelected) => {
+        clearInterval(this.state.interval)
+        if (this.state.currentTurn === 'player1') {
+            await this.setState({
+                currentTurn: 'player2'
+            })
         } else {
-            var map = this.state.player2Map
-            var space = this.state.player2Map[i]
-            var { name } = space
+            await this.setState({
+                currentTurn: 'player1'
+            })
         }
+        let { room } = this.props
+        let { currentTurn } = this.state
+        socket.emit('changeTurns', {currentTurn, room, spotSelected})
+    }
 
-        if (name === 'm2_position1') {
-            map[i].comp = <Hitspot/>
-        } else if (name === 'm2_position2') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm3a_position1') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm3a_position2') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm3a_position3') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm3b_position1') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm3b_position2') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm3b_position3') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm4_position1') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm4_position2') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm4_position3') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm4_position4') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm5_position1') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm5_position2') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm5_position3') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm5_position4') {
-            map[i].comp = <Hitspot/>
-        }  else if (name === 'm5_position5') {
-            map[i].comp = <Hitspot/>
-        } else {
-            map[i].comp = <Missedspot/>
-        }
-
-        if (this.props.player === 'player1') {
-            this.setState ({ player1Map: map })
-        } else {
-            this.setState ({ player2Map: map })
+    handleCountdown = () => {
+        let {time} = this.state
+        this.setState({
+            time: time - 1
+        })
+        if (!this.state.time) {
+            this.forceChangeTurns()
+            this.setState({
+                time: 30
+            })
         }
     }
 
+    handleClickOpposite = (spotSelected) => {
+        console.log('THE SELECTED SPOT', spotSelected)
+        if (spotSelected) {
+        const { i } = spotSelected
+        if (this.props.player === this.state.currentTurn) {
+            if (this.props.player === 'player1') {
+                let map = this.state.player1Map
+                let space = this.state.player1Map[i]
+                let {name} = space
+                console.log('THE NAME', name)
+
+                if (name.includes('position')) {
+                    map[i].comp = <Hitspot/>
+                } else {
+                    map[i].comp = <Missedspot/>
+                }
+                this.setState ({ player1Map: map })
+            } else {
+
+                let map = this.state.player2Map
+                let space = this.state.player2Map[i]
+                let {name} = space
+                console.log('THE NAME', name)
+
+
+
+                if (name.includes('position')) {
+                    map[i].comp = <Hitspot/>
+                } else {
+                    map[i].comp = <Missedspot/>
+                }
+                this.setState ({ player2Map: map })
+            }
+        }
+    }
+        this.setState({
+            interval: setInterval(this.handleCountdown, 1000),
+            time: 30
+        })
+    }
+
     handleClick = async (spotSelected) => {
-        console.log(spotSelected)
         
         const {name} = spotSelected.space
         const { space } = spotSelected
@@ -397,18 +406,7 @@ class Gameboard extends Component {
             await this.setState ({ winner: 'player1'})
         }
 
-        if (this.state.currentTurn === 'player1') {
-            await this.setState({
-                currentTurn: 'player2'
-            })
-        } else {
-            await this.setState({
-                currentTurn: 'player1'
-            })
-        }
-        let { room } = this.props
-        let { currentTurn } = this.state
-        socket.emit('changeTurns', {currentTurn, room, spotSelected})
+        this.forceChangeTurns(spotSelected)
     }
 
     leaveGame = () => {
@@ -435,6 +433,9 @@ class Gameboard extends Component {
             }
             <div className='gameboards-main-section'>
             <div className='left-panel'>
+                <div className='gameboard-username'>
+                    <p>{this.props.user.username}'s server</p>
+                </div>
                 <div className='player-board'>
                     { this.state.player1Map.length > 0 &&
                         this.state.player1Map.map((space, i) => {
@@ -442,9 +443,46 @@ class Gameboard extends Component {
                                 <div key={i} style={{'width': 20, 'height': 20, 'margin': 1}}>{space.comp}</div>
                             )
                     })}
-                    <h1 onClick={this.leaveGame}>Leave Game</h1>
                 </div>
+                <div className='left-middle-section'>
+                    <div className='legend-container'>
+                        <div className='legend-item'>
+                            <p>your hits</p>
+                            <div className='legend-modules'>
+                                <img className='legend-box' src={littlestoplight} alt='module'/>
+                                <img className='legend-box' src={littlesidebar} alt='module'/>
+                                <img className='legend-box' src={littlethreebar} alt='module'/>
+                                <img className='legend-box' src={littlemanydots} alt='module'/>
+                                <img className='legend-box' src={littletwominidots} alt='module'/>
+                            </div>
+                        </div>
+                        <div className='legend-item'>
+                            <p>your misses</p>
+                            <div className='legend-box legend-blue'/>
+                        </div>
+                        <div className='legend-item'>
+                            <p>your modules</p>
+                            <div className='legend-box legend-grey'/>
+                        </div>
+                        <div className='legend-item'>
+                            <p>opponent's hits</p>
+                            <div className='legend-box legend-black'/>
+                        </div>
+                        <div className='legend-item'>
+                            <p>opponent's misses</p>
+                            <div className='legend-box legend-maroon'/>
+                        </div>
+                    </div>
+                    <div className='timer'>
+                        <p>You have</p>
+                        <h1>{this.state.time}</h1>
+                        <p>seconds left!</p>
+                    </div>
+                </div>
+                <button onClick={this.leaveGame}>Leave Game</button>
             </div>
+            <div className='right-panel'>
+            <p>opponent's server</p>
             <div className='opponent-board'>
                 {this.state.player2 ?
                     this.state.player2Map.map((space, i) => {
@@ -459,6 +497,7 @@ class Gameboard extends Component {
                 :
                 <h1>Waiting for Opponent</h1>
                 }
+            </div>
             </div>
             </div>
             </div>
@@ -477,16 +516,56 @@ class Gameboard extends Component {
             }
             <div className='gameboards-main-section'>
             <div className='left-panel'>
+                <div className='gameboard-username'>
+                    <p>{this.props.user.username}'s server</p>
+                </div>
                 <div className='player-board'>
                     { this.state.player2Map.length > 0 &&
                         this.state.player2Map.map((space, i) => {
                             return (
                                 <div key={i} style={{'width': 20, 'height': 20, 'margin': 1}}>{space.comp}</div>
                             )
-                    })}
-                    <h1 onClick={this.leaveGame}>Leave Game</h1>
+                        })}
                 </div>
+                <div className='left-middle-section'>
+                <div className='legend-container'>
+                        <div className='legend-item'>
+                            <p>your hits</p>
+                            <div className='legend-modules'>
+                                <img className='legend-box' src={littlestoplight} alt='module'/>
+                                <img className='legend-box' src={littlesidebar} alt='module'/>
+                                <img className='legend-box' src={littlethreebar} alt='module'/>
+                                <img className='legend-box' src={littlemanydots} alt='module'/>
+                                <img className='legend-box' src={littletwominidots} alt='module'/>
+                            </div>
+                        </div>
+                        <div className='legend-item'>
+                            <p>your misses</p>
+                            <div className='legend-box legend-blue'/>
+                        </div>
+                        <div className='legend-item'>
+                            <p>your modules</p>
+                            <div className='legend-box legend-grey'/>
+                        </div>
+                        <div className='legend-item'>
+                            <p>opponent's hits</p>
+                            <div className='legend-box legend-black'/>
+                        </div>
+                        <div className='legend-item'>
+                            <p>opponent's misses</p>
+                            <div className='legend-box legend-maroon'/>
+                        </div>
+                    </div>
+                    <div className='timer'>
+                        <p>You have</p>
+                        <h1>{this.state.time}</h1>
+                        <p>seconds left!</p>
+                    </div>
+                </div>                
+                <button onClick={this.leaveGame}>Leave Game</button>
             </div>
+            <div className='right-panel'>
+            <p>opponent's server</p>
             <div className='opponent-board'>
                 {this.state.player2 &&
                     this.state.player1Map.map((space, i) => {
@@ -499,6 +578,7 @@ class Gameboard extends Component {
                     )
                 })
                 }
+            </div>
             </div>
             </div>
             </div>
