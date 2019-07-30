@@ -14,7 +14,11 @@ import TwoMiniDots from '../Modules/TwoMiniDots/TwoMiniDots'
 import ManyDots from '../Modules/ManyDots/ManyDots'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import blank from './Blank'
+// import blank from './Blank'
+import logo from '../../Assets/btlsrvlogo.svg'
+// import {Link} from 'react-router-dom'
+import { getUser, logout } from '../../ducks/reducers/user'
+
 
 class AddMap extends Component {
     constructor() {
@@ -39,7 +43,8 @@ class AddMap extends Component {
             modFiveDirection: 'row',
             currentPiece: 0,
             currentIndex: null,
-            name: ''
+            name: '',
+            save: false
         }
     }
 
@@ -47,6 +52,44 @@ class AddMap extends Component {
         this.setState({
             name: e.target.value
         })
+        this.setSave()
+    }
+
+    logout = () => {
+        this.cancelMap()
+        this.props.logout()
+    }
+
+    goToHome = () => {
+        this.cancelMap()
+        this.props.history.push('/')
+    }
+
+    goToDash = () => {
+        this.cancelMap()
+        this.props.history.push('/dashboard')
+    }
+
+    cancelMap = async () => {
+        await this.resetPiece(2)
+        await this.resetPiece(3)
+        await this.resetPiece(33)
+        await this.resetPiece(4)
+        await this.resetPiece(5)
+        this.props.history.push('/dashboard')
+    }
+
+    setSave = () => {
+        let {board, name} = this.state
+        let checkBoard = board.filter(space => {
+            return space.name !== 'board'
+        })
+        if (checkBoard.length === 17 && name.length > 0) {
+            this.setState({save: true})
+        }
+        if (name.length < 2) {
+            this.setState({save: false})
+        }
     }
 
     saveMap = async() => {
@@ -513,6 +556,8 @@ class AddMap extends Component {
             moduleFour,
             moduleFive
         })
+
+        this.setSave()
     }
 
     handleRotate = (str, direction) => {
@@ -604,15 +649,30 @@ class AddMap extends Component {
     render() {
         return (
             <div className='add-map'>
-                
-                <div className='main'>
+
+            <div className='addmap-navbar'>
+                <button onClick={this.goToHome}>
+                <div style={{'background':'white', 'height':70}}>
+                <img src={logo} alt='battle serve' className='addmap-logo'/>
+                </div>
+                </button>
+
+                <div className='addmap-link-container'>
+                    <button onClick={this.goToHome}>home</button>
+                    <button onClick={this.goToDash}>dashboard</button>
+                    <button onClick={this.logout}>logout</button>
+                </div>
+            </div>
                 
                 <div className='module-container'> 
                 <div className='top-left-box'>
                     <p>name your new map</p>
                     <div className='input-button-container'>
                         <input className='add-map-input' onChange={this.handleChange}></input>
-                        <button className='add-map-button' onClick={this.saveMap}>save</button>
+                        {this.state.save ? 
+                        <button onClick={this.saveMap}>save</button>
+                        :
+                        <button onClick={this.cancelMap}>cancel</button>}
                     </div>
                 </div>   
                 {this.state.modTwoDisplay &&
@@ -802,11 +862,10 @@ class AddMap extends Component {
                                                         <Stoplight/>
                                                 </div>
                                             )} else {
-                               return (<></>) 
+                                                return (<></>) 
                             }
                         })} 
                 </div>}
-                </div>
                 </div>
 
                 <div className='board'>
@@ -870,4 +929,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(AddMap)
+export default connect(mapStateToProps, {getUser, logout})(AddMap)

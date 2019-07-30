@@ -40,7 +40,7 @@ class StatsChart extends Component {
                 labels: ['victories', 'defeats'],
             },
             options: {
-                responsive: true,
+                // responsive: true,
                 maintainAspectRatio: false
             }
     
@@ -50,7 +50,7 @@ class StatsChart extends Component {
     render() {
         return (
             <div>
-                <canvas id='myChart' ref={this.chartRef} style={{'display': 'inline', 'height': 135}}/>
+                <canvas id='myChart' ref={this.chartRef} style={{'display': 'inline','width': '40vw', 'maxHeight': '35vh'}}/>
             </div>
         )
     }
