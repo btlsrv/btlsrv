@@ -36,11 +36,10 @@ massive(CONNECTION_STRING).then(db => {
             io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
-        client.on('startGame', data => {
-            let { map1 } = data
-            console.log('started')
-            player1Id = map1
-            console.log(player1Id)
+
+        client.on('sendMapToPlayer2', (data) => {
+            let { room, map1 } = data
+            client.in(room).emit('mapSentToPlayer2', map1)
         })
 
         // Joining rooms and games //
