@@ -22,7 +22,6 @@ const Dashboard = props => {
     const [displayMap, setDisplayMap] = useState(false)
     const [mapId, setMapId] = useState(0)
 
-    console.log(mapsList)
     const [topTen, setTopTen] = useState([])
     
     useEffect(()=> {
