@@ -6,6 +6,7 @@ import socket from '../../sockets'
 import {connect} from 'react-redux'
 import {setGameRoom} from '../../ducks/reducers/game'
 import {withRouter} from 'react-router-dom'
+import Hitspot from '../Gameboard/Hitspot';
 
 class Lobby extends Component {
     constructor() {
@@ -21,7 +22,7 @@ class Lobby extends Component {
 
     componentDidMount() {
         socket.emit('getRooms')
-        socket.on('roomsGot', data => {
+        socket.on('roomsGot', async data => {
             if (Object.keys(data).length !== 0) {
                 let roomArray = []
                 let initialDataArray = Object.entries(data)
@@ -32,8 +33,7 @@ class Lobby extends Component {
                     }
                     return roomArray.push(roomObject)
                 })
-                this.setState ({ rooms: roomArray })
-
+                await this.setState ({ rooms: roomArray })
             }
         })
     }
@@ -53,11 +53,11 @@ class Lobby extends Component {
         }
     }
 
-    makeGameRoom = () => {
+    makeGameRoom = async () => {
         let {gameNameInput} = this.state
         this.props.setGameRoom({room: gameNameInput, player: 'player1'})
-        this.props.history.push('/gameboard')
         socket.emit('createRoom', {room: gameNameInput})
+        this.props.history.push('/gameboard')
     }
 
     startGame = async() => {
