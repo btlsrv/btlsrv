@@ -16,6 +16,8 @@ let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
 app.use(express.json())
 
+player1Id = ''
+
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
     const io = socket(app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`)))
@@ -46,7 +48,7 @@ massive(CONNECTION_STRING).then(db => {
 
         client.on('joinGame', async data => {
             let { map2, room } = data
-            io.in(room).emit('gameJoined', { map2, map1: player1Id })
+            io.in(room).emit('gameJoined', {map2})
             player1 = '',
             io.emit('roomsGot', io.sockets.adapter.rooms)
         })

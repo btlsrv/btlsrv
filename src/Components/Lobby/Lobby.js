@@ -23,7 +23,6 @@ class Lobby extends Component {
     componentDidMount() {
         socket.emit('getRooms')
         socket.on('roomsGot', async data => {
-            console.log(data)
             if (Object.keys(data).length !== 0) {
                 let roomArray = []
                 let initialDataArray = Object.entries(data)
@@ -87,7 +86,6 @@ class Lobby extends Component {
     }
 
     render() {
-        console.log(this.state.rooms)
         return (
             <div className='lobby'>
                 <h2>Lobby</h2>

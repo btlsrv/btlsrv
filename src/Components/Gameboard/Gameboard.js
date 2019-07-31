@@ -422,6 +422,7 @@ class Gameboard extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <>
             {this.props.player === 'player1' ? 
