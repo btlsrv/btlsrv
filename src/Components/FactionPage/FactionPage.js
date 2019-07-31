@@ -12,6 +12,7 @@ const FactionPage = props => {
     const [picture, setPicture] = useState('')
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
+    const [leaders, setLeaders] = useState([])
     const {getUser} = props
     
     useEffect(()=> {
@@ -42,6 +43,13 @@ const FactionPage = props => {
             setMessages(updatedMessages)
             pageScroll()
         })
+
+
+        axios.get('/api/faction').then(res => {
+            setLeaders(res.data)
+        })
+
+
     }, [getUser, faction, messages.length])
 
     const handleChange = e => {
@@ -74,9 +82,8 @@ const FactionPage = props => {
         setMessage('')
     }
 
-    const pageScroll = () => {
-        document.getElementById('scroll').scrollBy(0, 100000000000000000)
-        setTimeout('pageScroll', 0)
+    const pageScroll = async() => {
+        await document.getElementById('scroll').scrollBy(0, 100000000000000000)
     }
 
     return (
@@ -87,9 +94,23 @@ const FactionPage = props => {
             </div>
 
             <section className='faction-main'>
-                <div className='leaderboard box-shadow'>
 
-                </div>
+            <div className='faction-leaderboard box-shadow'>
+                   <h2>TOP TEN {faction}</h2>
+                   {leaders &&
+                       leaders.map((user, i) => {
+                           return (
+                               <div key={i} className='faction-leaderboard-user'>
+                                   <h3>{user.username}</h3>
+                                   <div>
+                                       <p>V:{user.victories}</p>
+                                       <p>D:{user.defeats}</p>
+                                   </div>
+                               </div>
+                           )
+                       })
+                   }
+               </div>
 
                 <div className='forum box-shadow' id="scroll">
                     {messages &&

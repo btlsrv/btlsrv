@@ -16,8 +16,6 @@ let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
 app.use(express.json())
 
-let player1Id = ''
-
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
     const io = socket(app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`)))
@@ -74,19 +72,25 @@ massive(CONNECTION_STRING).then(db => {
             let { room, winner } = data
             io.in(room).emit('endGame', winner)
             client.leave(room)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
         client.on('leaveGame', data => {
             let { room, player } = data
             client.leave(room)
             client.in(room).emit('playerLeft', player)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
         client.on('leaveRoom', room => {
             client.leave(room)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
-        client.on('disconnect', () => console.log('user disconnected'))
+        client.on('disconnect', () => {
+            console.log('disconnected')
+            io.emit('roomsGot', io.sockets.adapter.rooms)
+        })
     })
 })
 

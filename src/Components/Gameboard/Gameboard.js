@@ -35,8 +35,8 @@ class Gameboard extends Component {
         this.state = {
             player1Map: initialBoard1,
             player2Map: initialBoard2,
-            player1Hits: 0,
-            player2Hits: 0,
+            player1Hits: 15,
+            player2Hits: 15,
             player2: false,
             currentTurn: 'player1',
             winner: '',
