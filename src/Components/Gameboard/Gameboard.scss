@@ -58,11 +58,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    p {
-        color: $white;
-        margin-bottom: 10px;
-    }
+    position: relative;
 }
 
 .opponent-board {
@@ -70,6 +66,28 @@
     width: 495px;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+
+    h3 {
+        background: $white;
+        height: 10vh;
+        width: 30vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 10px 10px 0 $shadow-grey;
+        position: absolute;
+        top: -40px;
+    }
+        
+    p {
+        color: $white;
+        margin-bottom: 10px;
+        position: absolute;
+        left: 50%;
+        top: -20px;
+        transform: translate(-50%, -50%)
+    }
 }
 
 .left-middle-section {

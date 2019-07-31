@@ -125,9 +125,9 @@ const Dashboard = props => {
                                 <img src={userPicture(props.user.faction_id)} alt='user profile'/>
                             </div>
                             <div className='map-button box-and-shadow'>
-                                {mapsList.length > 4 ?
+                                {mapsList.length > 9 ?
                                 <div>
-                                    <p>you've reached the 5 map limit</p>
+                                    <p>you've reached the 10 map limit</p>
                                 </div>
                                 :
                                 <button className='top-button button-text' onClick={addMap}>add map</button>

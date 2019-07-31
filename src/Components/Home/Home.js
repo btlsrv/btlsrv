@@ -9,6 +9,8 @@ import devin from '../../Assets/devin.png'
 import marshall from '../../Assets/marshall.png'
 import riley from '../../Assets/riley.png'
 
+
+
 const Home = props => {
     const {getUser} = props
     useEffect(()=> {

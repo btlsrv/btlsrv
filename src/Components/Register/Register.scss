@@ -2,6 +2,8 @@
 
 .reg {
     background: $black;
+    background-size: 6vh 6vh;
+    background-image: linear-gradient(to right, $shadow-grey 2px, transparent 2px), linear-gradient(to bottom, $shadow-grey 2px, transparent 2px);
     height: calc(100vh - 70px);
     width: 100vw;
     position: relative;
