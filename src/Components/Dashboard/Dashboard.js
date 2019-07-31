@@ -8,6 +8,7 @@ import {addMap} from '../../ducks/reducers/map'
 import axios from 'axios'
 import Lobby from '../Lobby/Lobby'
 import Chart from '../Chart/Chart'
+import MapDisplay from './MapDisplay'
 
 
 const Dashboard = props => {
@@ -15,6 +16,10 @@ const Dashboard = props => {
 
     const [lobby, setLobby] = useState(false)
     const [mapsList, setMapsList] = useState([])
+    const [displayMap, setDisplayMap] = useState(false)
+    const [mapId, setMapId] = useState(0)
+
+    console.log(mapsList)
     
     useEffect(()=> {
         getUser()
@@ -47,10 +52,21 @@ const Dashboard = props => {
         props.history.push('/addmap')
     }
 
+    const displayMapShow = (id) => {
+        setMapId(id)
+       setDisplayMap(true)     
+    }
+
+    const displayMapShowFalse = () => {
+        setDisplayMap(false)
+    }
 
     return (
         <div className='dash'>
+            
+            {displayMap && <MapDisplay mapId={mapId} displayMapShowFalse={displayMapShowFalse} />}
             {props.user 
+
             ?
             <div className='card-container'>
                 {lobby 
@@ -64,7 +80,7 @@ const Dashboard = props => {
                                 <div
                                 key={i}
                                 className='map'>
-                                    <p className='map-name'>{map.name}</p>
+                                    <p onClick={() => displayMapShow(map.map_id)}className='map-name'>{map.name}</p>
                                     <button onClick={() => setMap(map.map_id)}>set map</button>
                                     <button onClick={() => deleteMap(map.map_id)}>delete</button>
                                 </div>

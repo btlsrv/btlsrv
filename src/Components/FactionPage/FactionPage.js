@@ -12,7 +12,7 @@ const FactionPage = props => {
     const [picture, setPicture] = useState('')
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
-    const {getUser} = props
+    let {getUser} = props
     
     useEffect(()=> {
         getUser()
