@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './Lobby.scss'
-import axios from 'axios'
-import {Link} from 'react-router-dom'
+// import axios from 'axios'
+// import {Link} from 'react-router-dom'
 import socket from '../../sockets'
 import {connect} from 'react-redux'
 import {setGameRoom} from '../../ducks/reducers/game'
@@ -22,7 +22,6 @@ class Lobby extends Component {
     componentDidMount() {
         socket.emit('getRooms')
         socket.on('roomsGot', data => {
-            console.log(data)
             if (Object.keys(data).length !== 0) {
                 let roomArray = []
                 let initialDataArray = Object.entries(data)
@@ -54,26 +53,29 @@ class Lobby extends Component {
         }
     }
 
+    makeGameRoom = () => {
+        let {gameNameInput} = this.state
+        this.props.setGameRoom({room: gameNameInput, player: 'player1'})
+        this.props.history.push('/gameboard')
+        socket.emit('createRoom', {room: gameNameInput})
+    }
+
     startGame = async() => {
         let {gameNameInput} = this.state
         if (gameNameInput) {
             if (this.state.rooms) {
                 this.state.rooms.map(room => {
                     if (room.name === gameNameInput) {
-                       alert ('game name already exists. Please enter different name for your game.')
+                        return alert ('game name already exists. Please enter different name for your game.')
                     } else {
-                        this.props.setGameRoom({room: gameNameInput, player: 'player1'})
-                        this.props.history.push('/gameboard')
-                        socket.emit('createRoom', {room: gameNameInput})
+                        return this.makeGameRoom()
                     }
                 })
             } else {
-                this.props.setGameRoom({room: gameNameInput, player: 'player1'})
-                this.props.history.push('/gameboard')
-                socket.emit('createRoom', {room: gameNameInput})
+                return this.makeGameRoom()
             }
         } else {
-            alert('please enter game name')
+            return alert('please enter game name')
         }
     }
 
@@ -84,7 +86,6 @@ class Lobby extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div className='lobby'>
                 <h2>Lobby</h2>
@@ -102,11 +103,11 @@ class Lobby extends Component {
                     this.state.rooms.map((room, i) => {
                         if (room.sockets >= 2) {
                             return (
-                                <button key={i} >Full: {room.name}</button>
+                                <button className='button-2' key={i} >Full: {room.name}</button>
                             )
                         } else {
                         return (
-                            <button key={i} onClick={() => this.joinGame(room.name)}>Join: {room.name}</button>
+                            <button className='button-2' key={i} onClick={() => this.joinGame(room.name)}>Join: {room.name}</button>
                         )
                     }})
                 :

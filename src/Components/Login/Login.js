@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Login.scss'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
 import { connect } from 'react-redux'
 import {login} from '../../ducks/reducers/user'
 
@@ -22,6 +22,7 @@ const Login = (props) => {
     const handleLogin = e => {
         e.preventDefault()
         props.login(info)
+        .catch(() => alert('Email Or Password Incorrect. Please Try Again.'))
     }
     
     if(props.user) {

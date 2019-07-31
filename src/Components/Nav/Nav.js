@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import {Link, Redirect, withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import logo from '../../Assets/btlsrvlogo.svg'
 import './Nav.scss'
-import axios from 'axios'
+// import axios from 'axios'
 import { connect } from 'react-redux'
 import { getUser, logout } from '../../ducks/reducers/user'
 
@@ -17,7 +17,7 @@ const Nav = props => {
         await props.logout()
         props.history.push('/')
     }
-    // console.log(props)
+    
     return (
         <>
         {props.user
@@ -28,12 +28,15 @@ const Nav = props => {
             <img src={logo} alt='battle serve' className='logo'/>
             </div>
             </Link>
-
+            {props.location.pathname === '/gameboard' ?         // added
+                null                                            // by 
+                :                                               // derek (including closing bracket below)
             <div className='link-container'>
                 <Link to='/'>home</Link>
                 <Link to='/dashboard'>dashboard</Link>
                 <button onClick={logout}>logout</button>
             </div>
+            }                                                   
         </div>
         :
         <div className='navbar'>
