@@ -28,12 +28,15 @@ const Nav = props => {
             <img src={logo} alt='battle serve' className='logo'/>
             </div>
             </Link>
-
+            {props.location.pathname === '/gameboard' ?         // added
+                null                                            // by 
+                :                                               // derek (including closing bracket below)
             <div className='link-container'>
                 <Link to='/'>home</Link>
                 <Link to='/dashboard'>dashboard</Link>
                 <button onClick={logout}>logout</button>
             </div>
+            }                                                   
         </div>
         :
         <div className='navbar'>
