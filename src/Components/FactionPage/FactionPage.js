@@ -87,7 +87,7 @@ const FactionPage = props => {
             </div>
 
             <section className='faction-main'>
-                <div className='leaderboard box-shadow'>
+                <div className='faction-leaderboard box-shadow'>
 
                 </div>
 
