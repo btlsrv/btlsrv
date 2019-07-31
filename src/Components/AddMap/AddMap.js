@@ -665,7 +665,10 @@ class AddMap extends Component {
                 
                 <div className='module-container'> 
                 <div className='top-left-box'>
-                    <p>name your new map</p>
+                    <p>place your modules and name your new map
+                        <br/>
+                        <span>hint: click the modules to rotate them</span>
+                    </p>
                     <div className='input-button-container'>
                         <input className='add-map-input' onChange={this.handleChange}></input>
                         {this.state.save ? 
