@@ -238,7 +238,6 @@ class AddMap extends Component {
     }
 
     setTwoColumn = (currentIndex, i) => {
-        // Need to fix math so we can place the currentIndex 1 on the row 10-19
         i = - currentIndex * 10 + i         
         if (currentIndex === 0 && i >= 90) {
             return this.resetPiece(2)
