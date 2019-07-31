@@ -5,6 +5,8 @@
     align-items: center;
     justify-content: space-evenly;
     background: $black;
+    background-size: 6vh 6vh;
+    background-image: linear-gradient(to right, $shadow-grey 2px, transparent 2px), linear-gradient(to bottom, $shadow-grey 2px, transparent 2px);
     min-height: calc(100vh - 70px);
     width: 100vw;
     position: relative;
