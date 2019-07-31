@@ -1,7 +1,14 @@
 import React from 'react'
 
-const Blocker = () => <div style={style}><p>Opponent's Turn</p></div>
-
+const Blocker = (props) => {
+    console.log(props)
+    return (
+        <div style={style}>
+            <p>Opponent's Turn</p>
+            <button onClick={props.leaveGame}>Leave Game</button>
+        </div>
+    )
+}
 export default Blocker
 
 let style = {

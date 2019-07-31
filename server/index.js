@@ -23,14 +23,11 @@ massive(CONNECTION_STRING).then(db => {
     const io = socket(app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`)))
 
     io.on('connection', client => {
-        console.log('connected')
-
         client.leave(client.id)
 
         // Creating rooms and games //
         
         client.on('createRoom', data => {
-            console.log('room created')
             let { room } = data
             client.join(room)
             io.emit('roomsGot', io.sockets.adapter.rooms)
@@ -45,15 +42,12 @@ massive(CONNECTION_STRING).then(db => {
         // Joining rooms and games //
 
         client.on('joinRoom', data => {
-            console.log('room joined')
             let { room } = data
             client.join(room)
         })
 
         client.on('joinGame', async data => {
             let { map2, room } = data
-            console.log(data)
-            console.log('game joined')
             io.in(room).emit('gameJoined', { map2, map1: player1Id })
             player1 = '',
             io.emit('roomsGot', io.sockets.adapter.rooms)
@@ -63,7 +57,6 @@ massive(CONNECTION_STRING).then(db => {
 
         client.on('changeTurns', data => {
             let { currentTurn, room, spotSelected } = data
-            console.log(data)
             io.in(room).emit('turnsChanged', {currentTurn, spotSelected})
         })
 
@@ -79,13 +72,18 @@ massive(CONNECTION_STRING).then(db => {
         client.on('gameOver', data => {
             console.log(data)
             let { room, winner } = data
-            client.in(room).emit('gameOver', winner)
+            io.in(room).emit('endGame', winner)
             client.leave(room)
         })
 
-        client.on('leaveGame', room => {
+        client.on('leaveGame', data => {
+            let { room, player } = data
             client.leave(room)
-            client.in(room).emit('playerLeft')
+            client.in(room).emit('playerLeft', player)
+        })
+
+        client.on('leaveRoom', room => {
+            client.leave(room)
         })
 
         client.on('disconnect', () => console.log('user disconnected'))
