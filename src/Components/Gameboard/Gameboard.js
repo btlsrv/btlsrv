@@ -24,10 +24,9 @@ import littlesidebar from '../../Assets/sidebar.svg'
 import littletwominidots from '../../Assets/twominidots.svg'
 import littlemanydots from '../../Assets/manydots.svg'
 
+
 let initialBoard1 = board.map(space => ({...space}))
 let initialBoard2 = board.map(space => ({...space}))
-
-
 
 class Gameboard extends Component {
     constructor() {
@@ -109,36 +108,38 @@ class Gameboard extends Component {
             }
         })
 
-        socket.on('gameOver', async winner => {
-            await this.setState ({ winner })
-            if (this.props.player === this.state.winner) {
-                axios.post('/api/victories')
-            } else {
-                axios.post('/api/defeats')
-            }
+        socket.on('endGame', async winner => {
+            await this.setState({ winner })
         })
 
-        socket.on('playerLeft', async() => {
-            await alert('opponent left. Game over')
-            this.props.history.push('/dashboard')
+        socket.on('playerLeft', async winner => {
+            if (winner === 'player1') {
+                await this.setState ({ winner: 'player2'})
+            } else if (winner === 'player2') {
+                await this.setState ({ winner: 'player1'})
+            }
         })
     }
 
     componentDidUpdate(prevProps, prevState){
         let { winner } = this.state
-        let { room } = this.props
         if (prevState.winner !== winner) {
-            socket.emit('gameOver', {winner, room})
+            if (this.state.winner === this.props.player) {
+                axios.post('/api/victories')
+            } else {
+                axios.post('/api/defeats')
+            }
         }
     }
 
-    // componentWillUnmount() {
-    //     let { room } = this.props
-    //     socket.emit('leaveGame')
-    // }
+    componentWillUnmount() {
+        let { room } = this.props
+        socket.emit('leaveRoom', room)
+        initialBoard1 = board.map(space => ({...space}))
+        initialBoard2 = board.map(space => ({...space}))
+    }
 
     initializePlayer1 = async() => {
-
         let { player1Map } = this.state
         let id = this.props.map
         await axios.get(`/api/maps/${id}`).then(res => {
@@ -399,25 +400,28 @@ class Gameboard extends Component {
         } else {
             space.comp = <Missed/>
         }
-                        
+
         if (this.state.player1Hits === 17) {
-            await this.setState ({ winner: 'player2'})
+            let { room } = this.props
+            socket.emit('gameOver', {winner: 'player2', room})
         } else if (this.state.player2Hits === 17) {
-            await this.setState ({ winner: 'player1'})
+            let { room } = this.props
+            socket.emit('gameOver', {winner: 'player1', room})
         }
 
         this.forceChangeTurns(spotSelected)
     }
 
-    leaveGame = () => {
-        let { room } = this.props
-        socket.emit('leaveGame', room)
+    leaveGame = async() => {
+        let { room, player } = this.props
+        if (this.state.player2) {
+        await axios.post('/api/defeats')
+        }
+        socket.emit('leaveGame', {room, player})
         this.props.history.push('/dashboard')
     }
 
     render() {
-        console.log(board, this.state)
-
         return (
             <>
             {this.props.player === 'player1' ? 
@@ -427,7 +431,7 @@ class Gameboard extends Component {
                     <GameOver winner={this.state.winner}/>
                 :
                 this.state.currentTurn !== this.props.player ?                                                 
-                    <Blocker/>                     
+                    <Blocker leaveGame={this.leaveGame} />                     
                 :
                 null 
             }
@@ -510,7 +514,7 @@ class Gameboard extends Component {
                     <GameOver winner={this.state.winner}/>
                 :
                 this.state.currentTurn !== this.props.player ?                                                 
-                    <Blocker/>                     
+                    <Blocker leaveGame={this.leaveGame}/>                     
                 :
                 null                   
             }
