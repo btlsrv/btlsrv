@@ -1,0 +1,36 @@
+@import '../../Styles/styles.scss';
+
+.gameover {
+    width: 100vw;
+    height: calc(100vh - 70px);
+    background: rgba(255,255,255,.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    p {
+        font-size: 30px;
+        margin: 20px;
+    }
+}
+
+.gameover-buttons {
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+
+    button {
+        background: $pink;
+        width: 200px;
+        height: 40px;
+        border: none;
+        color: $white;
+        font-size: 17px;
+
+        &:hover {
+            background: $favorite-green;
+        }
+    }
+}

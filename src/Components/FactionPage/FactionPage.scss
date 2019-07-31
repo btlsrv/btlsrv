@@ -1,5 +1,4 @@
 @import '../../Styles/styles.scss';
-
 .faction {
     color: $white;
     display: flex;
@@ -8,21 +7,17 @@
     justify-content: space-evenly;
     height: calc(100vh - 70px);
     text-align: center;
-
     h1 {
         margin-top: 20px;
     }
 }
-
 .faction-header {
     display: flex;
     margin-top: 10px;
 }
-
 .box-shadow {
     box-shadow: 10px 10px 0 $shadow-grey;
 }
-
 .faction-main {
     display: flex;
     width: 100vw;
@@ -30,20 +25,17 @@
     justify-content: space-evenly;
     margin: 20px 0;
 }
-
 .leaderboard {
     width: 30%;
     height: 95%;
     background: $white;
 }
-
 .forum {
     width: 50%;
     height: 95%;
     background: $white;
     overflow-y: scroll;
 }
-
 .message {
     display: flex;
     flex-direction: column;
@@ -53,31 +45,26 @@
     width: 60%;
     text-align: center;
     background: $white;
-
     p {
         padding: 2px 6px;
         font-size: 12px;
     }
 }
-
 .my-message {
     background: $favorite-green;
     float: right;
     text-align: right;
     margin-right: 15px;
 }
-
 .faction-message {
     background: $shadow-grey;
     position: relative;
     left: 15px;
     text-align: left;
 }
-
 .username {
     background: $white;
 }
-
 .create-message {
     width: 100%;
     display: flex;
@@ -90,27 +77,23 @@
     border-top: 3px solid $pink;
     border-bottom: 3px solid $white;
     margin-top: 5px;
-
     input {
         height: 20px;
         border: none;
         width: 60%;
         border-bottom: 2px solid $favorite-green;
     }
-
     button {
         height: 20px;
         width: 45px;
         background: $pink;
         border: none;
         color: $white;
-
         &:hover {
             background: $favorite-green;
         }
     }
 }
-
 .faction-leaderboard {
     width: 30%;
     height: 95%;
