@@ -3,7 +3,9 @@
 .dash {
     background: $black;
     background-size: 6vh 6vh;
-    background-image: linear-gradient(to right, $shadow-grey 2px, transparent 2px), linear-gradient(to bottom, $shadow-grey 2px, transparent 2px);
+    background-image: linear-gradient(to right, rgba(89,89,89,.8) 2px, transparent 2px), linear-gradient(to bottom, rgba(89,89,89,.8) 2px, transparent 2px);
+    background-position-x: -1%;
+    background-position-y: -1%;
     min-height: calc(100vh - 70px);
     display: flex;
     align-items: center;
@@ -30,7 +32,7 @@
     display: flex;
     align-items: center;
     width: 28vw;
-    height: 3vh;
+    height: 4vh;
     border-bottom: 2.5px solid $favorite-green;
     margin-top: 20px;
 
@@ -50,13 +52,21 @@
 
 .map-name {
     width: 75%;
+
+    &:hover {
+        color: $favorite-green;
+    }
 }
 
 .top-message {
-    width: 55%;
+    width: 75%;
     text-align: center;
     position: absolute;
     top: 4vh;
+
+    span {
+        font-size: 12px;
+    }
 }
 
 .box-and-shadow {

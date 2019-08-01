@@ -6,11 +6,10 @@ import socket from '../../sockets'
 import {connect} from 'react-redux'
 import {setGameRoom} from '../../ducks/reducers/game'
 import {withRouter} from 'react-router-dom'
-import Hitspot from '../Gameboard/Hitspot';
 
 class Lobby extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             rooms: '',
@@ -89,6 +88,7 @@ class Lobby extends Component {
         return (
             <div className='lobby'>
                 <h2>Lobby</h2>
+                <button onClick={() => this.props.setLobby(false)} className='lobby-back-button'>back</button>
     
                 <div className='lobby-list'>
                     {this.state.createRoomName ? 
