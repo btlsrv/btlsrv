@@ -1,7 +1,4 @@
-const functions = require('../test-functions/functions')
-// const functions = require ('../test-functions/testing-functions')
-// import Profile from '../Components/Profile/Profile'
-// import axios from 'axios'
+const functions = require('../test-functions/module-export-functions')
 
 test('2 plus 2 eq 4', () => {
     expect(functions.add(2, 2)).toBe(4)
@@ -12,39 +9,43 @@ describe('Dashboard Component tests', () => {
         expect(typeof functions.getMaps).toBe('function')
     })
 
-    it('maps should be an array', () => { // test done by Riley
-        expect(maps).toBeInstanceOf(Array)
+    it('ondrop should be a function', () => { // test done by Riley
+        expect(typeof functions.onDrop).toBe('function')
     })
 
-    it('maps should not be an obj', () => { // test done by Riley
-        expect(maps).not.toBe(Object)
-    })
- 
-    it('maps should have a map_id property', () => { // test done by Riley
-        expect(maps).toHaveProperty ('map_id')
+    it('setFiveColumn should be a function', () => { // test done by Riley
+        expect(typeof functions.setFiveColumn).toBe('function')
     })
 
-    it('maps should have a user_id property', () => { // test done by Riley
-        expect(maps).toHaveProperty('user_id')
+    it('setFiveRow should be a function', () => { // test done by Riley
+        expect(typeof functions.setFiveRow).toBe('function')
     })
 
-    it('maps should have a name property', () => { // test done by Marshall
-        expect(maps).toHaveProperty('name')
+    it('setFourColumn should be a function', () => { // test done by Riley
+        expect(typeof functions.setFourColumn).toBe('function')
     })
 
-    it('map_id type should be a number', () => { // test done by Marshall
-        expect(typeof maps[0].map_id).toBe('number')
+    it('setFourRow should be a function', () => { // test done by Marshall
+        expect(typeof functions.setFourRow).toBe('function')
     })
 
-    it('user_id type should be a number', () => { // test done by Marshall
-        expect(typeof maps[0].user_id).toBe('number')
+    it('setThreeBColumn should be a function', () => { // test done by Marshall
+        expect(typeof functions.setThreeBColumn).toBe('function')
     })
 
-    it('name type should be a string', () => { // test done by Marshall
-        expect(typeof maps[0].name).toBe('string')
+    it('setThreeBRow should be a function', () => { // test done by Marshall
+        expect(typeof functions.setThreeBRow).toBe('function')
     })
 
-    it('setMap should be a function', () => { // test done by Marshall
+    it('setThreeColumn should be a function', () => { // test done by Marshall
+        expect(typeof functions.setThreeColumn).toBe('function')
+    })
+
+    it('setThreeRow should be a function', () => { // test done by Marshall
+        expect(typeof functions.setThreeRow).toBe('function')
+    })
+
+    it('setMap should be a function', () => { // test done by Devin
         expect(typeof functions.setMap).toBe('function')
     })
 
@@ -62,13 +63,13 @@ describe('testing on login component', () => {
         expect(typeof functions.handleChange).toBe('function')
     })
 
-    it('that handleLogin is a function', () => { // test done by Devin
+    it('that handleLogin is a function', () => { // test done by Derek
         expect(typeof functions.handleLogin).toBe('function')
     })
 })
 
 describe('AddMap component test', () => {
-    it('saveMap should be a function', () => { // test done by Devin
+    it('saveMap should be a function', () => { // test done by Derek
         expect(typeof functions.saveMap).toBe('function')
     })
 
@@ -88,11 +89,5 @@ describe('User reducer testing', () => {
 
     it('logout should be a function', () => { // test done by Derek
         expect(typeof functions.logout).toBe('function')
-    })
-})
-
-describe('Profile testing', () => {
-    it('Profile should be a function', () => { // test done by Derek
-        expect(typeof functions.Profile).toBe('function')
     })
 })
