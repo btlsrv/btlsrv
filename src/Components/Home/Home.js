@@ -8,6 +8,9 @@ import derek from '../../Assets/derek.png'
 import devin from '../../Assets/devin.png'
 import marshall from '../../Assets/marshall.png'
 import riley from '../../Assets/riley.png'
+import Btlsrvboard from './Btlsrvboard'
+
+
 
 const Home = props => {
     const {getUser} = props
@@ -31,7 +34,9 @@ const Home = props => {
                         </div>
                     </div>
 
-                    <div className='video'></div>
+                    <div className='btlsrv-grid'>
+                        <Btlsrvboard/>
+                    </div>
                 </section>
 
                 <section className='about-header'>

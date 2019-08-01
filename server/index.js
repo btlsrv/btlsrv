@@ -15,8 +15,9 @@ let userCtrl = require('./controllers.js/userCtrl')
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
 app.use(express.json())
+app.use( express.static( `${__dirname}/../build` ) )
 
-let player1Id = ''
+player1Id = ''
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
@@ -48,7 +49,7 @@ massive(CONNECTION_STRING).then(db => {
 
         client.on('joinGame', async data => {
             let { map2, room } = data
-            io.in(room).emit('gameJoined', { map2, map1: player1Id })
+            io.in(room).emit('gameJoined', {map2})
             player1 = '',
             io.emit('roomsGot', io.sockets.adapter.rooms)
         })
@@ -74,19 +75,25 @@ massive(CONNECTION_STRING).then(db => {
             let { room, winner } = data
             io.in(room).emit('endGame', winner)
             client.leave(room)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
         client.on('leaveGame', data => {
             let { room, player } = data
             client.leave(room)
             client.in(room).emit('playerLeft', player)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
         client.on('leaveRoom', room => {
             client.leave(room)
+            io.emit('roomsGot', io.sockets.adapter.rooms)
         })
 
-        client.on('disconnect', () => console.log('user disconnected'))
+        client.on('disconnect', () => {
+            console.log('disconnected')
+            io.emit('roomsGot', io.sockets.adapter.rooms)
+        })
     })
 })
 

@@ -73,9 +73,9 @@ const FactionPage = props => {
         })
         setMessage('')
     }
-    const pageScroll = () => {
-        document.getElementById('scroll').scrollBy(0, 100000000000000000)
-        setTimeout('pageScroll', 0)
+
+    const pageScroll = async() => {
+        await document.getElementById('scroll').scrollBy(0, 100000000000000000)
     }
     return (
         <div className='faction'>

@@ -7,32 +7,30 @@ describe('Dashboard testing', () => {
         cy.visit('/#/dashboard')
     })
 
-    it('user can got to view maps page', () => { // test done by Riley
-        cy.get('.dash')
-        .first()
-        .contains('view maps')
-        .click()
+    it('users faction picture is displayed', () => { // test done by Riley
+        cy.get('.dash-faction')
+        .contains('img')
     })
 
     it('user can go to add map', () => { // test done by Riley
-        cy.get('.dash')
+        cy.get('.map-button')
         .first()
         .contains('add map')
         .click()
     })
 
-    it('page contains text for each map user made', () => { // test done by Riley
-        cy.contains('p', 'set a map to start or join a game!')
+    it('page contains text for map button', () => { // test done by Riley
+        cy.get('.top-message')
+        cy.contains('p', 'click the pink "add map" button to get started')
     })
 
-    it('page contains text for the leaderboard', () => { // test done by Riley
-        cy.contains('p', 'leaderboard')
+    it('page contains text for the leaderboard top ten', () => { // test done by Riley
+        cy.get('.right-section-bottom')
+        cy.contains('p', 'top ten players')
     })
     
-    it('user can delete maps', () => { // test done by Riley
-        cy.get('.map')
-        .first()
-        .contains('delete')
-        .click()
+    it('check if the dashboard is named', () => { // test done by Riley
+        cy.get('.right-section-top')
+        .contains('h2', 'marshall\'s dashboard')
     })
 })

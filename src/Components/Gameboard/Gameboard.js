@@ -486,8 +486,8 @@ class Gameboard extends Component {
                 <button onClick={this.leaveGame}>Leave Game</button>
             </div>
             <div className='right-panel'>
-            <p>opponent's server</p>
             <div className='opponent-board'>
+            <p>opponent's server</p>
                 {this.state.player2 ?
                     this.state.player2Map.map((space, i) => {
                     return (
@@ -499,7 +499,7 @@ class Gameboard extends Component {
                     )
                 })
                 :
-                <h1>Waiting for Opponent</h1>
+                <h3>Waiting for Opponent</h3>
                 }
             </div>
             </div>
@@ -569,8 +569,8 @@ class Gameboard extends Component {
                 <button onClick={this.leaveGame}>Leave Game</button>
             </div>
             <div className='right-panel'>
-            <p>opponent's server</p>
             <div className='opponent-board'>
+            <p>opponent's server</p>
                 {this.state.player2 &&
                     this.state.player1Map.map((space, i) => {
                     return (

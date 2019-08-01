@@ -7,6 +7,10 @@
     position: relative;
     height: calc(100vh - 70px);
     background: $black;
+    background-size: 6vh 6vh;
+    background-image: linear-gradient(to right, rgba(89,89,89,.8) 2px, transparent 2px), linear-gradient(to bottom, rgba(89,89,89,.8) 2px, transparent 2px);
+    background-position-x: -1%;
+    background-position-y: -1%;
 
     h6 {
         color: $white;
@@ -14,10 +18,11 @@
 }
 
 .board {
-    height: 495px;
-    width: 495px;
+    height: 490px;
+    width: 490px;
     display: flex;
     flex-wrap: wrap;
+    background: $black;
 }
 
 .gameboards-main-section {
@@ -58,18 +63,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    p {
-        color: $white;
-        margin-bottom: 10px;
-    }
+    position: relative;
 }
 
 .opponent-board {
-    height: 495px;
-    width: 495px;
+    height: 490px;
+    width: 490px;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    background: $black;
+
+    h3 {
+        background: $white;
+        height: 10vh;
+        width: 480px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 10px 10px 0 $shadow-grey;
+        position: absolute;
+        top: -40px;
+    }
+        
+    p {
+        color: $white;
+        margin-bottom: 10px;
+        position: absolute;
+        left: 50%;
+        top: -20px;
+        transform: translate(-50%, -50%)
+    }
 }
 
 .left-middle-section {
