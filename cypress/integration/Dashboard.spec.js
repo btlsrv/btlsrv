@@ -7,21 +7,39 @@ describe('Dashboard testing', () => {
         cy.visit('/#/dashboard')
     })
 
-    it('users faction picture is displayed', () => { // test done by Riley
-        cy.get('.dash-faction')
-        .contains('img')
-    })
-
+    
     it('user can go to add map', () => { // test done by Riley
         cy.get('.map-button')
         .first()
         .contains('add map')
         .click()
     })
+    
+    it('can type in a map name', () => { // test done by Riley
+        cy.get('.map-button')
+        .first()
+        .contains('add map')
+        .click()
 
-    it('page contains text for map button', () => { // test done by Riley
-        cy.get('.top-message')
-        cy.contains('p', 'click the pink "add map" button to get started')
+        cy.get('.add-map-input')
+        .type('taco')
+        .should('have.value', 'taco')
+    })
+
+    it('can cancel the create map process', () => { // test done by Riley
+        cy.get('.map-button')
+        .first()
+        .contains('add map')
+        .click()
+
+        cy.get('.add-map-input')
+        .type('taco')
+        .should('have.value', 'taco')
+
+        cy.get('.input-button-container')
+        .first()
+        .contains('cancel')
+        .click()
     })
 
     it('page contains text for the leaderboard top ten', () => { // test done by Riley
