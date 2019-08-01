@@ -15,6 +15,7 @@ let userCtrl = require('./controllers.js/userCtrl')
 let { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env
 
 app.use(express.json())
+app.use( express.static( `${__dirname}/../build` ) )
 
 player1Id = ''
 
