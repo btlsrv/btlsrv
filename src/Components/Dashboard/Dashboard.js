@@ -87,7 +87,7 @@ const Dashboard = props => {
             <div className='card-container'>
                 {lobby 
                 ? 
-                    <Lobby/>
+                    <Lobby setLobby = {setLobby}/>
                 :
                 <div className='map-list box-and-shadow'>
                      {mapsList.length < 1 && !lobby ?
@@ -96,7 +96,9 @@ const Dashboard = props => {
                     </div>
                     :
                     <div className='top-message'>
-                        <p>set a map to start or join a game!</p>
+                        <p>set a map to start or join a game! 
+                            <br/>
+                            <span>click a map's name to view its layout</span></p>
                     </div>
                     }
                     {mapsList.length > 0 &&

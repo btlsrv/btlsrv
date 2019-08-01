@@ -48,51 +48,51 @@ describe('Dashboard Component tests', () => {
         expect(typeof functions.setMap).toBe('function')
     })
 
-    it('addMap should be a function', () => { // test done by Devan
+    it('addMap should be a function', () => { // test done by Devin
         expect(typeof functions.addMap).toBe('function')
     })
 
-    it('deleteMap should be a function', () => { // test done by Devan
+    it('deleteMap should be a function', () => { // test done by Devin
         expect(typeof functions.deleteMap).toBe('function')
     })
 })
 
 describe('testing on login component', () => {
-    it('that handleChange is a function', () => { // test done by Devan
-        expect(typeof functinos.handleChange).toBe('function')
+    it('that handleChange is a function', () => { // test done by Devin
+        expect(typeof functions.handleChange).toBe('function')
     })
 
-    it('that handleLogin is a function', () => { // test done by Devan
-        expect(typeof functinos.handleLogin).toBe('function')
+    it('that handleLogin is a function', () => { // test done by Devin
+        expect(typeof functions.handleLogin).toBe('function')
     })
 })
 
 describe('AddMap component test', () => {
-    it('saveMap should be a function', () => { // test done by Devan
-        expect(typeof functinos.saveMap).toBe('function')
+    it('saveMap should be a function', () => { // test done by Devin
+        expect(typeof functions.saveMap).toBe('function')
     })
 
     it('handleRotate should be a function', () => { // test done by Derek
-        expect(typeof functinos.handleRotate).toBe('function')
+        expect(typeof functions.handleRotate).toBe('function')
     })
 })
 
 describe('User reducer testing', () => {
     it('getUser should be a function', () => { // test done by Derek
-        expect(typeof functinos.getUser).toBe('function')
+        expect(typeof functions.getUser).toBe('function')
     })
 
     it('login should be a function', () => { // test done by Derek
-        expect(typeof functinos.login).toBe('function')
+        expect(typeof functions.login).toBe('function')
     })
 
     it('logout should be a function', () => { // test done by Derek
-        expect(typeof functinos.logout).toBe('function')
+        expect(typeof functions.logout).toBe('function')
     })
 })
 
 describe('Profile testing', () => {
     it('Profile should be a function', () => { // test done by Derek
-        expect(typeof functinos.Profile).toBe('function')
+        expect(typeof functions.Profile).toBe('function')
     })
 })
